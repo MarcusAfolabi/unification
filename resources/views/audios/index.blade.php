@@ -10,7 +10,7 @@
     <div class="mcontainer">
         <!--  breadcrumb -->
         @auth
-        @if (auth()->user()->isAdmin())
+        @if (auth()->user()->role==='admin')
 
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
@@ -20,7 +20,7 @@
             </div>
         </div>
         @if (session('status'))
-        <p class="bg-green-500 text-white text-center border p-4 relative rounded-md uk-alert">
+        <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">
             {{ session('status') }}</p>
         @endif
         <div class="card">
@@ -31,7 +31,6 @@
                         autocomplete="off">
                 </form>
             </div>
-            @if ($audios->count() > 0)
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -61,10 +60,9 @@
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Delete</th>
                                     </tr>
-                                </thead>
-
+                                </thead> 
                                 <tbody>
-                                    @foreach ($audios as $key => $aud)
+                                    @forelse ($audios as $key => $aud)
                                     <tr class="border-b">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{
                                             ++$key}}</td>
@@ -119,27 +117,23 @@
                                             </form>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <p class="text-center text-opacity-75"> Nothing Here!</p>
+                                    @endforelse
                                 </tbody>
                             </table>
-                        </div>
-                        @else
-                        <p class="text-center text-opacity-75"> Nothing Here!</p>
-                        @endif
+                        </div> 
                     </div>
-                    {{ $audios->links() }}
-
+                    {{ $audios->links() }} 
                 </div>
             </div>
         </div>
     </div>
 
-    @elseif (!auth()->user()->isAdmin())
+    @elseif (auth()->user()->role==='member')
     <div class="lg:flex lg:space-x-10">
 
-        <div class="lg:w-2/3">
-
-            <!-- Clips -->
+        <div class="lg:w-2/3"> 
 
             <div class="my-5 flex justify-between pb-3">
                 <h2 class="text-2xl font-semibold"> My Audio Clips </h2>
@@ -194,6 +188,8 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <p class="text-center text-opacity-75"> Nothing Here!</p>
                 @endif
                 @endforeach
 

@@ -13,20 +13,17 @@ use Illuminate\Http\Request;
 class WelcomeController extends Controller
 {
     public function index(Request $request)
-    {
-        if ($request->search) {
-            $posts = Post::where('postTitle', 'like', '%' . $request->search . '%')
-                ->orWhere('fullDescription', 'like', '%' . $request->search . '%')->latest()->paginate(40);
-        } else {
-            $posts = Post::all()->random('0');
-        }
-
-        $videos = Video::all();
-        $sideproducts = Product::inRandomOrder()->limit(10)->get();
-        $poststories = Post::inRandomOrder()->limit(5)->get();
-        $sideprayers = Prayer::inRandomOrder()->limit(10)->get();
-        $sideaudios = Audio::inRandomOrder()->limit(10)->get();
-        $sidejobs = Vacancy::inRandomOrder()->limit(10)->get();
-        return view('welcome', compact('posts', 'videos', 'poststories', 'sideaudios', 'sidejobs', 'sideproducts', 'sideprayers'));
+    { 
+        $posts = Post::with(['images'])->select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
+        $anniversary_posts = Post::with(['images'])->select('id', 'title', 'slug')->where('category', 'Anniversary')->inRandomOrder()->limit(10)->get();
+        $fellowship_posts = Post::with(['images'])->select('id', 'title', 'slug')->where('category', 'Fellowship')->inRandomOrder()->limit(10)->get();
+        $cec_posts = Post::with(['images'])->select('id', 'title', 'slug')->where('category', 'CEC')->inRandomOrder()->limit(10)->get();
+        $videos = Video::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
+        $sideproducts = Product::select('name', 'currency', 'price', 'image')->inRandomOrder()->limit(10)->get();
+        $poststories = Post::with(['images'])->select('id', 'title', 'slug')->inRandomOrder()->limit(5)->get();
+        $sideprayers = Prayer::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
+        $sideaudios = Audio::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
+        $sidejobs = Vacancy::select('id', 'position', 'slug')->inRandomOrder()->limit(10)->get();
+        return view('welcome', compact('posts', 'anniversary_posts', 'fellowship_posts', 'cec_posts', 'videos', 'poststories', 'sideaudios', 'sidejobs', 'sideproducts', 'sideprayers'));
     }
 }

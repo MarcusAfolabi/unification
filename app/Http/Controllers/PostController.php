@@ -20,34 +20,27 @@ use Illuminate\Support\Facades\Notification;
 // use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
-{ 
+{
     public function __construct()
     {
         $this->middleware('auth')->except(['show']);
     }
     public function index(Request $request)
     {
-        if ($request->search) {
-            $posts = Post::where('title', 'like', '%' . $request->search . '%')
-                ->orWhere('content', 'like', '%' . $request->search . '%')->latest()->paginate(40);
-        } else {
-            $posts = Post::latest()->paginate(40);
-        }
-
-        $sideposts = Post::all()->take(5);
-        $sideproducts = Product::all()->take(5);
-
-        return view('posts.index', compact('posts','sideposts','sideproducts'));
+        $myposts = Post::with(['images'])->select('id', 'category', 'title', 'intro', 'created_at', 'slug')->where('user_id', auth()->user()->id)->latest()->paginate(40);
+        $sideposts = Post::select('id', 'title', 'views', 'slug', 'created_at')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
+        $all_posts = Post::with(['images'])->select('id', 'title', 'intro', 'created_at', 'category', 'user_id')->latest()->paginate(40);
+        $sideproducts = Product::select('name', 'currency', 'price', 'slug', 'id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
+        return view('posts.index', compact('myposts', 'all_posts', 'sideposts', 'sideproducts'));
     }
- 
+
     public function create()
     {
         return view('posts.create');
-
-    } 
+    }
     public function store(Request $request)
     {
-        $user= User::latest()->get();
+        $user = User::latest()->get();
 
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
@@ -57,62 +50,38 @@ class PostController extends Controller
             "category" => 'required',
             "content" => 'required'
         ]);
-        try {
-        $title = $request->input('title');
-        $intro = $request->input('intro');
-        $category = $request->input('category');
-        $slug = Str::slug($title, '-');
-        $user_id = Auth::user()->id;
-        $content = $request->input('content');
- 
-        $post = new Post();
-        $post->title = $title;
-        $post->intro = $intro;
-        $post->slug = $slug;
-        $post->user_id = $user_id;
-        $post->category = $category;
-        $post->content = $content; 
-        $post->save();
         
-        // if ($request->hasFile("image")) {
-        //     $files = $request->file("image");
-        //     foreach ($files as $file) {
-        //         $imageName = time() . '_' . $file->getClientOriginalName();
-        //         $request['post_id'] = $post->id;
-        //         $request['image'] = $imageName;
-        //         // $file->move(\public_path("/postImages"), $imageName);
-        //         $file->move(public_path("/storage/app/public/postImages"), $imageName);
-        //         Image::create($request->all());
-        //     }
-        // } 
-        // if ($request->hasFile("image")) {
-        //     $files = $request->file("image");
-        //     foreach ($files as $file) {
-        //         $imageName = time() . '_' . $file->getClientOriginalName();
-        //         $request['post_id'] = $post->id;
-        //         $request['image'] = $imageName;
-        //         // $file->move(\storage_path("/images"), $imageName);
-        //         $file->move('uploads/postImages/', $imageName);
-        //         Image::create($request->all());
-        //     }
-        // } 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $filename = $image->store('public/posts');
-                $postImage = new Image();
-                $postImage->post_id = $post->id;
-                $postImage->image = $filename;
-                $postImage->save();
-            }
-        }
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->back()->with('error', $e->getMessage());
-        }
+            $title = $request->input('title');
+            $intro = $request->input('intro');
+            $category = $request->input('category');
+            $slug = Str::slug($title, '-');
+            $user_id = Auth::user()->id;
+            $content = $request->input('content');
+
+            $post = new Post();
+            $post->title = $title;
+            $post->intro = $intro;
+            $post->slug = $slug;
+            $post->user_id = $user_id;
+            $post->category = $category;
+            $post->content = $content;
+            $post->save();
+
+            if ($request->hasFile("post_images")) {
+                $files = $request->file("post_images");
+                foreach ($files as $file) {
+                    $imageName = time() . '_' . $file->getClientOriginalName();
+                    $request['post_id'] = $post->id;
+                    $request['post_image'] = $imageName;
+                    $file->move(\public_path("/postImages"), $imageName);
+                    Image::create($request->all());
+                }
+            }  
+        
         // Notification::send($user, new NewPostNotification($post));
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
- 
+
     public function show(Post $post)
     {
         DB::table('posts')->increment('views');
@@ -120,17 +89,15 @@ class PostController extends Controller
         $tagposts = Post::latest()->take(5)->get();
         $sideposts = Post::all();
         $relatedposts = Post::where('id', '!=', $post->id)->latest()->take(5)->get();
-        return view('posts.post', compact('post','relatedposts', 'sideposts', 'tagposts', 'timelineposts'));
-
+        return view('posts.post', compact('post', 'relatedposts', 'sideposts', 'tagposts', 'timelineposts'));
     }
- 
-    public function edit(Post $post)
-    { 
-        return view('posts.edit', compact('post'));
 
-    } 
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
+    }
     public function update(Request $request, Post $post)
-    { 
+    {
         $request->validate([
             "title" => 'required|max:255',
             "image" => 'required | image|mimes:jpeg,png,jpg,gif,svg,mp3,mp4|max:10048',
@@ -158,17 +125,15 @@ class PostController extends Controller
 
 
         return redirect(route('posts.index'))->with('status', 'Post Updated Successfully. We ensure it edify the body of Christ before we publish');
-
     }
- 
+
     public function status($id)
     {
-        $post = Post::select('status')->where('id','=',$id)->first();
+        $post = Post::select('status')->where('id', '=', $id)->first();
 
-        if($post->status == '1')
-        {
+        if ($post->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
@@ -178,7 +143,7 @@ class PostController extends Controller
         return redirect()->back()->with('status', 'Status Updated');
     }
 
-     public function destroy(Post $post)
+    public function destroy(Post $post)
     {
 
         $post->delete();

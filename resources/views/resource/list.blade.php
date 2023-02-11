@@ -12,11 +12,11 @@ ecommerce, facebook, facebook shop, shop, buyers, sellers, small business, enter
                     <h2 class="text-2xl font-semibold"> Isokan CEC Resources </h2>
                 </div> 
                 <div class="divide-y card px-4">          
-                    @foreach($resources as $resource)          
+                    @forelse($resources as $resource)          
                     <div class="flex md:space-x-6 space-x-4 md:py-5 py-3 relative">
                         <a href="{{ route('resource.show', $resource) }}" class="md:w-64 md:h-40 w-36 h-24 overflow-hidden rounded-lg relative shadow-sm">
                              <img src="{{ asset('assets/images/isokan_logo.png') }}" alt="{{ ucwords($resource->name) }}" class="w-full h-full absolute inset-0 object-cover">
-                             <div class="absolute bg-yellow-100 font-semibold px-2.5 py-1 rounded-full text-yellow-500 text-xs top-2.5 left-2.5">
+                             <div class="absolute bg-blue-100 font-semibold px-2.5 py-1 rounded-full text-blue-500 text-xs top-2.5 left-2.5">
                                 CEC
                              </div>
                         </a>
@@ -34,7 +34,9 @@ ecommerce, facebook, facebook shop, shop, buyers, sellers, small business, enter
                             </div> 
                         </div>
                     </div> 
-                    @endforeach
+                    @empty
+                    <h6 class=" text-center font-semibold"> Not available at the moment </h6>
+                    @endforelse
                 </div> 
             </div>
         </div>

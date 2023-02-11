@@ -20,10 +20,9 @@
                             </svg></div><input type="file" id="image" accept="image/*" multiple name="images"><a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">Images 5 max </a>
                     </div>@error('image') <p style="color: red; ">{{ $message}} </p>@enderror <div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
                             <option value="">{{ old('category')}}</option>
-                            <option value="Bible Study">Bible Study</option>
-                            <option value="Anniversary Post">Anniversary Post</option>
-                            <option value="Anniversary Post">Events Post</option>
-                            <option value="CEC">CEC</option>
+                            <option value="Anniversary">Annual Anniversary </option>
+                            <option value="Fellowship">Fellowship Activities </option>
+                           @if(auth()->user()->role==='admin') <option value="CEC">CEC News</option>@endif
                         </select></div>@error('category') <p style="color: red; ">{{ $message}} </p>@enderror <div class="form-group"><textarea name="content" id="content" class="with-border px-3 py-3" placeholder="Content">{{ old('content')}}</textarea></div>@error('content') <p style="color: red; ">{{ $message}} </p>@enderror
                 </div>
                 <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">

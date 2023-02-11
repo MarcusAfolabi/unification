@@ -5,12 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+{ 
     public function up()
     {
         Schema::create('conventions', function (Blueprint $table) {
@@ -21,20 +16,14 @@ return new class extends Migration
             $table->string('gender');
             $table->string('phone'); 
             $table->string('academic_status');
-            $table->string('unification_status'); 
-            $table->string('central_status'); 
-            $table->foreignId('institution_id')->references('id')->on('institutions')->onDelete('cascade');
-            $table->string('unit'); 
-            $table->string('profile_image'); 
+            $table->string('fellowship_status'); 
+            $table->string('unit_id'); 
+            $table->foreignId('fellowship_id')->references('id')->on('fellowships');
+            $table->string('profile_image');  
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+ 
     public function down()
     {
         Schema::dropIfExists('conventions');

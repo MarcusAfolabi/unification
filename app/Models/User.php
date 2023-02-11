@@ -17,32 +17,44 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
- 
+
     protected $fillable = [
-        'name', 'username', 'lastname', 'email', 'gender',
-        'phoneNumber', 'date_of_birth', 'contact_address', 'academicStatus', 'unificationCurrentPost',
-        'levelInSchool', 'positionHeld', 'yourFellowship', 'unit_in_fellowship', 'qualification_one', 'degree_one',
-        'course_one', 'qualification_two', 'degree_two', 'course_two', 'qualification_three',
-        'degree_three', 'course_three', 'graduationYear', 'relationship_status', 'occupation',
-        'professional_skill', 'office_address', 'country_of_residence', 'password',
+        'name',
+        'lastname',
+        'email',
+        'gender',
+        'phone',
+        'address',
+        'academic_status',
+        'fellowship_status',
+        'fellowship_id',
+        'unit_id',
+        'qualification_one',
+        'degree_one',
+        'course_one',
+        'password'
     ];
- 
+
     protected $hidden = [
         'password',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
- 
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function institutions()
+    public function units()
     {
-        return $this->hasMany(Institution::class);
+        return $this->belongsTo(Unit::class);
     }
-  
+    public function fellowships()
+    {
+        return $this->belongsTo(Fellowship::class);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -73,8 +85,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function prayers()
     {
         return $this->hasMany(Prayer::class);
-    } 
+    }
     protected $appends = [
         'profile_photo_url',
-    ]; 
+    ];
 }

@@ -9,11 +9,19 @@ class Convention extends Model
 {
     use HasFactory;
 
-    
-    public $fillable =[
-        'name', 'email', 'phoneNumber', 'lastname', 'firstname',
-        'middlename','contactAddress','academicStatus','unificationStatus',
-        'unificationCurrentPost','yourFellowship','fellowshipsStatecountry',
-        'levelInSchool','qualification','positionHeld','graduationYear'
+    protected $table = 'conventions';
+
+    protected $fillable =[
+        'email',
+        'lastname',
+        'firstname',
+        'gender',
+        'phone',
+        'academic_status',
+        'fellowship_status',
+        'fellowship_id',
+        'unit_id',
+        'profile_image',
+        'recaptcha_token'
     ];
 }

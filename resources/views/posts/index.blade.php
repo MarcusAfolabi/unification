@@ -18,7 +18,7 @@
                     <a href="{{ route('posts.create') }}"><i class="icon-material-outline-add"></i> New Post </a>
                 </h5>
             </div>
-        </div> 
+        </div>
         @if(auth()->user()->role === 'admin' )
         <div class="card">
             <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"> </div>
@@ -29,7 +29,7 @@
             </div>
             <hr>
             <br>
-            @if ($posts->count() > 0)
+            @if ($all_posts->count() > 0)
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -46,6 +46,8 @@
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Category</th>
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
+                                            Intro</th>
+                                        <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Creator</th>
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Date</th>
@@ -61,7 +63,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($posts as $key => $post)
+                                    @foreach ($all_posts as $key => $post)
                                     <tr class="border-b">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">{{
                                             ++$key}}</td>
@@ -70,6 +72,8 @@
                                         </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $post->category }}</td>
+                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
+                                            $post->intro }}</td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"> <a href="{{ route('user.index', $post->user->id) }}">
                                                 {{ $post->user->name }} </a></td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"> {{
@@ -85,21 +89,7 @@
 
                                             </form>
                                         </td>
-                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-                                            <div class="switches-list">
-                                                <div class="switch-container">
-                                                    @if($post->status =='1')
-                                                    <label class="switch"><a href="{{ url('/status', $post) }}"><input type="checkbox" checked>
-                                                            <span class="switch-button"></span>Active</a> </label>
-                                                    @else
-                                                    <label class="switch"> <a href="{{ url('/status', $post) }}"><input type="checkbox">
-                                                            <span class="switch-button"></span>InActive </a></label>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
                                             {{ $post->views }} read
                                         </td>
@@ -113,12 +103,12 @@
                             Sorry, nothing to show</p>
                         @endif
                     </div>
-                    {{ $posts->links() }}
-
+                    {{ $all_posts->links() }}
                 </div>
             </div>
         </div>
-        @(auth()->user()->role === 'member' )
+        @endif
+        @if(auth()->user()->role === 'member' )
         <div class="lg:flex  lg:space-x-12">
 
             <div class="lg:w-3/4">
@@ -136,7 +126,7 @@
                 </div>
 
                 <div class="card divide-y divide-blue-100 px-4">
-                    @foreach ($posts as $post)
+                    @foreach ($myposts as $post)
                     <div class="lg:flex lg:space-x-6 py-5">
                         <a href="{{ route('posts.show', $post) }}">
                             <div class="lg:w-60 w-full h-40 overflow-hidden rounded-lg relative shadow-sm">
@@ -152,7 +142,7 @@
                                 {{ $post->title }}</a>
                             <div class="border-b dark:border-blue-700 leading-6 line-clamp-2 mt-5">
 
-                                {!! $post->content !!}
+                                {{ $post->intro  }}
                             </div>
                             <div class="flex items-center pt-3">
                                 <div class="flex items-center"> <a href="{{ route('posts.edit', $post) }}"> <span class="icon-feather-edit "></span></a></td>
@@ -180,7 +170,7 @@
 
                 </div>
                 <br>
-                {{ $posts->links() }}
+                {{ $myposts->links() }}
 
 
             </div>
@@ -211,7 +201,6 @@
                     <h4 class="text-lg font-semibold mb-3"> Recommended Products </h4>
 
                     <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
-                        {{-- <h3 class="text-line-through font-semibold mb-1"> Other Products </h3> --}}
                         @foreach ($sideproducts as $sideproduct)
                         <a href="{{ route('products.show', $sideproduct) }}">
                             <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">

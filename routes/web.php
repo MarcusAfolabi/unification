@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\HouseController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ExecutiveController;
 use App\Http\Controllers\ConventionController;
-use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\FellowshipController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SubconventionController;
 
@@ -35,11 +36,7 @@ use App\Http\Controllers\SubconventionController;
 Route::get('/donation', function () {
     return view('donation');
 })->name('donation');
-
-// Route::get('/resources', function () {
-//     return view('resources');
-// })->name('resources');
-
+ 
 Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
@@ -48,9 +45,9 @@ Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
 
-Route::get('/link', function () {
-    Artisan::call('storage:link');
-});
+// Route::get('/link', function () {
+//     Artisan::call('storage:link');
+// });
 
 
 
@@ -64,13 +61,13 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 
 // Send Notification through Email
-Route::post('send',[NotificationController::class, "sendnotification"])->middleware('auth');
+Route::post('send', [NotificationController::class, "sendnotification"])->middleware('auth');
 
 // All User
 Route::resource('/user', UserController::class);
 Route::get('/user-presidents', [UserController::class, 'president'])->name('user.president');
 // All Post
-Route::get('/posts', [PostController::class,'index'])->name('posts.index');
+Route::get('/post', [PostController::class,'index'])->name('posts.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
 Route::get('/posts/{post:slug}',[PostController::class, 'show'])->name('posts.show');
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
@@ -162,5 +159,10 @@ Route::resource('resource', ResourceController::class);
 Route::get('/resource/{resource:slug}',[ResourceController::class, 'show'])->name('resource.show');
 Route::get('/resources',[ResourceController::class, 'list'])->name('resource.list');
 
-Route::resource('institution', InstitutionController::class)->middleware('auth');
+Route::resource('fellowship', FellowshipController::class);
+Route::get('/fellowship/{fellowship:slug}',[FellowshipController::class, 'show'])->name('fellowship.show');
+
 Route::resource('house', HouseController::class);
+
+Route::resource('unit', UnitController::class);
+Route::get('/unit/{unit:slug}',[UnitController::class, 'show'])->name('unit.show');

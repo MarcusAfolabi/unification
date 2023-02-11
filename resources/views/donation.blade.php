@@ -18,7 +18,7 @@
 
                 </div>
 
-                <div class="divide-y divide-gray-100 card px-5 py-2">
+                <div class="divide-y divide-blue-100 card px-5 py-2">
 
                     <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
                         <div class="p-10 space-y-7">
@@ -35,7 +35,7 @@
                                 <input class="line__input" id="institution" name="institution" type="text"
                                     onkeyup="this.setAttribute('value', this.value);" value="{{ old('institution') }}"
                                     autocomplete="off">
-                                <span for="institution" class="line__placeholder"> Your Institution/Occupation </span>
+                                <span for="institution" class="line__placeholder"> Your Fellowship </span>
                             </div>
                             @error('institution')
                             <p style="color: red; ">{{ $message }} </p>
@@ -93,7 +93,7 @@
                             @enderror
 
                             <div class="line">
-                                <input class="line__input" id="amount" name="amount" minlength="4" type="tel"
+                                <input class="line__input" id="number" name="amount" minlength="4" max="6" type="number"
                                     onkeyup="this.setAttribute('value', this.value);" value="{{ old('amount') }}"
                                     autocomplete="off">
                                 <span for="amount" class="line__placeholder"> Amount (N) </span>
@@ -103,7 +103,7 @@
                             @enderror
 
                             <div class="form-group">
-                                <textarea name="illustration" id="explain" placeholder="Payment Illustration" rows="5"
+                                <textarea class="form-group with-border shadow px-3 py-3" name="illustration" placeholder="Payment Illustration" rows="5"
                                     cols="30">
                                 {{ old('explain') }}</textarea>
 
@@ -121,7 +121,7 @@
 
                         </div>
                         <!-- form footer -->
-                        <div class="border-t flex justify-between lg:space-x-10 p-7 bg-gray-50 rounded-b-md">
+                        <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
                             <p class="text-sm leading-6"> You will be forwarded to our secured payment platform.
                                 Ensure your email is valid to receive payment receipt. Thank You</p>
                             <button class="button dark" id="start-payment-button" type="submit">DONATE </button>
@@ -167,13 +167,13 @@
                                             <a href="{{ url('donation') }}"
                                                 class="font-semibold line-clamp-2 mb-2">Cancer of the Anus</a>
 
-                                            <div class="font-medium text-sm text-gray-400 flex items-center">
+                                            <div class="font-medium text-sm text-blue-400 flex items-center">
                                                 <i class="icon-feather-trending-up text-base text-blue-500 mr-1.5"> </i>
                                                 562 People donated
                                             </div>
 
                                             <div class="mt-4 -m-3.5">
-                                                <div class="bg-gray-100 h-2 w-full relative overflow-hidden">
+                                                <div class="bg-blue-100 h-2 w-full relative overflow-hidden">
                                                     <div class="bg-blue-600 w-1/3 h-full"></div>
                                                 </div>
                                             </div>
@@ -194,13 +194,13 @@
                                             <a href="{{ url('donation') }}"
                                                 class="font-semibold line-clamp-2 mb-2">Unification WASIMI Building</a>
 
-                                            <div class="font-medium text-sm text-gray-400 flex items-center">
+                                            <div class="font-medium text-sm text-blue-400 flex items-center">
                                                 <i class="icon-feather-trending-up text-base text-blue-500 mr-1.5"> </i>
                                                 109 People donated
                                             </div>
 
                                             <div class="mt-4 -m-3.5">
-                                                <div class="bg-gray-100 h-2 w-full relative overflow-hidden">
+                                                <div class="bg-blue-100 h-2 w-full relative overflow-hidden">
                                                     <div class="bg-blue-600 w-1/3 h-full"></div>
                                                 </div>
                                             </div>
@@ -212,9 +212,9 @@
 
                         </ul>
 
-                        <a class="absolute bg-white top-1/4 flex items-center justify-center p-2 -left-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-gray-800 dark:text-white"
+                        <a class="absolute bg-white top-1/4 flex items-center justify-center p-2 -left-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-blue-800 dark:text-white"
                             href="#" uk-slider-item="previous"> <i class="icon-feather-chevron-left"></i></a>
-                        <a class="absolute bg-white top-1/4 flex items-center justify-center p-2 -right-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-gray-800 dark:text-white"
+                        <a class="absolute bg-white top-1/4 flex items-center justify-center p-2 -right-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-blue-800 dark:text-white"
                             href="#" uk-slider-item="next"> <i class="icon-feather-chevron-right"></i></a>
 
                     </div>
@@ -246,24 +246,24 @@
                                 more
                             </div>
                         </div>
-                        <a href="#" class="bg-gray-100 rounded-lg text-center py-2 block mt-6 font-medium"> Donate
+                        <a href="#" class="bg-blue-100 rounded-lg text-center py-2 block mt-6 font-medium"> Donate
                             Now</a>
                     </div>
                 </div>
                 <div>
                     <div class="text-xl font-semibold mb-1"> We're here to help</div>
-                    <div class="text-gray-400"> Answers to common questions about fundraisers </div>
+                    <div class="text-blue-400"> Answers to common questions about fundraisers </div>
                 </div>
 
                 <ul class="space-y-3.5 mt-5" uk-accordion>
-                    <li class="uk-open bg-gray-100 rounded-lg py-2.5 px-3">
+                    <li class="uk-open bg-blue-100 rounded-lg py-2.5 px-3">
                         <a class="uk-accordion-title text-base font-semibold" href="#">Who can donate?</a>
                         <div class="uk-accordion-content mt-2.5">
                             <p>People from all over the world can donate to Cherubim and Seraphim Church Unification
                                 Campus Fellowship.</p>
                         </div>
                     </li>
-                    <li class="bg-gray-100 rounded-lg py-2.5 px-3">
+                    <li class="bg-blue-100 rounded-lg py-2.5 px-3">
                         <a class="uk-accordion-title text-base font-semibold" href="#">What payment method are available
                             to receive donations?</a>
                         <div class="uk-accordion-content mt-2.5">
@@ -273,7 +273,7 @@
                                 number</a>
                         </div>
                     </li>
-                    <li class="bg-gray-100 rounded-lg py-2.5 px-3">
+                    <li class="bg-blue-100 rounded-lg py-2.5 px-3">
                         <a class="uk-accordion-title text-base font-semibold" href="#">Can a non student of the fold
                             donate?</a>
                         <div class="uk-accordion-content mt-2.5">
@@ -281,7 +281,7 @@
                                 building at Wasimi</p>
                         </div>
                     </li>
-                    {{-- <li class="bg-gray-100 rounded-lg py-2.5 px-3">
+                    {{-- <li class="bg-blue-100 rounded-lg py-2.5 px-3">
                         <a class="uk-accordion-title text-base font-semibold" href="#">How do fees work?</a>
                         <div class="uk-accordion-content mt-2.5">
                             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
@@ -296,17 +296,5 @@
         </div>
 
     </div>
-</div>
-<script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
-<script>
-    ClassicEditor
-            .create(document.querySelector('#explain'))
-            .then(explain => {
-                console.log(explain);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-</script>
-
+</div> 
 @endsection
