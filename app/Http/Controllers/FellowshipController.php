@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class FellowshipController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin'])->except(['show']);
+    }
     public function index(Request $request)
     {
         if ($request->fellowship) {
@@ -19,29 +23,16 @@ class FellowshipController extends Controller
         } else {
             $fellowships = Fellowship::latest()->paginate(30);
         }
-        // $role = Auth::user()->role;
-
-        // if($role == 'admin')
-        // {
+       
         return view('fellowship.index', compact('fellowships'));
-        // }
-        // else{
-        //     abort(406);
-        // }
-    }
+        }  
 
 
     public function create()
     {
-        // $role = Auth::user()->role;
-
-        // if($role == 'admin')
-        // {
+       
         return view('fellowship.create');
-        // }
-        // else{
-        //     abort(406);
-        // }
+        
 
     }
 

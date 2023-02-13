@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class UnitController extends Controller
 {
     
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin'])->except(['show']);
+    }
     public function index()
     {
         $units = Unit::latest()->get();

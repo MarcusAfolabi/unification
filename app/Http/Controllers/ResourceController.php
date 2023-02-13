@@ -17,7 +17,7 @@ class ResourceController extends Controller
 { 
     public function __construct()
     {
-        $this->middleware(['auth'])->except('index');
+        $this->middleware(['auth', 'admin'])->except('index');
     }
     public function index()
     {
@@ -37,9 +37,8 @@ class ResourceController extends Controller
  
     public function create()
     { 
-        if(auth()->user()->role === 'member' ){
             return view('resource.create');
-        }
+        
     }
  
     public function store(Request $request)
