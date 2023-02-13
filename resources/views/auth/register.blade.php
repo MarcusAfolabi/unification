@@ -10,30 +10,30 @@
     </div>
     <div class="mcontainer">
         <div class="-mt-16 bg-white max-w-2xl mx-auto p-10 relative rounded-md shadow">
-            <form method="POST" action="{{ route('register')}}" id="registerForm" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('register')}}" >
                 <x-jet-validation-errors class="mb-4" />
                 <div class="grid md:grid-cols-2 md:gap-y-7 md:gap-x-6 gap-6">
-                    @csrf <input type="hidden" class="g-recaptcha" name="recaptcha_token" id="recaptcha_token">
-                    <div class="line"><input class="line__input" required id="name" required autofocus name="name" type="name" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name')}}" autocomplete="off"><span for="name" class="line__placeholder">First Name </span></div>
-                    <div class="line"><input class="line__input" required id="lastname" required autofocus name="lastname" type="lastname" onkeyup="this.setAttribute('value', this.value);" value="{{ old('lastname')}}" autocomplete="off"><span for="lastname" class="line__placeholder">Last name </span></div>
-                    <div class="line"><input class="line__input" required id="email" required autofocus name="email" type="email" onkeyup="this.setAttribute('value', this.value);" value="{{ old('email')}}" autocomplete="off"><span for="email" class="line__placeholder">Email </span></div>
-                    <div class="line"><select type="text" required placeholder="Gender" name="gender" class="selectpicker">
+                    @csrf 
+                    <div class="line"><input class="line__input"  id="name" autofocus name="name" type="name" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name')}}" autocomplete="off"><span for="name" class="line__placeholder">First Name </span></div>
+                    <div class="line"><input class="line__input"  id="lastname" autofocus name="lastname" type="lastname" onkeyup="this.setAttribute('value', this.value);" value="{{ old('lastname')}}" autocomplete="off"><span for="lastname" class="line__placeholder">Last name </span></div>
+                    <div class="line"><input class="line__input"  id="email" autofocus name="email" type="email" onkeyup="this.setAttribute('value', this.value);" value="{{ old('email')}}" autocomplete="off"><span for="email" class="line__placeholder">Email </span></div>
+                    <div class="line"><select type="text"  placeholder="Gender" name="gender" class="selectpicker">
                             <option value="{{ old('gender')}}">Select Gender </option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select></div>
-                    <div class="line"><input class="line__input" required id="tel" required autofocus name="phone" type="tel" onkeyup="this.setAttribute('value', this.value);" value="{{ old('phoneNumber')}}" autocomplete="off"><span for="phoneNumber" class="line__placeholder">Phone Number </span>
+                    <div class="line"><input class="line__input"  id="tel" autofocus name="phone" type="tel" onkeyup="this.setAttribute('value', this.value);" value="{{ old('phoneNumber')}}" autocomplete="off"><span for="phoneNumber" class="line__placeholder">Phone Number </span>
                     </div>
 
-                    <div class="line"><input class="line__input" required id="address" required autofocus name="address" type="address" onkeyup="this.setAttribute('value', this.value);" value="{{ old('contact_address')}}" autocomplete="off"><span for="contact_address" class="line__placeholder">Home/Hostel address </span></div>
-                    <div class="line"><select type="text" placeholder="Graduate ?" required name="academic_status" class="selectpicker">
+                    <div class="line"><input class="line__input"  id="address" autofocus name="address" type="address" onkeyup="this.setAttribute('value', this.value);" value="{{ old('contact_address')}}" autocomplete="off"><span for="contact_address" class="line__placeholder">Home/Hostel address </span></div>
+                    <div class="line"><select type="text" placeholder="Graduate ?" name="academic_status" class="selectpicker">
                             <option selected disabled value="{{ old('academic_status')}}">Graduate? Pls Select </option>
                             <option value="Graduate">Yes, Graduate </option>
                             <option value="Postgraduate">No, Postgraduate </option>
                             <option value="Undergraduate">No, Undergraduate </option>
                         </select></div>
 
-                    <div class="line"><select name="fellowship_status" required class="selectpicker">
+                    <div class="line"><select name="fellowship_status"  class="selectpicker">
                             <option selected disabled value="{{ old('fellowship_status')}}">Fellowship Post? Pls Select
                             </option>
                             <option value="ASSISTANT SECRETARY">ASSISTANT SECRETARY </option>
@@ -52,20 +52,20 @@
                             <option value="MEMBER">MEMBER </option>
                             <option value="CENTRAL EXECUTIVE COUNCIL">OTHERS - CENTRAL EXECUTIVE MEMBER</option>
                         </select></div>
-                    <div class="line"><select name="fellowship_id" required class="selectpicker">
+                    <div class="line"><select name="fellowship_id"  class="selectpicker">
                             <option selected disabled value="{{ old('fellowship_id')}}">Fellowship Name? Pls Select </option>
                             @foreach (App\Models\Fellowship::select('id', 'name')->latest()->get() as $fellowship) <option value="{{$fellowship->id}}">{{$fellowship->name}}</option>@endforeach
                             <option value="1">Example</option>
                         </select>
                     </div>
-                    <div class="line"><select name="unit_id" required class="selectpicker">
+                    <div class="line"><select name="unit_id"  class="selectpicker">
                             <option selected disabled>Unit in Fellowship? Pls
                                 Select </option>
                             @foreach(App\Models\Unit::all() as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }} </option>
                             @endforeach
                         </select></div>
-                    <div class="line"><select name="qualification_one" required class="selectpicker">
+                    <div class="line"><select name="qualification_one"  class="selectpicker">
                             <option selected disabled value="{{ old('qualification_one')}}">Other Qualification?
                                 Pls Select </option>
                             <option value="Diploma">Diploma </option>
@@ -81,17 +81,17 @@
                             <option value="PGD">PGD </option>
                             <option value="MBA">MBA </option>
                         </select></div>
-                    <div class="line"><input class="line__input" required id="degree_one" required autofocus name="degree_one" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('degree_one')}}" autocomplete="off"><span for="degree_one" class="line__placeholder">The Institution
+                    <div class="line"><input class="line__input"  id="degree_one" autofocus name="degree_one" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('degree_one')}}" autocomplete="off"><span for="degree_one" class="line__placeholder">The Institution
                         </span></div>
-                    <div class="line"><input class="line__input" required id="course_one" required autofocus name="course_one" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('course_one')}}" autocomplete="off"><span for="course_one" class="line__placeholder">Course Of
+                    <div class="line"><input class="line__input"  id="course_one" autofocus name="course_one" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('course_one')}}" autocomplete="off"><span for="course_one" class="line__placeholder">Course Of
                             Study </span></div>
 
-                    <div class="line"><input class="line__input" required id="password" name="password" type="password" autocomplete="current-password" onkeyup="this.setAttribute('value', this.value);" value="{{ old('password')}}" autocomplete="off"><span for="password" class="line__placeholder">Password </span></div>
+                    <div class="line"><input class="line__input"  id="password" name="password" type="password" autocomplete="current-password" onkeyup="this.setAttribute('value', this.value);" value="{{ old('password')}}" autocomplete="off"><span for="password" class="line__placeholder">Password </span></div>
                     <div class="line"><input class="line__input" id="password" name="password_confirmation" type="password" autocomplete="current-password" onkeyup="this.setAttribute('value', this.value);" value="{{ old('password')}}" autocomplete="off"><span for="password" class="line__placeholder">Confirm Password </span>
                     </div>
                     <div class="md:col-span-2 md:flex items-center justify-between">
                         <div>
-                            <div class="checkbox"><input type="checkbox" name="remember_me" required id="chekcbox2"><label for="chekcbox2"><span class="checkbox-icon"></span><span class="font-medium text-blue-400">I belong to this fold and my information is
+                            <div class="checkbox"><input type="checkbox" required name="remember_me"  id="chekcbox2"><label for="chekcbox2"><span class="checkbox-icon"></span><span class="font-medium text-blue-400">I belong to this fold and my information is
                                         accurate, &amp; agreed to <a href="policy">policy</a> of the
                                         church.</span></label></div>
                         </div>
@@ -106,17 +106,4 @@
         </div>
     </div>
 </div>
-<script>
-    grecaptcha.ready(function() {
-        document.getElementById('registerForm').addEventListener("submit", function(event) {
-            event.preventDefault();
-            grecaptcha.execute('{{ config('
-                services.recaptcha.site_key ')}}', {
-                    action: 'register'
-                }).then(function(token) {
-                document.getElementById("recaptcha_token").value = token;
-                document.getElementById('registerForm').submit();
-            });
-        });
-    });
-</script>@endsection
+ @endsection

@@ -9,11 +9,10 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\SignupNotification;
 use Illuminate\Support\Facades\Validator;
-use App\Notifications\NewMemberNotification;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-use App\Notifications\WelcomeEmailNotification;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -23,7 +22,17 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'unique:users'],
+            'lastname' => ['required', 'max:255'],
+            'gender' => ['required', 'max:255'],
+            'phone' => ['required', 'max:255', 'unique:users'],
+            'address' => ['required', 'max:255'],
+            'academic_status' => ['required', 'max:255'],
+            'fellowship_status' => ['required', 'max:255'],
+            'fellowship_id' => ['required', 'max:255'],
+            'unit_id' => ['required', 'max:255'],
+            'qualification_one' => ['required', 'max:255'],
+            'degree_one' => ['required', 'max:255'],
+            'course_one' => ['required', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
@@ -48,7 +57,10 @@ class CreateNewUser implements CreatesNewUsers
                     'course_one' => $input['course_one'], 
                     'password' => Hash::make($input['password']),
              ]);
-            // $user->notify(new WelcomeEmailNotification());
+             Notification::route('mail', [
+                'ajayi.femi@cnsunification.org' => 'CENTRAL EXECUTIVE COUNCIL PRO',
+            ])->notify(new SignupNotification($user));            
+            Mail::to($user->email)->send(new WelcomeMail($user));
             return $user;
     }
 }

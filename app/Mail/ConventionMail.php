@@ -16,7 +16,7 @@ class ConventionMail extends Mailable
 
     public function __construct(Convention $convention)
     {
-        $this->convention =$convention
+        $this->convention = $convention;
     }
  
     public function build()
