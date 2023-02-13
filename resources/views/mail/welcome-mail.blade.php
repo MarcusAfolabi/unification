@@ -20,7 +20,7 @@ Once again, welcome to the Cherubim and Seraphim Church Unification Campus Fello
 Preview Profile
 @endcomponent
 
-Your Alagba Femi Ajayi,
+Your Alagba Femi Ajayi,<br>
 Central Executive Council Public Relations Officer,<br>
 {{ config('app.name') }}
 @endcomponent

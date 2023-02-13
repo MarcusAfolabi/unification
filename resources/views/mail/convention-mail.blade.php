@@ -19,12 +19,10 @@ If you have any questions, please do not hesitate to reach out to us at <a href=
 
 May the peace of Christ reign in your heart as you prepare for this year's convention.
 
-In Christ,
 @component('mail::button', ['url' => 'https://cnsunification.org/payment'])
 Payment link
 @endcomponent
 
-Blessings,
 2023 Organizing Team,<br>
 {{ config('app.name') }}
 @endcomponent

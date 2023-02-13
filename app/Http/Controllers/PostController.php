@@ -7,6 +7,7 @@ use Exception;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
+use App\Mail\PostMail;
 use App\Models\Product;
 use App\Models\PostImage;
 use Illuminate\Support\Str;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\NewPostNotification;
 use Illuminate\Support\Facades\Notification;
@@ -69,7 +72,13 @@ class PostController extends Controller
             }
         }
 
-        // Notification::send($user, new NewPostNotification($post));
+        Notification::route('mail', [
+            'info@cnsunification.org' => 'Alert! New post has been published on the website',
+        ])->notify(new PostNotification($post));
+
+        Mail::to($post->user->email)->send(new PostMail($post));
+       
+
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
