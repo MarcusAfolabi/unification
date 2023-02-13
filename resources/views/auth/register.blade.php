@@ -14,7 +14,7 @@
                 <x-jet-validation-errors class="mb-4" />
                 <div class="grid md:grid-cols-2 md:gap-y-7 md:gap-x-6 gap-6">
                     @csrf <input type="hidden" class="g-recaptcha" name="recaptcha_token" id="recaptcha_token">
-                    <div class="line"><input class="line__input" required id="email" required autofocus name="name" type="name" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name')}}" autocomplete="off"><span for="name" class="line__placeholder">First Name </span></div>
+                    <div class="line"><input class="line__input" required id="name" required autofocus name="name" type="name" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name')}}" autocomplete="off"><span for="name" class="line__placeholder">First Name </span></div>
                     <div class="line"><input class="line__input" required id="lastname" required autofocus name="lastname" type="lastname" onkeyup="this.setAttribute('value', this.value);" value="{{ old('lastname')}}" autocomplete="off"><span for="lastname" class="line__placeholder">Last name </span></div>
                     <div class="line"><input class="line__input" required id="email" required autofocus name="email" type="email" onkeyup="this.setAttribute('value', this.value);" value="{{ old('email')}}" autocomplete="off"><span for="email" class="line__placeholder">Email </span></div>
                     <div class="line"><select type="text" required placeholder="Gender" name="gender" class="selectpicker">

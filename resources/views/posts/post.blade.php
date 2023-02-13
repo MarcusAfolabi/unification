@@ -1,14 +1,12 @@
 @extends('layouts.main')
-@section('title', $post->postTitle)
-@section('description', $post->fullDescription)
-@section('keywords', $post->postCategories)
+@section('title', $post->title)
+@section('description', $post->intro)
+@section('keywords', $post->category)
 
 @section('main')
 <!-- Main Contents -->
 <div id="fb-root"></div>
-<script async defer crossorigin="anonymous"
-    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=562231884526354&autoLogAppEvents=1"
-    nonce="t3DkjUu0"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=562231884526354&autoLogAppEvents=1" nonce="t3DkjUu0"></script>
 <div class="main_content">
     <div class="mcontainer">
 
@@ -19,49 +17,38 @@
                 <div class="card">
 
                     <div class="h-44 mb-4 md:h-72 overflow-hidden relative rounded-t-lg w-full">
-                        <img src="{{ asset($post->image) }}" alt="{{ $post->postTitle }}"
-                            class="w-full h-full absolute inset-0 object-cover">
+                        <img src="{{ asset('storage/' . $post->images->first()->path) }}" alt="{{ $post->title }}" title="{{ $post->title }}" class="w-full h-full absolute inset-0 object-cover">
                     </div>
                     <div class="p-7">
 
-                        <h1 class="lg:text-3xl text-2xl font-semibold mb-6"> {{ $post->postTitle }} </h1>
+                        <h1 class="lg:text-3xl text-2xl font-semibold mb-6"> {{ $post->title }} </h1>
 
 
                         <div class="flex items-center space-x-3 my-4 pb-4 border-b border-gray-100">
-                            <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->postTitle }}"
-                                class="w-10 rounded-full">
+                            @if ($post->images)
+                            <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->name }}" title="{{ $post->user->name }}" class="w-10 rounded-full">
+                            @endif
                             <div>
-                                <div class="text-base font-semibold"> {{ $post->user->name }} <span
-                                        class="icon-feather-shield"></span> {{ $post->user->yourFellowship }}</div>
+                                <div class="text-base font-semibold"> {{ $post->user->name }} <span class="icon-feather-shield"></span></div>
                                 <div class="text-xs"> Published {{ $post->created_at->diffForHumans() }} </div>
                             </div>
                         </div>
 
 
                         <div class="space-y-3">
-                            {!! $post->fullDescription !!}
+                            {!! $post->content !!}
                         </div>
                         <hr class="-mx-2 my-2 blue:border-gray-800">
 
                         <div class="uk-child-width-1-3@m" uk-grid uk-lightbox="animation: scale">
+                            @foreach ($post->images as $image)
                             <div>
-                                <a class="uk-inline" href="{{ asset($post->image2) }}"
-                                    data-caption="{{ $post->postTitle }}">
-                                    <img src="{{ asset($post->image2) }}" alt="{{ $post->postTitle }}">
+                                <a class="uk-inline" href="{{ asset('storage/' . $image->path) }}" data-caption="{{ $post->title }}">
+                                    <img src="{{ asset('storage/' . $image->path) }}" alt="{{ $post->title }}">
                                 </a>
                             </div>
-                            <div>
-                                <a class="uk-inline" href="{{ asset($post->image1) }}"
-                                    data-caption="{{ $post->postTitle }}">
-                                    <img src="{{ asset($post->image1) }}" alt="{{ $post->postTitle }}">
-                                </a>
-                            </div>
-                            <div>
-                                <a class="uk-inline" href="{{ asset($post->image) }}"
-                                    data-caption="{{ $post->postTitle }}">
-                                    <img src="{{ asset($post->image) }}" alt="{{ $post->postTitle }}">
-                                </a>
-                            </div>
+                            @endforeach
+ 
                         </div>
 
                     </div>
@@ -80,21 +67,16 @@
                                 @foreach ($relatedposts as $relatedpost)
                                 <li>
                                     <div>
-                                        <a href="{{ route('posts.show', $relatedpost) }}"
-                                            class="w-full md:h-32 h-28 overflow-hidden rounded-lg relative block">
-                                            <img src="{{ asset($relatedpost->image) }}"
-                                                alt="{{ $relatedpost->postTitle }}"
-                                                class="w-full h-full absolute inset-0 object-cover">
+                                        <a href="{{ route('posts.show', $relatedpost) }}" class="w-full md:h-32 h-28 overflow-hidden rounded-lg relative block">
+                                            <img src="{{ asset($relatedpost->image) }}" alt="{{ $relatedpost->title }}" class="w-full h-full absolute inset-0 object-cover">
                                         </a>
                                         <div class="pt-3">
-                                            <a href="{{ route('posts.show', $relatedpost) }}"
-                                                class="font-semibold line-clamp-2"> {{ $relatedpost->postTitle }}</a>
+                                            <a href="{{ route('posts.show', $relatedpost) }}" class="font-semibold line-clamp-2"> {{ $relatedpost->title }}</a>
                                             <div class="flex space-x-2 items-center text-sm pt-2">
                                                 <div> {{ $relatedpost->created_at->diffForHumans() }} </div>
                                                 <div class="md:block hidden">·</div>
                                                 <div class="flex items-center">
-                                                    <ion-icon name="chatbox-ellipses-outline"
-                                                        class="text-base leading-0 mr-2"></ion-icon> {{ $relatedpost->views }} views
+                                                    <ion-icon name="chatbox-ellipses-outline" class="text-base leading-0 mr-2"></ion-icon> {{ $relatedpost->views }} views
                                                 </div>
                                             </div>
                                         </div>
@@ -105,13 +87,11 @@
 
                             </ul>
 
-                            <a class="absolute bg-white top-16 flex items-center justify-center p-2 -left-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-gray-800 dark:text-white"
-                                href="#" uk-slider-item="previous">
+                            <a class="absolute bg-white top-16 flex items-center justify-center p-2 -left-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-gray-800 dark:text-white" href="#" uk-slider-item="previous">
                                 <ion-icon name="chevron-back-outline"></ion-icon>
                                 </ion-icon>
                             </a>
-                            <a class="absolute bg-white top-16 flex items-center justify-center p-2 -right-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-gray-800 dark:text-white"
-                                href="#" uk-slider-item="next">
+                            <a class="absolute bg-white top-16 flex items-center justify-center p-2 -right-4 rounded-full shadow-md text-xl w-9 z-10 dark:bg-gray-800 dark:text-white" href="#" uk-slider-item="next">
                                 <ion-icon name="chevron-forward-outline"></ion-icon>
                             </a>
 
@@ -123,8 +103,7 @@
 
                 <div class="card p-6">
 
-                    <div class="fb-comments" data-href="https://cnsunification.org/{{ route('posts.show', $post) }}"
-                        data-width="" data-numposts="10"></div>
+                    <div class="fb-comments" data-href="https://cnsunification.org/{{ route('posts.show', $post) }}" data-width="" data-numposts="10"></div>
 
                 </div>
 
@@ -138,9 +117,8 @@
                     <ul>
                         @foreach ($sideposts as $sidepost )
                         <li>
-                            <a href="{{route('posts.show', $sidepost)}}"
-                                class="hover:bg-gray-100 rounded-md p-2 -mx-2 block">
-                                <h3 class="font-medium line-clamp-2"> {{ $sidepost->postTitle }} </h3>
+                            <a href="{{route('posts.show', $sidepost)}}" class="hover:bg-gray-100 rounded-md p-2 -mx-2 block">
+                                <h3 class="font-medium line-clamp-2"> {{ $sidepost->title }} </h3>
                                 <div class="flex items-center my-auto text-xs space-x-1.5">
                                     <div> {{ $sidepost->created_at->diffForHumans() }}</div>
                                     <div class="pb-1"> . </div>

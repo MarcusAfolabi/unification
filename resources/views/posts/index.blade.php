@@ -67,7 +67,7 @@
                                     <tr class="border-b">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">{{
                                             ++$key}}</td>
-                                        <th class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a href="{{ asset($post->image) }}"> <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="rounded-lg" style="max-height: 50px; max-width:50px" srcset=""></a></th>
+                                        <th class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"> <img src="{{ asset('storage/' . $post->images->first()->path) }}" alt="{{ $post->title }}" class="rounded-lg" style="max-height: 50px; max-width:50px" srcset=""> </th>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
                                         </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
@@ -130,7 +130,9 @@
                     <div class="lg:flex lg:space-x-6 py-5">
                         <a href="{{ route('posts.show', $post) }}">
                             <div class="lg:w-60 w-full h-40 overflow-hidden rounded-lg relative shadow-sm">
-                                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="w-full h-full absolute inset-0 object-cover">
+                                @if ($post->images)
+                                <img src="{{ asset('storage/' . $post->images->first()->path) }}" alt="{{ $post->title }}" title="{{ $post->title }}"  class="w-full h-full absolute inset-0 object-cover">
+                                @endif
                                 <div class="absolute bg-blue-100 font-semibold px-2.5 py-1 rounded-full text-blue-500 text-xs top-2.5 left-2.5">
                                     {{ $post->category }}
                                 </div>

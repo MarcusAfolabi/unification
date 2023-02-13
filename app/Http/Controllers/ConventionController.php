@@ -6,17 +6,19 @@ use App\Rules\Recaptcha;
 use App\Mail\WelcomeMail;
 use App\Models\Convention;
 use App\Models\Fellowship;
+use App\Mail\ConventionMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewMemberNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\ConventionNotification;
 
 class ConventionController extends Controller
 { 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index', 'store', 'payment']);
     }
     public function index(Request $request)
     {
@@ -59,9 +61,11 @@ class ConventionController extends Controller
             "academic_status" => 'required|string|max:255',
             "fellowship_status" => 'required|string|max:255',
             "fellowship_id" => 'required',
-            "fellowship_unit" => 'required|string|max:255', 
-            "profile_image" => 'required|image|max:300', 
-            'recaptcha_token' => 'required', new Recaptcha('recaptcha_token'),
+            "unit_id" => 'required|string|max:255', 
+            "profile_image" => 'required|image|mimes:jpeg,png,jpg|max:300|dimensions:min_width=300,min_height=300,max_width=600,max_height=600',
+            // 'recaptcha_token' => 'required', new Recaptcha('recaptcha_token'),
+            // 'g-recaptcha-response' => 'required|recaptchav3:convention,0.5'
+
         ]);
         $convention = new Convention();        
         $convention->email = $request->input('email');
@@ -72,18 +76,17 @@ class ConventionController extends Controller
         $convention->academic_status = $request->input('academic_status');
         $convention->fellowship_status = $request->input('fellowship_status');
         $convention->fellowship_id = $request->input('fellowship_id');
-        $convention->fellowship_unit = $request->input('fellowship_unit');       
-        // $convention => 'storage/' . $request->file('profile_image')->store('convention', 'public');
+        $convention->unit_id = $request->input('unit_id');       
         $image = $request->file('profile_image');
         $image_path = $image->store('conventions', 'public');
         $convention->profile_image = $image_path;
         $convention->save();
 
-        // Notification::route('mail', [
-        //     'info@cnsunification.org' => 'A Member Just Pick Up Convention Form',
-        // ])->notify(new NewMemberNotification($convention));
+        Notification::route('mail', [
+            'info@cnsunification.org' => 'Alert! Convention registration is gaining more attendance',
+        ])->notify(new ConventionNotification($convention));
 
-        // Mail::to($convention->email)->send(new WelcomeMail($convention));
+        Mail::to($convention->email)->send(new ConventionMail($convention));
 
         return redirect(route('convention.payment'))->with('status', 'Your Sub Convention Registration is Received Successfully. Proceed to make payment if you have not');
     }

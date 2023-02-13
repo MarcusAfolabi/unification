@@ -69,12 +69,16 @@ Route::get('/user-presidents', [UserController::class, 'president'])->name('user
 // All Post
 Route::get('/post', [PostController::class,'index'])->name('posts.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
-Route::get('/posts/{post:slug}',[PostController::class, 'show'])->name('posts.show');
+Route::get('/post/{post:slug}',[PostController::class, 'show'])->name('posts.show');
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
-Route::get('/posts/{post}/edit',[PostController::class, 'edit'])->name('posts.edit');
+Route::get('/post/{post}/edit',[PostController::class, 'edit'])->name('posts.edit');
 Route::put('/post/{post}',[PostController::class, 'update'])->name('posts.update');
 Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 Route::get('/status/{id}', [PostController::class, 'status'])->name('status.status');
+// Route::delete('posts/{post}/images/{image}', [PostController::class, 'destroyImage'])->name('posts.images.destroy');
+// Route::delete('posts/{post}/images/{image}', 'PostController@destroyImage')->name('images.destroy');
+
+Route::get('/post/deleteimage/{posts}/delete', [PostController::class, 'deleteimage'])->name('post.deleteimage');
 
 
 // All Video

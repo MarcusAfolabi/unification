@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\Notifications\NewPostNotification;
 use Illuminate\Support\Facades\Notification;
 // use App\Notifications\NewPostNotification;
@@ -46,44 +48,34 @@ class PostController extends Controller
             "title" => 'required|string|unique:posts|max:255',
             "intro" => 'required',
             "image*" => 'required|image|array|max:5',
-            "image*" => 'required|image|mimes:jpeg,png,jpg|max:250|dimensions:min_width=300,min_height=300,max_width=900,max_height=450',
+            "image*" => 'required|image|mimes:jpeg,png,jpg|max:400',
             "category" => 'required',
             "content" => 'required'
         ]);
-        
-            $title = $request->input('title');
-            $intro = $request->input('intro');
-            $category = $request->input('category');
-            $slug = Str::slug($title, '-');
-            $user_id = Auth::user()->id;
-            $content = $request->input('content');
 
-            $post = new Post();
-            $post->title = $title;
-            $post->intro = $intro;
-            $post->slug = $slug;
-            $post->user_id = $user_id;
-            $post->category = $category;
-            $post->content = $content;
-            $post->save();
+        $post = new Post();
+        $post->fill($request->only(['title', 'intro', 'category', 'content']));
+        $post->slug = Str::slug($request->input('title'), '-');
+        $post->user_id = Auth::user()->id;
+        $post->save();
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $path = $image->store('postImages', 'public');
 
-            if ($request->hasFile("post_images")) {
-                $files = $request->file("post_images");
-                foreach ($files as $file) {
-                    $imageName = time() . '_' . $file->getClientOriginalName();
-                    $request['post_id'] = $post->id;
-                    $request['post_image'] = $imageName;
-                    $file->move(\public_path("/postImages"), $imageName);
-                    Image::create($request->all());
-                }
-            }  
-        
+                $postImage = new Image();
+                $postImage->path = $path;
+                $postImage->post_id = $post->id;
+                $postImage->save();
+            }
+        }
+
         // Notification::send($user, new NewPostNotification($post));
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
     public function show(Post $post)
     {
+
         DB::table('posts')->increment('views');
         $timelineposts = Post::all();
         $tagposts = Post::latest()->take(5)->get();
@@ -99,32 +91,52 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            "title" => 'required|max:255',
-            "image" => 'required | image|mimes:jpeg,png,jpg,gif,svg,mp3,mp4|max:10048',
+            "title" => 'required|string|max:255',
+            "intro" => 'required',
+            "image*" => 'required|image|array|max:5',
+            "image*" => 'sometimes|image|mimes:jpeg,png,jpg|max:250|dimensions:min_width=300,min_height=300,max_width=900,max_height=450',
             "category" => 'required',
             "content" => 'required'
         ]);
-        $title = $request->input('title');
-        $category = $request->input('category');
-        $slug = Str::slug($title, '-');
-        $content = $request->input('content');
+        // $post = Post::findOrFail($id);
 
-        $image = 'storage/' . $request->file('image')->store('postImages', 'public');
-        $image1 = 'storage/' . $request->file('image1')->store('postImages', 'public');
-        $image2 = 'storage/' . $request->file('image2')->store('postImages', 'public');
-
-        $post->title = $title;
-        $post->slug = $slug;
-        $post->category = $category;
-        $post->content = $content;
-        $post->image = $image;
-        $post->image1 = $image1;
-        $post->image2 = $image2;
-
+        $post->fill($request->only(['title', 'intro', 'category', 'content']));
+        $post->slug = Str::slug($request->input('title'), '-');
+        $post->user_id = Auth::user()->id;
         $post->save();
 
+        // if ($request->hasFile('image')) {
+        //     $images = $request->file('image');
 
+        //     foreach ($images as $image) {
+        //         $path = $image->store('posts');
+        //         Image::create([
+        //             'post_id' => $post->id,
+        //             'path' => $path
+        //         ]);
+        //     }
+        // } 
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $path = $image->store('postImages', 'public');
+
+                $postImage = new Image();
+                $postImage->path = $path;
+                $postImage->post_id = $post->id;
+                $postImage->save();
+            }
+        }
         return redirect(route('posts.index'))->with('status', 'Post Updated Successfully. We ensure it edify the body of Christ before we publish');
+
+    
+    }
+    public function deleteimage(Image $id){
+        $image = Image::findOrFail($id);
+        if(File::exists("posts/".$image->path)){
+            File::delete("posts/".$image->path);
+        }
+        Image::find($id)->delete(); 
+        return redirect()->back()->with('status', 'Post Image Deleted');
     }
 
     public function status($id)
@@ -145,8 +157,15 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $images = $post->images;
+
+        foreach ($images as $image) {
+            Storage::delete($image->path);
+            $image->delete();
+        }
 
         $post->delete();
-        return redirect()->back()->with('status', 'Post Delete Successfully.');
+
+        return redirect()->route('posts.index')->with('status', 'Post and associated images deleted successfully.');
     }
 }

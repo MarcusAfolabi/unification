@@ -12,10 +12,10 @@ class Image extends Model
     protected $table = 'images';
 
     protected $fillable = [
-        'post_id', 'post_images'
+        'post_id', 'path'
     ];
 
-    public function posts()
+    public function post()
     {
         return $this->belongsTo(Post::class);
     }

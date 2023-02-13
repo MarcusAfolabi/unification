@@ -10,9 +10,12 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->text('post_image');
+            $table->unsignedBigInteger('post_id');
+            $table->string('path');
             $table->timestamps();
+            
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+
         });
     }
  

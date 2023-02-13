@@ -10,14 +10,14 @@ return new class extends Migration
     {
         Schema::create('conventions', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('lastname');
             $table->string('firstname'); 
             $table->string('gender');
             $table->string('phone'); 
             $table->string('academic_status');
             $table->string('fellowship_status'); 
-            $table->string('unit_id'); 
+            $table->foreignId('unit_id')->references('id')->on('units')->onDelete('cascade');
             $table->foreignId('fellowship_id')->references('id')->on('fellowships');
             $table->string('profile_image');  
             $table->timestamps();
