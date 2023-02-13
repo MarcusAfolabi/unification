@@ -3,9 +3,7 @@
 
 @section('main')
     <div class="main_content">
-        <div class="mcontainer">
-
-            <!--  breadcrumb -->
+        <div class="mcontainer"> 
             <div class="breadcrumb-area py-0">
                 <div class="breadcrumb">
                     <ul class="m-0">
@@ -17,22 +15,16 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-
-            <!-- create page-->
+            </div> 
             <div class="max-w-2xl m-auto shadow-md rounded-md bg-white lg:mt-20">
                 @if (session('status'))
-                    <p class="bg-green-500 text-white text-center border p-4 relative rounded-md uk-alert">
+                    <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">
                         {{ session('status') }}</p>
                 @endif
                 <!-- form header -->
-                <div class="text-center border-b border-gray-100 py-6">
+                <div class="text-center border-b border-blue-100 py-6">
                     <h3 class="font-bold text-xl"> Add New Resource </h3>
-                </div>
-
-
-                <!-- form body -->
-
+                </div> 
                 <form method="POST" action="{{ route('resource.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="p-10 space-y-7">
@@ -42,14 +34,11 @@
                                 autocomplete="off">
                             <span for="name" class="line__placeholder"> Name </span>
                         </div>
-                        @error('name')
-                            <p style="color: red; ">{{ $message }} </p>
-                        @enderror
+                       
                         <div uk-form-custom class="w-full py-3">
-                        <label>File</label>
-
+                        <label>File</label> 
                             <div
-                                class="bg-gray-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg dark:bg-gray-800 dark:border-gray-600">
+                                class="bg-blue-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg dark:bg-blue-800 dark:border-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                     class="w-12">
                                     <path
@@ -57,22 +46,14 @@
                                     <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                                 </svg>
                             </div>
-                            <input type="file" id="file" name="file">
+                            <input type="file" id="file"  name="file">
                             <a href="#"
-                                    class="bg-gray-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">
+                                    class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">
                                     PDF, DOCS, JPEG or PNG</a>
-                        </div>
-                        @error('file')
-                            <p style="color: red; ">{{ $message }} </p>
-                        @enderror
-                         
-                    </div>
-
-                    <!-- form footer -->
-                    <div class="border-t flex justify-between lg:space-x-10 p-7 bg-gray-50 rounded-b-md">
-                        <p class="text-sm leading-6"> Your Post Is Subject to Review and Proof-reading. Ensure To Be
-                            Accurate And Concise. </p>
-                        <button class="button dark" type="submit">POST</button>
+                        </div> 
+                    </div> 
+                    <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
+                        <button class="button blue" type="submit">POST</button>
                     </div>
 
                 </form>

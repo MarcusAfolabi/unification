@@ -11,7 +11,6 @@ class Resource extends Model
     protected $table = 'resources';
     
     protected $fillable = [
-        'user_id',
         'name',
         'slug',
         'file'

@@ -34,7 +34,7 @@ class SignupNotification extends Notification
                     ->line("Name: {$this->user->name} ")
                     ->line("Email: {$this->user->email} ")
                     ->line("Status: {$this->user->fellowship_status} ")
-                    ->line("Date of Registration:: \${$this->user->created_at->diffForHumans()} ")                     
+                    ->line("Date of Registration:: {$this->user->created_at->diffForHumans()} ")                     
                     ->line('Thank you for your attention to this matter, and I look forward to hearing back from you soon.')
                     ->action('Preview Member', url('https://cnsunification.org'))
                     ->line('Best regards,');

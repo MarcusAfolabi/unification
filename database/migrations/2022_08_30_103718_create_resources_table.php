@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('file');
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }
