@@ -46,20 +46,13 @@ class FellowshipController extends Controller
             "address" => 'required',
             "logo" => 'required',
         ]);
-        $name = $request->input('name');
-        $slug = Str::slug($name, '-');
-        $acronyms = $request->input('acronyms');
-        $phone = $request->input('phone');
-        $address = $request->input('address');
-        $logo = 'storage/' . $request->file('logo')->store('fellowshipLogo', 'public');
-
         $fellowship = new Fellowship();
-        $fellowship->name = $name;
-        $fellowship->slug = $slug;
-        $fellowship->acronyms = $acronyms;
-        $fellowship->phone = $phone;
-        $fellowship->address = $address;
-        $fellowship->logo = $logo;
+        $fellowship->name = $request->input('name');
+        $fellowship->slug = Str::slug($request->input('name'), '-');
+        $fellowship->acronyms = $request->input('acronyms');
+        $fellowship->phone = $request->input('phone');
+        $fellowship->address = $request->input('address');
+        $fellowship->logo = 'storage/' . $request->file('logo')->store('fellowshipLogo', 'public');
         $fellowship->save();
         return redirect()->back()->with('status', 'Added Successfully');
     }
@@ -82,24 +75,17 @@ class FellowshipController extends Controller
     {
         $request->validate([
             "name" => 'required',
-            "code" => 'nullable',
-            "state" => 'nullable',
+            "acronyms" => 'required',
+            "phone" => 'required',
+            "address" => 'required',
+            "logo" => 'sometimes',
         ]);
-        $name = $request->input('name');
-        $acronyms = $request->input('acronyms');
-        $phone = $request->input('phone');
-        $address = $request->input('address');
-        $state = $request->input('state');
-        $country = $request->input('country');
-        $year_of_establishment = $request->input('year_of_establishment');
-
-        $fellowship->name = $name;
-        $fellowship->acronyms = $acronyms;
-        $fellowship->phone = $phone;
-        $fellowship->address = $address;
-        $fellowship->state = $state;
-        $fellowship->country = $country;
-        $fellowship->year_of_establishment = $year_of_establishment;
+        $fellowship->name = $request->input('name');
+        $fellowship->slug = Str::slug($request->input('name'), '-');
+        $fellowship->acronyms = $request->input('acronyms');
+        $fellowship->phone = $request->input('phone');
+        $fellowship->address = $request->input('address');
+        $fellowship->logo = 'storage/' . $request->file('logo')->store('fellowshipLogo', 'public');
         $fellowship->save();
         return redirect(route('fellowship.index'))->back()->with('status', 'Updated Successfully');
     }

@@ -8,7 +8,7 @@ return new class extends Migration
 { 
     public function up()
     {
-        Schema::create('audio', function (Blueprint $table) {
+        Schema::create('audios', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
             $table->string('author');
@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('content');
             $table->string('slug');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('status')->default(0);
             $table->integer('views')->default(0);
             $table->timestamps();
         });
@@ -26,6 +25,6 @@ return new class extends Migration
  
     public function down()
     {
-        Schema::dropIfExists('audio');
+        Schema::dropIfExists('audios');
     }
 };

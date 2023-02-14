@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-// use App\Models\User;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
 use App\Mail\PostMail;
 use App\Models\Product;
-use App\Models\PostImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Storage;
-use App\Notifications\NewPostNotification;
 use Illuminate\Support\Facades\Notification;
-// use App\Notifications\NewPostNotification;
-// use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
 {
@@ -33,15 +26,14 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $myposts = Post::with(['images'])->select('id', 'category', 'title', 'intro', 'created_at', 'slug')->where('user_id', auth()->user()->id)->latest()->paginate(40);
-        $sideposts = Post::select('id', 'title', 'views', 'slug', 'created_at')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
         $all_posts = Post::with(['images'])->select('id', 'title', 'intro', 'created_at', 'category', 'user_id')->latest()->paginate(40);
         $sideproducts = Product::select('name', 'currency', 'price', 'slug', 'id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
-        return view('posts.index', compact('myposts', 'all_posts', 'sideposts', 'sideproducts'));
+        return view('posts.index', compact('myposts', 'all_posts', 'sideproducts'));
     }
 
     public function create()
     {
-        return view('posts.create');
+        //
     }
     public function store(Request $request)
     {
@@ -64,7 +56,6 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
                 $path = $image->store('postImages', 'public');
-
                 $postImage = new Image();
                 $postImage->path = $path;
                 $postImage->post_id = $post->id;
@@ -77,20 +68,15 @@ class PostController extends Controller
         ])->notify(new PostNotification($post));
 
         Mail::to($post->user->email)->send(new PostMail($post));
-       
-
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
     public function show(Post $post)
     {
-
         DB::table('posts')->increment('views');
-        $timelineposts = Post::all();
-        $tagposts = Post::latest()->take(5)->get();
-        $sideposts = Post::all();
-        $relatedposts = Post::where('id', '!=', $post->id)->latest()->take(5)->get();
-        return view('posts.post', compact('post', 'relatedposts', 'sideposts', 'tagposts', 'timelineposts'));
+        $sideposts = Post::with(['images'])->select('id', 'title', 'created_at', 'views', 'slug')->where('category', '!=', $post->category)->latest()->take(5)->get();
+        $relatedposts = Post::with(['images'])->select('id', 'title', 'created_at', 'views', 'slug')->where('id', '!=', $post->id)->latest()->take(5)->get();
+        return view('posts.show', compact('post', 'relatedposts', 'sideposts'));
     }
 
     public function edit(Post $post)
@@ -107,24 +93,10 @@ class PostController extends Controller
             "category" => 'required',
             "content" => 'required'
         ]);
-        // $post = Post::findOrFail($id);
-
         $post->fill($request->only(['title', 'intro', 'category', 'content']));
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();
-
-        // if ($request->hasFile('image')) {
-        //     $images = $request->file('image');
-
-        //     foreach ($images as $image) {
-        //         $path = $image->store('posts');
-        //         Image::create([
-        //             'post_id' => $post->id,
-        //             'path' => $path
-        //         ]);
-        //     }
-        // } 
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
                 $path = $image->store('postImages', 'public');
@@ -136,15 +108,14 @@ class PostController extends Controller
             }
         }
         return redirect(route('posts.index'))->with('status', 'Post Updated Successfully. We ensure it edify the body of Christ before we publish');
-
-    
     }
-    public function deleteimage(Image $id){
+    public function deleteimage(Image $id)
+    {
         $image = Image::findOrFail($id);
-        if(File::exists("posts/".$image->path)){
-            File::delete("posts/".$image->path);
+        if (File::exists("posts/" . $image->path)) {
+            File::delete("posts/" . $image->path);
         }
-        Image::find($id)->delete(); 
+        Image::find($id)->delete();
         return redirect()->back()->with('status', 'Post Image Deleted');
     }
 

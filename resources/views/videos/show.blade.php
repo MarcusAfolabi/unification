@@ -11,71 +11,48 @@
         nonce="t3DkjUu0"></script>
     <div class="main_content">
         <div class="mcontainer">
-
             <div class="lg:flex lg:space-x-10">
-
                 <div class="lg:w-3/4">
-
-                    <div class="embed-video rounded">
+                    <div class="embed-video rounded-md">
                         <iframe src="{{ $video->url }}" frameborder="0" uk-video="automute: true" allowfullscreen
                             uk-responsive></iframe>
-
                     </div>
-
                     <div class="py-5 space-y-4">
-
                         <div>
                             <h1 class="text-2xl font-semibold line-clamp-1"> {{ $video->title }} </h1>
-                            <p> {{ $video->views }} views </p>
                         </div>
-
                         <div class="md:flex items-center justify-between">
                             <a href="#" class="flex items-center space-x-3">
-                                <img src="{{ asset($video->user->name) }}" alt="" class="w-10 rounded-full">
+                                <img uk-tooltip="{{ $video->user->name }}" src="{{ asset($video->user->profile_photo_url) }}" alt="{{ $video->user->name }}" class="w-10 rounded-full">
                                 <div class="">
                                     <div class="text-base font-semibold"> {{ $video->user->name }} </div>
-                                    <div class="text-xs"> Published on {{ $video->created_at->diffForHumans() }}
+                                    <div class="text-xs"> Published {{ $video->created_at->diffForHumans() }}
                                     </div>
                                 </div>
                             </a>
                             <div class="flex items-center space-x-3 md:pt-0 pt-2">
-                                <div class="like-btn" uk-tooltip="Unlike it">
-                                    <i class="uil-thumbs-down"></i>
-                                    <span class="likes">16</span>
+                                
+                                <div class="flex h-2 w-36 bg-blue-200 rounded-lg overflow-hidden">
+                                    <div class="w-{{ $video->views }} bg-gradient-to-br from-red-400 to-blue-400 h-4"></div>
                                 </div>
-                                <div class="flex h-2 w-36 bg-gray-200 rounded-lg overflow-hidden">
-                                    <div class="w-2/3 bg-gradient-to-br from-purple-400 to-blue-400 h-4"></div>
-                                </div>
-                                <div class="like-btn" uk-tooltip="I like it">
+                                <div class="like-btn" uk-tooltip="I see it">
                                     <i class="uil-thumbs-up"></i>
-                                    <span class="likes">21</span>
+                                    <span class="likes">{{ $video->views }}</span>
                                 </div>
                             </div>
                         </div>
-
                         <div class="text-lg font-semibold pt-2"> Description </div>
                         {!! $video->content !!}
                         <hr>
-
                         <div class="my-5">
-
                             <div class="fb-comments"
-                            data-href="https://.cnsunification.org/{{ route('posts.show', $video) }}"
+                            data-href="https://cnsunification.org/{{ route('videos.show', $video) }}"
                             data-width="" data-numposts="5"></div>
-
-
                         </div>
-
                     </div>
-
-
                 </div>
-
-                <!-- sidebar -->
                 <div class="lg:w-1/4 w-full">
-
-                    <h3 class="text-xl font-bold mb-2"> Related Videos </h3>
-
+                    <h3 class="text-xl font-bold mb-2"> Others shorts </h3>
                     @foreach ($sidevideos as $sidevideo)
                         <div class="py-2 relative">
                             <a href="{{ route('videos.show', $sidevideo) }}"
@@ -99,13 +76,8 @@
                             </div>
                         </div>
                     @endforeach
-
-
                 </div>
-
             </div>
-
-
         </div>
     </div>
 @endsection

@@ -1,8 +1,8 @@
 @extends('layouts.main')
-@section('title', 'All Post')
-@section('description', 'This is all Post')
-@section('keywords', 'blog, posts, bloging, wordpress')
-@section('canonical', 'https://cnsunification.org/posts')
+@section('title', 'Recap of the Recent Fellowship Activities')
+@section('description', 'Join us as we reflect on the highlights of the recent Cherubim and Seraphim Church Unification Campus Fellowship Convention. Read about the inspiring talks, powerful worship sessions, and meaningful connections made with fellow members.')
+@section('keywords', 'Cherubim and Seraphim Church Unification Campus Fellowship, Fellowship Convention, Recap, Inspiring Talks, Worship Sessions, Meaningful Connections, Church Members')
+@section('canonical', 'https://cnsunification.org/post')
 
 @section('main')
 <div class="main_content">
@@ -15,7 +15,7 @@
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
                 <h5 class="text-1xl font-semibold">
-                    <a href="{{ route('posts.create') }}"><i class="icon-material-outline-add"></i> New Post </a>
+                    <a uk-tooltip="Add" href="#modal-post" uk-toggle><i class="icon-material-outline-add"></i> Add New </a>
                 </h5>
             </div>
         </div>
@@ -109,29 +109,15 @@
         </div>
         @endif
         @if(auth()->user()->role === 'member' )
-        <div class="lg:flex  lg:space-x-12">
-
+        <div class="lg:flex  lg:space-x-12"> 
             <div class="lg:w-3/4">
-
-                <div class="flex justify-between items-center relative md:mb-4 mb-3">
-                    <div class="flex-1">
-                        <h2 class="text-2xl font-semibold"> My Post </h2>
-
-                    </div>
-                    <a href="{{ route('posts.create') }}" class="flex items-center justify-center h-10 w-10 z-10 rounded-full bg-blue-600 text-white absolute right-0" data-tippy-placement="left" title="Create New Article">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                </div>
-
                 <div class="card divide-y divide-blue-100 px-4">
                     @foreach ($myposts as $post)
                     <div class="lg:flex lg:space-x-6 py-5">
                         <a href="{{ route('posts.show', $post) }}">
                             <div class="lg:w-60 w-full h-40 overflow-hidden rounded-lg relative shadow-sm">
                                 @if ($post->images)
-                                <img src="{{ asset('storage/' . $post->images->first()->path) }}" alt="{{ $post->title }}" title="{{ $post->title }}"  class="w-full h-full absolute inset-0 object-cover">
+                                <img src="{{ asset('storage/' . $post->images->first()->path) }}" alt="{{ $post->title }}" title="{{ $post->title }}" class="w-full h-full absolute inset-0 object-cover">
                                 @endif
                                 <div class="absolute bg-blue-100 font-semibold px-2.5 py-1 rounded-full text-blue-500 text-xs top-2.5 left-2.5">
                                     {{ $post->category }}
@@ -179,51 +165,65 @@
             <div class="lg:w-1/4 w-full flex-shrink-0">
 
                 <div uk-sticky="offset:100" class="uk-sticky">
-
-                    <h2 class="text-lg font-semibold mb-3"> Similar Posts </h2>
-                    <ul>
-                        @foreach ($sideposts as $sidepost )
-                        <li>
-                            <a href="{{route('posts.show', $sidepost)}}" class="hover:bg-blue-100 rounded-md p-2 -mx-2 block">
-                                <h3 class="font-medium line-clamp-2"> {{ $sidepost->title }} </h3>
-                                <div class="flex items-center my-auto text-xs space-x-1.5">
-                                    <div> {{ $sidepost->created_at->diffForHumans() }}</div>
-                                    <div class="pb-1"> . </div>
-                                    <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-                                    <div> {{ $sidepost->views }} views</div>
-                                </div>
-                            </a>
-                        </li>
-                        @endforeach
-
-
-                    </ul>
-                    <br>
-
                     <h4 class="text-lg font-semibold mb-3"> Recommended Products </h4>
-
                     <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
-                        @foreach ($sideproducts as $sideproduct)
+                        @forelse ($sideproducts as $sideproduct)
                         <a href="{{ route('products.show', $sideproduct) }}">
                             <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">
                                 <img src="{{ asset($sideproduct->image) }}" class="w-9 h-9 mr-3" alt="">
                                 <p class="line-clamp-1 mt-2 leading-6"> <strong> {{ $sideproduct->name }} </strong> for
                                     <strong> {{ $sideproduct->currency }}{{ number_format($sideproduct->price) }}
                                     </strong>
-
                                 </p>
                             </div>
                         </a>
-                        @endforeach
-
+                        @empty
+                        <a href="{{ route('products.create') }}">
+                            <h4 class="text-lg font-semibold mb-3"> You can add your first product </h4>
+                        </a>
+                        @endforelse
                     </div>
-                    <a href="{{ route('products.index') }}" class="hover:text-blue-600 hover:underline"> See All </a>
-
-
                 </div>
             </div>
         </div>
         @endif
     </div>
 </div>
+<div id="modal-post" uk-modal>
+    <div class="uk-modal-dialog"> 
+        <button class="uk-modal-close-default m-3" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Add New Story</h2>
+            <h5>You can add pictures - (upto 5), Anniversary events and other fellowship activities from here.</h5>
+        </div> 
+        <form method="POST" action="{{ route('posts.store')}}" enctype="multipart/form-data">@csrf <div class="p-10 space-y-7">
+                <div class="line"><input class="line__input" id="title" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div>@error('title') <p style="color: red; ">{{ $message}} </p>@enderror <div class="line"><input class="line__input" id="intro" name="intro" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('intro')}}" autocomplete="off"><span for="intro" class="line__placeholder">Intro </span></div><label>Images</label>
+                <div uk-form-custom class="w-full py-3">
+                    <div class="bg-blue-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg dark:bg-blue-800 dark:border-blue-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
+                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
+                            <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
+                        </svg></div><input type="file" id="image" accept="image/*" multiple name="image[]"><a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">Images 5 max </a>
+                </div>@error('image') <p style="color: red; ">{{ $message}} </p>@enderror <div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
+                        <option value="">{{ old('category')}} </option>
+                        <option value="Anniversary">Annual Anniversary </option>
+                        <option value="Fellowship">Fellowship Activities </option>
+                        @if(auth()->user()->role==='admin') <option value="CEC">CEC News</option>@endif
+                    </select></div>@error('category') <p style="color: red; ">{{ $message}} </p>@enderror <div class="form-group">
+                    <textarea name="content" id="content" class="with-border px-3 py-3" placeholder="Content">{{ old('content')}}</textarea>
+                </div>@error('content') <p style="color: red; ">{{ $message}} </p>@enderror
+            </div>
+            <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
+                <p class="text-sm leading-6">Your Post Is Subject to Review and Proof-reading. Ensure To Be Accurate And Concise. </p><button class="button dark" type="submit">POST</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.Add(document.querySelector('#content')).then(content => {
+        console.log(content);
+    }).catch(error => {
+        console.error(error);
+    });
+</script>
 @endsection
