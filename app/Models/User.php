@@ -18,6 +18,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    protected $table = 'users';
+    
     protected $fillable = [
         'name',
         'lastname',

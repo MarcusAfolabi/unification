@@ -18,8 +18,8 @@ class WelcomeController extends Controller
         $anniversary_posts = Post::with(['images'])->select('id', 'title', 'slug')->where('category', 'Anniversary')->inRandomOrder()->limit(10)->get();
         $fellowship_posts = Post::with(['images'])->select('id', 'title', 'slug')->where('category', 'Fellowship')->inRandomOrder()->limit(10)->get();
         $cec_posts = Post::with(['images'])->select('id', 'title', 'slug')->where('category', 'CEC')->inRandomOrder()->limit(10)->get();
-        $videos = Video::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
-        $sideproducts = Product::select('name', 'currency', 'price', 'image')->inRandomOrder()->limit(10)->get();
+        $videos = Video::select('id', 'title', 'slug', 'user_id', 'created_at')->inRandomOrder()->limit(10)->get();
+        $sideproducts = Product::select('name', 'currency', 'price', 'image', 'slug')->inRandomOrder()->limit(10)->get();
         $poststories = Post::with(['images'])->select('id', 'title', 'slug', 'user_id')->inRandomOrder()->limit(5)->get();
         $sideprayers = Prayer::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
         $sideaudios = Audio::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();

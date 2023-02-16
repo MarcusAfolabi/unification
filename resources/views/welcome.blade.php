@@ -261,7 +261,7 @@
                     <!-- post header-->
                     <div class="flex justify-between items-center lg:p-4 p-2.5">
                         <div class="flex flex-1 items-center space-x-4">
-                            <a href="{{ route('videos.show', $video->user->id) }}">
+                            <a href="{{ route('videos.show', $video) }}">
                                 <img src="{{ $video->user->profile_photo_url }}"
                                     class="bg-gray-200 border border-white rounded-full w-10 h-10">
                             </a>
@@ -407,8 +407,7 @@
                             <img src="{{ asset($sideproduct->image) }}" class="w-9 h-9 mr-3" alt="">
                             <p class="line-clamp-2 leading-6 mt-1"> <strong> {{ $sideproduct->name }} </strong> for
                                 <strong> {{ $sideproduct->currency }}{{ number_format($sideproduct->price) }}
-                                </strong>
-
+                                </strong> 
                             </p>
                         </div>
                     </a>
@@ -425,8 +424,7 @@
                             <img src="{{ asset($sidejob->image) }}" class="w-9 h-9 mr-3" alt="">
                             <p class="line-clamp-2 leading-6 mt-2"> <strong> {{ $sidejob->position }} </strong> Salary of
                                 <strong> {{ $sidejob->currency }}{{ number_format($sidejob->salary, 2) }}
-                                </strong>
-
+                                </strong> 
                             </p>
                         </div>
                     </a>

@@ -14,11 +14,7 @@
                 </h5>
             </div>
         </div>
-        @if (session('status'))
-        <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">
-            {{ session('status') }}
-        </p>
-        @endif
+        @if (session('status')) <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">{{ session('status')}} </p>@endif
         <x-jet-validation-errors class="mb-4" />
         @if (auth()->user()->role==='admin')
         <div class="card">
@@ -112,7 +108,6 @@
             </div>
         </div>
     </div>
-
     @elseif (auth()->user()->role==='member')
     <div class="lg:flex lg:space-x-10">
         <div class="lg:w-2/3">
@@ -121,10 +116,10 @@
                 <div class="flex sm:flex-row flex-col sm:space-x-4 py-4 relative w-full">
                     <div class="sm:w-56 w-full h-32 overflow-hidden rounded-lg relative shadow-sm flex-shrink-0">
                         <img src="{{ asset($aud->image) }}" alt="{{ $aud->title }}" class="w-full h-full absolute inset-0 object-cover">
-                        <audio class="js-player">
+                        <!-- <audio class="js-player">
                             <source src="{{ $aud->file }}" />
-                        </audio>
-                        {{-- <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt=""> --}}
+                        </audio> -->
+                    <a href="{{asset($aud->file )}}"> <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt=""> </a>
                     </div>
                     <div class="flex-1 relative md:mt-0 mt-4">
                         <a href="#" class="text-xl font-semibold leading-6">{{ $aud->title }}</a>
@@ -168,14 +163,18 @@
                         <a href="#" href="#" iv class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
                             <img src="{{ asset($aud->image) }}" class="absolute w-full h-full inset-0 " alt="{{ $aud->title }}">
                         </a>
+                       
                         <div class="flex-1">
-                            <audio class="js-player">
-                                <source src="{{ $aud->file }}" />
-                            </audio>
-                            <a href="#" class="text-base font-semibold capitalize leading-6 line-clamp-1 mt-1">{{
+                        <a href="#" class="text-base font-semibold capitalize leading-6 line-clamp-1 mt-1">{{
                                 $aud->title }}
                             </a>
+                            <audio class="js-player">
+                                <source src="{{ $aud->file }}" />
+                            </audio>                         
                             <div class="text-sm text-blue-500 mt-0.5"> {{ $aud->views }} Streamed</div>
+                        </div>
+                            
+                            
                         </div>
                     </div>
                     @empty
