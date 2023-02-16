@@ -79,6 +79,9 @@ Route::get('/status/{id}', [PostController::class, 'status'])->name('status.stat
 // Route::delete('posts/{post}/images/{image}', 'PostController@destroyImage')->name('images.destroy');
 
 Route::get('/post/deleteimage/{posts}/delete', [PostController::class, 'deleteimage'])->name('post.deleteimage');
+Route::post('/posts/{post:slug}/like', [PostController::class, 'like'])->name('posts.like');
+Route::delete('/posts/{post:slug}/unlike', [PostController::class, 'unlike'])->name('posts.unlike');
+
 
 
 // All Video

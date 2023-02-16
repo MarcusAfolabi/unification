@@ -41,7 +41,7 @@
         </div>
         <div class="md:flex md:space-x-6 lg:mx-16">
             <div class="space-y-5 flex-shrink-0 md:w-7/12">
-                <div class="card lg:mx-0 p-4" uk-toggle="target: #create-post-modal">
+                <div class="card lg:mx-0 p-4" uk-toggle="target: #modal-post">
                     <div class="flex space-x-3">
                         @auth
                         <img src="{{asset(auth()->user()->profile_photo_url)}}" class="w-10 h-10 rounded-full">
@@ -102,14 +102,37 @@
                     <div class="p-4 space-y-3">
 
                         <div class="flex space-x-4 lg:font-bold">
-                            <a href="#" class="flex items-center space-x-2">
+                           @if(auth()->user()->like)
+                           <form action="{{ route('posts.like', $fellowship_post) }}" method="POST">
+                                @csrf
+                                <a href="#" class="flex items-center space-x-2">
+                                    <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                        </svg>
+                                    </div>
+                                    <div> <button type="submit" class="btn btn-primary"> {{ $fellowship_post->likes->count() }} Like </button> </div>
+                            </form>
+                            @else
+                            <form action="{{ route('posts.like', $fellowship_post) }}" method="POST">
+                                @csrf
+                                <a href="#" class="flex items-center space-x-2">
+                                    <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                        </svg>
+                                    </div>
+                                    <div> <button type="submit" class="btn btn-primary"> {{ $fellowship_post->likes->count() }} Like </button> </div>
+                            </form>
+                           @endif
+                            <!-- <a href="#" class="flex items-center space-x-2">
                                 <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
                                         <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                                     </svg>
                                 </div>
                                 <div> Like</div>
-                            </a>
+                            </a> -->
                             <a href="#" class="flex items-center space-x-2 flex-1 justify-end">
                                 <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
@@ -121,12 +144,10 @@
                         </div>
                         <div class="flex items-center space-x-3 pt-2">
                             <div class="flex items-center">
-                                <img src="assets/images/avatars/avatar-1.jpg" alt="" class="w-6 h-6 rounded-full border-2 border-white blue:border-blue-900">
-                                <img src="assets/images/avatars/avatar-4.jpg" alt="" class="w-6 h-6 rounded-full border-2 border-white blue:border-blue-900 -ml-2">
-                                <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-6 h-6 rounded-full border-2 border-white blue:border-blue-900 -ml-2">
+                            
                             </div>
                             <div class="blue:text-blue-100">
-                                Liked <strong> Johnson</strong> and <strong> 209 Others </strong>
+                                Liked <strong>  </strong> and <strong> 209 Others </strong>
                             </div>
                         </div>
 
@@ -224,25 +245,55 @@
                         <a href="#" class="text-blue-600 "> See all</a>
                     </div>
                     <div>
-                        @foreach($unit_members as $unit_member)                       
+                        @foreach($unit_members as $unit_member)
                         <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-blue-50">
                             <a href="#" class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
                                 <img src="{{ asset($fellowship->logo) }}" class="absolute w-full h-full inset-0 " alt="">
                             </a>
                             <div class="flex-1">
                                 <a href="#" class="text-base font-semibold capitalize"> {{ $unit_member->unit->name }} </a>
-                        <!-- <div class="text-sm text-blue-500 mt-0.5"> {{ $unit_counts }} members </div> -->
+                                <!-- <div class="text-sm text-blue-500 mt-0.5"> {{ $unit_counts }} members </div> -->
                             </div>
                             <a href="#" class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold bg-blue-500 text-white">
                                 Join
                             </a>
-                        </div> 
+                        </div>
                         @endforeach
 
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div id="modal-post" uk-modal>
+    <div class="uk-modal-dialog"> 
+        <button class="uk-modal-close-default m-3" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Add New Story</h2>
+            <h5>You can add pictures - (upto 5), Anniversary events and other fellowship activities from here.</h5>
+        </div> 
+        <form method="POST" action="{{ route('posts.store')}}" enctype="multipart/form-data">@csrf <div class="p-10 space-y-7">
+                <div class="line"><input class="line__input" id="title" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div> <div class="line"><input class="line__input" id="intro" name="intro" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('intro')}}" autocomplete="off"><span for="intro" class="line__placeholder">Intro </span></div>
+                <input class="with-border" hidden name="fellowship_id" value="{{ auth()->user()->fellowship_id }}">
+                <div uk-form-custom class="w-full py-3">
+                    <div class="bg-blue-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg blue:bg-blue-800 blue:border-blue-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
+                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
+                            <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
+                        </svg></div><input type="file" id="image" accept="image/*" multiple name="image[]"><a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">Images 5 max </a>
+                </div><div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
+                        <option value="">{{ old('category')}} </option>
+                        <option value="Anniversary">Annual Anniversary </option>
+                        <option value="Fellowship">Fellowship Activities </option>
+                        @if(auth()->user()->role==='admin') <option value="CEC">CEC News</option>@endif
+                    </select></div> <div class="form-group">
+                    <textarea name="content" id="content" class="with-border px-3 py-3" placeholder="Content">{{ old('content')}}</textarea>
+                </div>
+            </div>
+            <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
+                <p class="text-sm leading-6">Your Post Is Subject to Review and Proof-reading. Ensure To Be Accurate And Concise. </p><button class="button blue" type="submit">PUBLISH</button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

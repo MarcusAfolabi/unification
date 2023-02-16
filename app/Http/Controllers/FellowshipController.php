@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Unit;
 use App\Models\User;
 use App\Models\Fellowship;
+use App\Models\Postlike;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class FellowshipController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show', 'index']);
+        $this->middleware(['auth'])->except(['index']);
     }
     public function index(Request $request)
     {
@@ -58,9 +59,13 @@ class FellowshipController extends Controller
         return redirect()->back()->with('status', 'Added Successfully');
     }
 
-    public function show(Fellowship $fellowship, Unit $unit, User $user)
+    public function show(Fellowship $fellowship, Unit $unit, User $user, Post $post)
     {
 
+        // $postlikes = Postlike::where('post_id', $post->id)->inRandomOrder()->limit(3)->get();
+        $postlikes = Postlike::where('post_id', $post->id)->with('user')->get();
+
+        // dd($postlikes);
         $unit_members = User::where('fellowship_id', $fellowship->id)->select('unit_id')->distinct()->get();
         $unit_count = User::where('unit_id', auth()->user()->unit_id)->pluck('unit_id')->unique()->count();
         $unit_counts = User::where('fellowship_id', $fellowship->id)
@@ -76,7 +81,8 @@ class FellowshipController extends Controller
             'fellowship_users',
             'fellowship_posts',
             'unit_counts',
-            'unit_members'
+            'unit_members',
+            'postlikes'
         ));
     }
 

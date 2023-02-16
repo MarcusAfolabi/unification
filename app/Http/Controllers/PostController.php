@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Image;
 use App\Mail\PostMail;
 use App\Models\Product;
+use App\Models\Postlike;
 use App\Models\Fellowship;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -74,8 +75,56 @@ class PostController extends Controller
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
+    public function like(Post $post){
+        $user = Auth::user();
+
+        // Check if the user has already liked the post
+        $existingLike = Postlike::where('user_id', $user->id)
+            ->where('post_id', $post->id)
+            ->first();
+
+        if ($existingLike) {
+            // The user has already liked the post, so we can't like it again
+            return redirect()->back()->with(['status' => 'You have already liked this post.'], 422);
+        }
+
+        // Create a new like for the post
+        $like = new Postlike();
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        $like->save();
+
+        // Update the post's like count
+        // $post->likes()->increment('count');
+
+        return redirect()->back()->with(['status' => 'Post liked successfully.']);
+    }
+
+    public function unlike(Post $post){
+        $user = Auth::user();
+
+        // Check if the user has liked the post
+        $existingLike = Postlike::where('user_id', $user->id)
+            ->where('post_id', $post->id)
+            ->first();
+
+        if (!$existingLike) {
+            // The user hasn't liked the post, so we can't unlike it
+            return response()->json(['message' => 'You have not liked this post.'], 422);
+        }
+
+        // Delete the user's like for the post
+        $existingLike->delete();
+
+        // Update the post's like count
+        $post->likes()->decrement('count');
+
+        return response()->json(['message' => 'Post unliked successfully.']);
+    }
+
     public function show(Post $post)
     {
+
         DB::table('posts')->increment('views');
         $sideposts = Post::with(['images'])->select('id', 'title', 'created_at', 'views', 'slug')->where('category', '!=', $post->category)->latest()->take(5)->get();
         $relatedposts = Post::with(['images'])->select('id', 'title', 'created_at', 'views', 'slug')->where('id', '!=', $post->id)->latest()->take(5)->get();
