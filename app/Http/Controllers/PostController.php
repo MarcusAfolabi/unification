@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Unit;
 use App\Models\User;
 use App\Models\Image;
 use App\Mail\PostMail;
 use App\Models\Product;
+use App\Models\Fellowship;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +39,7 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
-        $user = User::latest()->get();
+        // $user = User::latest()->get();
 
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
@@ -45,11 +47,12 @@ class PostController extends Controller
             "image*" => 'required|image|array|max:5',
             "image*" => 'required|image|mimes:jpeg,png,jpg|max:400',
             "category" => 'required',
-            "content" => 'required'
+            "content" => 'required',
+            "fellowship_id" => 'required',
         ]);
 
         $post = new Post();
-        $post->fill($request->only(['title', 'intro', 'category', 'content']));
+        $post->fill($request->only(['title', 'intro', 'category', 'content', 'fellowship_id']));
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();
@@ -63,11 +66,11 @@ class PostController extends Controller
             }
         }
 
-        Notification::route('mail', [
-            'info@cnsunification.org' => 'Alert! New post has been published on the website',
-        ])->notify(new PostNotification($post));
+        // Notification::route('mail', [
+        //     'info@cnsunification.org' => 'Alert! New post has been published on the website',
+        // ])->notify(new PostNotification($post));
 
-        Mail::to($post->user->email)->send(new PostMail($post));
+        // Mail::to($post->user->email)->send(new PostMail($post));
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
@@ -118,23 +121,7 @@ class PostController extends Controller
         Image::find($id)->delete();
         return redirect()->back()->with('status', 'Post Image Deleted');
     }
-
-    public function status($id)
-    {
-        $post = Post::select('status')->where('id', '=', $id)->first();
-
-        if ($post->status == '1') {
-            $status = '0';
-        } else {
-            $status = '1';
-        }
-
-        $values = array('status' => $status);
-        Post::where('id', $id)->update($values);
-
-        return redirect()->back()->with('status', 'Status Updated');
-    }
-
+ 
     public function destroy(Post $post)
     {
         $images = $post->images;

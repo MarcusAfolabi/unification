@@ -17,7 +17,7 @@ class AudioController extends Controller
     }
     public function index(Request $request)
     {
-        DB::table('audio')->increment('views');
+        DB::table('audios')->increment('views');
         $audios = Audio::where('user_id', auth()->user()->id)->latest()->get();
         $all_audios = Audio::latest()->paginate(20);
         // $side_audios = Audio::select('id', 'slug', 'title', 'image', 'file')->latest()->get();

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Unit;
 use App\Models\User;
 use App\Models\Fellowship;
-use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class FellowshipController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show']);
+        $this->middleware(['auth', 'admin'])->except(['show', 'index']);
     }
     public function index(Request $request)
     {
@@ -23,17 +24,17 @@ class FellowshipController extends Controller
         } else {
             $fellowships = Fellowship::latest()->paginate(30);
         }
-       
-        return view('fellowship.index', compact('fellowships'));
-        }  
+        if (auth()->user()->role === 'member') {
+            $chapters = Fellowship::latest()->paginate(30);
+            return view('fellowship.list', compact('chapters'));
+        } elseif (auth()->user()->role === 'admin')
+            return view('fellowship.index', compact('fellowships'));
+    }
 
 
     public function create()
     {
-       
-        return view('fellowship.create');
-        
-
+        //
     }
 
 
@@ -57,12 +58,26 @@ class FellowshipController extends Controller
         return redirect()->back()->with('status', 'Added Successfully');
     }
 
-    public function show(Fellowship $fellowship)
+    public function show(Fellowship $fellowship, Unit $unit, User $user)
     {
-        $fellowship_posts = Post::where('category', 'Fellowship')->inRandomOrder()->limit(10)->get();
+
+        $unit_members = User::where('fellowship_id', $fellowship->id)->select('unit_id')->distinct()->get();
+        $unit_count = User::where('unit_id', auth()->user()->unit_id)->pluck('unit_id')->unique()->count();
+        $unit_counts = User::where('fellowship_id', $fellowship->id)
+            ->pluck('unit_id')
+            ->unique()
+            ->count();
+        $fellowship_posts = Post::where('fellowship_id', $fellowship->id)->inRandomOrder()->limit(10)->get();
         $fellowship_member = User::select('id')->where('fellowship_id', $fellowship->id)->count();
         $fellowship_users = User::select('id', 'name', 'lastname', 'profile_photo_path')->where('fellowship_id', $fellowship->id)->inRandomOrder()->limit(6)->get();
-        return view('fellowship.show', compact('fellowship', 'fellowship_member', 'fellowship_users', 'fellowship_posts'));
+        return view('fellowship.show', compact(
+            'fellowship',
+            'fellowship_member',
+            'fellowship_users',
+            'fellowship_posts',
+            'unit_counts',
+            'unit_members'
+        ));
     }
 
 

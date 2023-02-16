@@ -12,8 +12,13 @@ class Fellowship extends Model
 
     protected $fillable = ['name', 'slug', 'acronyms', 'logo', 'phone', 'address'];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
+    }
+    
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
     }
 }

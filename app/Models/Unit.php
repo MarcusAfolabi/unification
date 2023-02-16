@@ -11,8 +11,14 @@ class Unit extends Model
     protected $table = 'units';
 
     protected $fillable = ['name', 'slug'];
+  
+    public function fellowship()
+    {
+        return $this->belongsTo(Fellowship::class);
+    }
+
     public function users()
     {
-        return $this->hasMany(Users::class);
+        return $this->hasMany(User::class);
     }
 }

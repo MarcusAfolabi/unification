@@ -17,9 +17,9 @@
                     @foreach ($poststories as $poststory)
                     <a href="{{ route('posts.show', $poststory) }}">
                         <div class="single_story">
-                            <img src="{{ asset($poststory->image1) }}" alt="{{ $poststory->postTitle }}">
+                            <img src="{{ asset($poststory->image1) }}" alt="{{ $poststory->title }}">
                             <div class="story-avatar"> <img src="{{ $poststory->user->profile_photo_url }}"
-                                    alt="{{ $poststory->postTitle }}"></div>
+                                    alt="{{ $poststory->title }}"></div>
                             <div class="story-content">
                                 <h4>{{ $poststory->user->name }} </h4>
                             </div>
@@ -41,16 +41,16 @@
                             @auth
                             <img src="{{ asset(auth()->user()->profile_photo_url) }}" class="w-10 h-10 rounded-full">
                             <input placeholder="What's Your Mind? {{ auth()->user()->lastname }}!"
-                                class="bg-gray-100 hover:bg-gray-200 flex-1 h-10 px-6 rounded-full">
+                                class="bg-blue-100 hover:bg-blue-200 flex-1 h-10 px-6 rounded-full">
                             @endauth
                             @guest
                             <img src="{{ asset('assets/images/logo.png') }}" class="w-10 h-10 rounded-full">
                             <input placeholder="What's Your Mind?"
-                                class="bg-gray-100 hover:bg-gray-200 flex-1 h-10 px-6 rounded-full">
+                                class="bg-blue-100 hover:bg-blue-200 flex-1 h-10 px-6 rounded-full">
                             @endguest
                         </div>
                         <div class="grid grid-flow-col pt-3 -mx-1 -mb-1 font-semibold text-sm">
-                            <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer">
+                            <div class="hover:bg-blue-100 flex items-center p-1.5 rounded-md cursor-pointer">
                                 <svg class="bg-blue-100 h-9 mr-2 p-1.5 rounded-full text-blue-600 w-9 -my-0.5 hidden lg:block"
                                     data-tippy-placement="top" title="Tooltip" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@
                                 </svg>
                                 Photo/Video
                             </div>
-                            <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer">
+                            <div class="hover:bg-blue-100 flex items-center p-1.5 rounded-md cursor-pointer">
                                 <svg class="bg-green-100 h-9 mr-2 p-1.5 rounded-full text-green-600 w-9 -my-0.5 hidden lg:block"
                                     uk-tooltip="title: Messages ; pos: bottom ;offset:7" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@
                                 </svg>
                                 Tag Friend
                             </div>
-                            <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer">
+                            <div class="hover:bg-blue-100 flex items-center p-1.5 rounded-md cursor-pointer">
                                 <svg class="bg-red-100 h-9 mr-2 p-1.5 rounded-full text-red-600 w-9 -my-0.5 hidden lg:block"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -102,11 +102,11 @@
                         <div class="flex flex-1 items-center space-x-4">
                             <a href="">
                                 <img src="{{ $post->user->profile_photo_url }}"
-                                    class="bg-gray-200 border border-white rounded-full w-10 h-10">
+                                    class="bg-blue-200 border border-white rounded-full w-10 h-10">
                             </a>
                             <div class="flex-1 font-semibold capitalize">
-                                <a href="{{ route('posts.show', $post) }}" class="text-black dark:text-gray-100">{{
-                                    $post->postTitle }} </a>
+                                <a href="{{ route('posts.show', $post) }}" class="text-black dark:text-blue-100">{{
+                                    $post->title }} </a>
                                 <div class="text-xs"> {{ $post->user->name }}
                                     posted {{ $post->created_at->diffForHumans() }} <ion-icon name="people">
                                     </ion-icon>
@@ -115,9 +115,9 @@
                         </div>
                         <div>
                             <a href="#"> <i
-                                    class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i>
+                                    class="icon-feather-more-horizontal text-2xl hover:bg-blue-200 rounded-full p-2 transition -mr-1 dark:hover:bg-blue-700"></i>
                             </a>
-                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
+                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-blue-500 hidden text-base border border-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700"
                                 uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
 
                                 <ul class="space-y-1">
@@ -127,24 +127,24 @@
                                         <div class="fb-share-button"
                                             data-href="https://web.facebook.com/isokancampusfellowship"
                                             data-layout="button" data-size="small"><a target="_blank"
-                                                href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->postTitle }}&amp;src=sdkpreparse"
-                                                class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                                href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse"
+                                                class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                                 <i class="icon-brand-facebook-square"> </i> Share</a>
                                         </div>
 
                                     </li>
                                     <li>
 
-                                        <a href="https://twitter.com/intent/tweet?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->postTitle }}&amp;text=By {{ $post->user->name }}"
+                                        <a href="https://twitter.com/intent/tweet?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}"
                                             target="_blank"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="icon-brand-twitter-square"> </i> Share</a>
                                     </li>
                                     <li>
 
                                         <a href="https://api.whatsapp.com/share?url={{ route('posts.show', $post) }}"
                                             target="_blank"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="icon-brand-whatsapp-square"> </i> Share</a>
                                     </li>
                                     @endguest
@@ -153,34 +153,34 @@
                                         <div class="fb-share-button"
                                             data-href="https://web.facebook.com/isokancampusfellowship"
                                             data-layout="button" data-size="small"><a target="_blank"
-                                                href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->postTitle }}&amp;src=sdkpreparse"
-                                                class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                                href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse"
+                                                class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                                 <i class="icon-brand-facebook-square"> </i> Share</a>
                                         </div>
 
                                     </li>
                                     <li>
 
-                                        <a href="https://twitter.com/share?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->postTitle }}&amp;text=By {{ $post->user->name }}"
+                                        <a href="https://twitter.com/share?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}"
                                             target="_blank"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="icon-brand-twitter-square"> </i> Share</a>
                                     </li>
                                     <li>
 
                                         <a href="https://whatsapp.com/share?url={{ route('posts.show', $post) }}"
                                             target="_blank"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="icon-brand-whatsapp-square"> </i> Share</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('posts.edit', $post) }}"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="uil-edit-alt mr-1"></i> Edit Post
                                         </a>
                                     </li>
                                     <li>
-                                        <hr class="-mx-2 my-2 dark:border-gray-800">
+                                        <hr class="-mx-2 my-2 dark:border-blue-800">
                                     </li>
                                     <li>
                                         <a href=""
@@ -197,27 +197,24 @@
                     </div>
                     <div class="p-2 pt-0 leading-6 line-clamp-2 mt-1">
 
-                        {!! $post->fullDescription !!}
-                    </div>
-
-
-
+                        {!! $post->content !!}
+                    </div> 
                     <div uk-lightbox>
                         <div class="grid grid-cols-2 gap-2 px-5">
 
                             <a href="{{ asset($post->image) }}" class="col-span-2">
-                                <img src="{{ asset($post->image) }}" alt="{{ $post->postTitle }}"
+                                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}"
                                     class="rounded-md w-full lg:h-76 object-cover">
                             </a>
                             <a href="{{ asset($post->image1) }}">
-                                <img src="{{ asset($post->image1) }}" alt="{{ $post->postTitle }}"
+                                <img src="{{ asset($post->image1) }}" alt="{{ $post->title }}"
                                     class="rounded-md w-full h-full">
                             </a>
                             <a href="{{ asset($post->image2) }}" class="relative">
-                                <img src="{{ asset($post->image2) }}" alt="{{ $post->postTitle }}"
+                                <img src="{{ asset($post->image2) }}" alt="{{ $post->title }}"
                                     class="rounded-md w-full h-full">
                                 <div
-                                    class="absolute bg-gray-900 bg-opacity-30 flex justify-center items-center text-white rounded-md inset-0 text-2xl">
+                                    class="absolute bg-blue-900 bg-opacity-30 flex justify-center items-center text-white rounded-md inset-0 text-2xl">
                                 </div>
                             </a>
 
@@ -236,10 +233,10 @@
 
                             <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship"
                                 data-layout="button" data-size="small"><a target="_blank"
-                                    href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->postTitle }}&amp;src=sdkpreparse"
-                                    class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                    href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse"
+                                    class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        width="20" height="20" class="dark:text-gray-100">
+                                        width="20" height="20" class="dark:text-blue-100">
                                         <path
                                             d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                                     </svg>Share</a>
@@ -263,10 +260,10 @@
                         <div class="flex flex-1 items-center space-x-4">
                             <a href="{{ route('videos.show', $video) }}">
                                 <img src="{{ $video->user->profile_photo_url }}"
-                                    class="bg-gray-200 border border-white rounded-full w-10 h-10">
+                                    class="bg-blue-200 border border-white rounded-full w-10 h-10">
                             </a>
                             <div class="flex-1 font-semibold capitalize ">
-                                <a href="#" class="text-black dark:text-gray-100"> {{ $video->title }} </a>
+                                <a href="#" class="text-black dark:text-blue-100"> {{ $video->title }} </a>
                                 <div class="text-xs"> {{ $video->user->name }}
                                     posted {{ $video->created_at->diffForHumans() }} <ion-icon name="people">
                                     </ion-icon>
@@ -275,9 +272,9 @@
                         </div>
                         <div>
                             <a href="#"> <i
-                                    class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i>
+                                    class="icon-feather-more-horizontal text-2xl hover:bg-blue-200 rounded-full p-2 transition -mr-1 dark:hover:bg-blue-700"></i>
                             </a>
-                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
+                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-blue-500 hidden text-base border border-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700"
                                 uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
 
                                 <ul class="space-y-1">
@@ -285,7 +282,7 @@
                                     @guest
                                     <li>
                                         <a href="#"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="uil-share-alt mr-1"></i> Share
                                         </a>
                                     </li>
@@ -293,18 +290,18 @@
                                     @auth
                                     <li>
                                         <a href="#"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="uil-share-alt mr-1"></i> Share
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('videos.edit', $video) }}"
-                                            class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                            class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                             <i class="uil-edit-alt mr-1"></i> Edit Post
                                         </a>
                                     </li>
                                     <li>
-                                        <hr class="-mx-2 my-2 dark:border-gray-800">
+                                        <hr class="-mx-2 my-2 dark:border-blue-800">
                                     </li>
                                     <li>
                                         <a href="{{ route('videos.destroy', $video->id) }}"
@@ -339,10 +336,10 @@
 
                             <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship"
                                 data-layout="button" data-size="small"><a target="_blank"
-                                    href="https://www.facebook.com/sharer/sharer.php?u={{ route('videos.show', $video) }}&amp;text={{ $video->postTitle }}&amp;src=sdkpreparse"
-                                    class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                    href="https://www.facebook.com/sharer/sharer.php?u={{ route('videos.show', $video) }}&amp;text={{ $video->title }}&amp;src=sdkpreparse"
+                                    class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        width="20" height="20" class="dark:text-gray-100">
+                                        width="20" height="20" class="dark:text-blue-100">
                                         <path
                                             d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                                     </svg>Share</a>
@@ -358,7 +355,7 @@
                 <a href="#">
                     <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
                         <h3 class="text-line-through font-semibold mb-1"> Daily Bible Verse </h3>
-                        <div class="-mx-2 duration-300 flex hover:bg-gray-50 px-2 py-2 rounded-md">
+                        <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">
                             <img src="{{asset('assets/images/icons/bible-icon.png')}}" class="w-9 h-9 mr-3" alt="">
                             <p class="line-clamp-2 leading-6">
                             <div id="dailyVersesWrapper"></div>
@@ -372,7 +369,7 @@
                     <h3 class="text-line-through font-semibold mb-1"> Daily Prayer Chant </h3>
                     @foreach ($sideprayers as $sideprayer)
 
-                    <div class="-mx-2 duration-300 flex hover:bg-gray-50 px-2 py-2 rounded-md">
+                    <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">
                         <img src="{{asset('assets/images/icons/dua-hands.png')}}" class="w-9 h-9 mr-3" alt="">
                         <p class="line-clamp-2 leading-6">
                             <a href="{{ route('prayers.show', $sideprayer) }}">{{ $sideprayer->title }}</a>
@@ -387,7 +384,7 @@
                 <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
                     <h3 class="text-line-through font-semibold mb-1 leading-6 line-clamp-1 mt-1">
                         {{ $sideaudio->title }} by {{ $sideaudio->author }}</h3>
-                    <div class="-mx-2 duration-300 flex hover:bg-gray-50 px-2 py-2 rounded-md">
+                    <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">
                         <img src="{{ asset($sideaudio->image) }}" class="w-9 h-9 mr-3" alt="">
                         <p class="line-clamp-2 leading-6">
                             <audio class="js-player">
@@ -403,7 +400,7 @@
                     <h3 class="text-line-through font-semibold mb-1"> Suggested Products </h3>
                     @foreach ($sideproducts as $sideproduct)
                     <a href="{{ route('products.show', $sideproduct) }}">
-                        <div class="-mx-2 duration-300 flex hover:bg-gray-50 px-2 py-2 rounded-md">
+                        <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">
                             <img src="{{ asset($sideproduct->image) }}" class="w-9 h-9 mr-3" alt="">
                             <p class="line-clamp-2 leading-6 mt-1"> <strong> {{ $sideproduct->name }} </strong> for
                                 <strong> {{ $sideproduct->currency }}{{ number_format($sideproduct->price) }}
@@ -420,7 +417,7 @@
                     <h3 class="text-line-through font-semibold mb-1"> Suggested Vacancies </h3>
                     @foreach ($sidejobs as $sidejob)
                     <a href="{{ route('vacancies.show', $sidejob) }}">
-                        <div class="-mx-2 duration-300 flex hover:bg-gray-50 px-2 py-2 rounded-md">
+                        <div class="-mx-2 duration-300 flex hover:bg-blue-50 px-2 py-2 rounded-md">
                             <img src="{{ asset($sidejob->image) }}" class="w-9 h-9 mr-3" alt="">
                             <p class="line-clamp-2 leading-6 mt-2"> <strong> {{ $sidejob->position }} </strong> Salary of
                                 <strong> {{ $sidejob->currency }}{{ number_format($sidejob->salary, 2) }}

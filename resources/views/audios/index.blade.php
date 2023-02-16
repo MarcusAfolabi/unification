@@ -172,9 +172,7 @@
                                 <source src="{{ $aud->file }}" />
                             </audio>                         
                             <div class="text-sm text-blue-500 mt-0.5"> {{ $aud->views }} Streamed</div>
-                        </div>
-                            
-                            
+                        </div> 
                         </div>
                     </div>
                     @empty

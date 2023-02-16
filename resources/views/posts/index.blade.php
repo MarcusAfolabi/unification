@@ -12,6 +12,8 @@
             {{ session('status') }}
         </p>
         @endif
+        <x-jet-validation-errors class="mb-4" />
+
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
                 <h5 class="text-1xl font-semibold">
@@ -128,7 +130,7 @@
 
                             <a href="{{ route('posts.show', $post) }}" class="text-xl font-semibold line-clamp-2">
                                 {{ $post->title }}</a>
-                            <div class="border-b dark:border-blue-700 leading-6 line-clamp-2 mt-5">
+                            <div class="border-b blue:border-blue-700 leading-6 line-clamp-2 mt-5">
 
                                 {{ $post->intro  }}
                             </div>
@@ -197,23 +199,24 @@
             <h5>You can add pictures - (upto 5), Anniversary events and other fellowship activities from here.</h5>
         </div> 
         <form method="POST" action="{{ route('posts.store')}}" enctype="multipart/form-data">@csrf <div class="p-10 space-y-7">
-                <div class="line"><input class="line__input" id="title" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div>@error('title') <p style="color: red; ">{{ $message}} </p>@enderror <div class="line"><input class="line__input" id="intro" name="intro" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('intro')}}" autocomplete="off"><span for="intro" class="line__placeholder">Intro </span></div><label>Images</label>
+                <div class="line"><input class="line__input" id="title" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div> <div class="line"><input class="line__input" id="intro" name="intro" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('intro')}}" autocomplete="off"><span for="intro" class="line__placeholder">Intro </span></div>
+                <input class="with-border" hidden name="fellowship_id" value="{{ auth()->user()->fellowship_id }}">
                 <div uk-form-custom class="w-full py-3">
-                    <div class="bg-blue-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg dark:bg-blue-800 dark:border-blue-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
+                    <div class="bg-blue-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg blue:bg-blue-800 blue:border-blue-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
                             <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
                             <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                         </svg></div><input type="file" id="image" accept="image/*" multiple name="image[]"><a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">Images 5 max </a>
-                </div>@error('image') <p style="color: red; ">{{ $message}} </p>@enderror <div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
+                </div><div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
                         <option value="">{{ old('category')}} </option>
                         <option value="Anniversary">Annual Anniversary </option>
                         <option value="Fellowship">Fellowship Activities </option>
                         @if(auth()->user()->role==='admin') <option value="CEC">CEC News</option>@endif
-                    </select></div>@error('category') <p style="color: red; ">{{ $message}} </p>@enderror <div class="form-group">
+                    </select></div> <div class="form-group">
                     <textarea name="content" id="content" class="with-border px-3 py-3" placeholder="Content">{{ old('content')}}</textarea>
-                </div>@error('content') <p style="color: red; ">{{ $message}} </p>@enderror
+                </div>
             </div>
             <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
-                <p class="text-sm leading-6">Your Post Is Subject to Review and Proof-reading. Ensure To Be Accurate And Concise. </p><button class="button dark" type="submit">POST</button>
+                <p class="text-sm leading-6">Your Post Is Subject to Review and Proof-reading. Ensure To Be Accurate And Concise. </p><button class="button blue" type="submit">PUBLISH</button>
             </div>
         </form>
     </div>
