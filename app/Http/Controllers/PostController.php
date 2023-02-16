@@ -46,7 +46,7 @@ class PostController extends Controller
             "title" => 'required|string|unique:posts|max:255',
             "intro" => 'required',
             "image*" => 'required|image|array|max:5',
-            "image*" => 'required|image|mimes:jpeg,png,jpg|max:400',
+            "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
             "content" => 'required',
             "fellowship_id" => 'required',

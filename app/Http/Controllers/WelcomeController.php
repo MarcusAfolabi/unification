@@ -22,7 +22,7 @@ class WelcomeController extends Controller
         $sideproducts = Product::select('name', 'currency', 'price', 'image', 'slug')->inRandomOrder()->limit(10)->get();
         $poststories = Post::with(['images'])->select('id', 'title', 'slug', 'user_id')->inRandomOrder()->limit(5)->get();
         $sideprayers = Prayer::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
-        $sideaudios = Audio::select('id', 'title', 'slug')->inRandomOrder()->limit(10)->get();
+        $sideaudios = Audio::select('id', 'title', 'slug', 'image', 'file')->inRandomOrder()->limit(10)->get();
         $sidejobs = Vacancy::select('id', 'position', 'slug')->inRandomOrder()->limit(10)->get();
         return view('welcome', compact('posts', 'anniversary_posts', 'fellowship_posts', 'cec_posts', 'videos', 'poststories', 'sideaudios', 'sidejobs', 'sideproducts', 'sideprayers'));
     }

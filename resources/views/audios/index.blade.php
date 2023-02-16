@@ -116,10 +116,7 @@
                 <div class="flex sm:flex-row flex-col sm:space-x-4 py-4 relative w-full">
                     <div class="sm:w-56 w-full h-32 overflow-hidden rounded-lg relative shadow-sm flex-shrink-0">
                         <img src="{{ asset($aud->image) }}" alt="{{ $aud->title }}" class="w-full h-full absolute inset-0 object-cover">
-                        <!-- <audio class="js-player">
-                            <source src="{{ $aud->file }}" />
-                        </audio> -->
-                    <a href="{{asset($aud->file )}}"> <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt=""> </a>
+                    <a href="{{asset($aud->file )}}"> <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="{{ $aud->title }}"> </a>
                     </div>
                     <div class="flex-1 relative md:mt-0 mt-4">
                         <a href="#" class="text-xl font-semibold leading-6">{{ $aud->title }}</a>
