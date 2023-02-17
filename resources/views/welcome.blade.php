@@ -1,16 +1,12 @@
 @extends('layouts.main')
 @section('title', 'Welcome')
-
+@section('description', 'Welcome')
 @section('main')
 
 <div class="main_content">
-    <div class="mcontainer">
-
-        <!--  Feeds  -->
+    <div class="mcontainer"> 
         <div class="lg:flex lg:space-x-10">
-            <div class="lg:w-3/4 lg:px-20 space-y-7">
-
-                <!-- user story -->
+            <div class="lg:w-3/4 lg:px-20 space-y-7"> 
                 <div class="user_story grid md:grid-cols-5 grid-cols-3 gap-2 lg:-mx-20 relative">
 
                     @foreach ($poststories as $poststory)
@@ -72,7 +68,7 @@
                 <!--       </div>-->
                 <!--End Live Stream-->
 
-                @foreach ($posts as $post)
+                @foreach ($user_fellowship_posts as $post)
                 <div class="card lg:mx-0 uk-animation-slide-bottom-small">
                     <!-- post header-->
                     <div class="flex justify-between items-center lg:p-4 p-2.5">
@@ -81,79 +77,40 @@
                                 <img src="{{ $post->user->profile_photo_url }}" class="bg-blue-200 border border-white rounded-full w-10 h-10">
                             </a>
                             <div class="flex-1 font-semibold capitalize">
-                                <a href="{{ route('posts.show', $post) }}" class="text-black dark:text-blue-100">{{
+                                <a href="{{ route('posts.show', $post) }}" class="text-black blue:text-blue-100">{{
                                     $post->title }} </a>
                                 <div class="text-xs"> {{ $post->user->name }}
-                                    posted {{ $post->created_at->diffForHumans() }} <ion-icon name="people">
+                                    shared  {{ $post->created_at->diffForHumans() }} <ion-icon name="people">
                                     </ion-icon>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-blue-200 rounded-full p-2 transition -mr-1 dark:hover:bg-blue-700"></i>
+                            <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-blue-200 rounded-full p-2 transition -mr-1 blue:hover:bg-blue-700"></i>
                             </a>
-                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-blue-500 hidden text-base border border-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700" uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
-
-                                <ul class="space-y-1">
-                                    @guest
-
+                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-blue-500 hidden text-base border border-blue-100 blue:bg-blue-900 blue:text-blue-100 blue:border-blue-700" uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
+                                <ul class="space-y-1"> 
                                     <li>
-                                        <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                                <i class="icon-brand-facebook-square"> </i> Share</a>
-                                        </div>
-
+                                        <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                                <i class="icon-brand-facebook-square"> </i>&nbsp; Share on Facebook</a>
+                                        </div> 
+                                    </li>
+                                    <li> 
+                                        <a href="https://twitter.com/intent/tweet?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                            <i class="icon-brand-twitter-square"> </i> &nbsp; Share on Twitter</a>
                                     </li>
                                     <li>
 
-                                        <a href="https://twitter.com/intent/tweet?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                            <i class="icon-brand-twitter-square"> </i> Share</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="https://api.whatsapp.com/share?url={{ route('posts.show', $post) }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                            <i class="icon-brand-whatsapp-square"> </i> Share</a>
-                                    </li>
-                                    @endguest
-                                    @auth
-                                    <li>
-                                        <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                                <i class="icon-brand-facebook-square"> </i> Share</a>
-                                        </div>
-
-                                    </li>
-                                    <li>
-
-                                        <a href="https://twitter.com/share?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                            <i class="icon-brand-twitter-square"> </i> Share</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="https://whatsapp.com/share?url={{ route('posts.show', $post) }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                            <i class="icon-brand-whatsapp-square"> </i> Share</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('posts.edit', $post) }}" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                            <i class="uil-edit-alt mr-1"></i> Edit Post
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="-mx-2 my-2 dark:border-blue-800">
-                                    </li>
-                                    <li>
-                                        <a href="" class="flex items-center px-3 py-2 text-red-500 hover:bg-red-100 hover:text-red-500 rounded-md dark:hover:bg-red-600">
-                                            <i class="uil-trash-alt mr-1"></i> Delete
-                                        </a>
-                                    </li>
-                                    @endauth
-
+                                        <a href="https://api.whatsapp.com/share?url={{ route('posts.show', $post) }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                            <i class="icon-brand-whatsapp-square"> </i> &nbsp; Share on Whatsapp</a>
+                                    </li> 
                                 </ul>
 
                             </div>
                         </div>
                     </div>
-                    <div class="p-2 pt-0 leading-6 line-clamp-2 mt-1">
-
-                        {!! $post->content !!}
+                    <div class="p-5 pt-0 border-b blue:border-blue-700">
+                        {{  $post->intro  }}... <a class="text-sm text-blue-500 mt-0.5" href="{{ route('posts.show', $post) }}">Read more</a>
                     </div>
                     <div uk-lightbox>
                         <div class="grid grid-cols-2 gap-2 px-5">
@@ -165,16 +122,13 @@
                             @endforeach
 
                         </div>
-                    </div>
-
+                    </div> 
                     <div class="p-4 space-y-3">
                         <div class="flex space-x-4 lg:font-bold">
-                            @auth
-
+                            @auth 
                             @php
                             $liked = $post->likes()->where('user_id', auth()->user()->id)->exists();
-                            @endphp
-
+                            @endphp 
                             @if (!$liked)
                             <form action="{{ route('posts.like', $post) }}" method="POST">
                                 @csrf
@@ -186,8 +140,7 @@
                                     </div>
                                     <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} Like </button> </div>
                             </form>
-                            @else
-
+                            @else 
                             <a href="#" class="flex items-center space-x-2">
                                 <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
@@ -196,8 +149,8 @@
                                 </div>
                                 <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} You Like it</button> </div>
                                 @endif
-                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="dark:text-blue-100">
+                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="blue:text-blue-100">
                                             <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                                         </svg>Share</a>
                                 </div>
@@ -205,7 +158,7 @@
                                 @guest
                                 <form action="{{ route('posts.like', $post) }}" method="POST">
                                     @csrf
-                                    <a href="#" class="flex items-center space-x-2">
+                                    <a class="flex items-center space-x-2">
                                         <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
                                                 <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
@@ -213,8 +166,8 @@
                                         </div>
                                         <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} Like </button> </div>
                                 </form>
-                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md dark:hover:bg-blue-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="dark:text-blue-100">
+                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="blue:text-blue-100">
                                             <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                                         </svg>Share</a>
                                 </div>
@@ -223,7 +176,223 @@
                     </div>
                 </div>
                 @endforeach
-            </div>
+                @foreach ($fellowship_posts as $post)
+                <div class="card lg:mx-0 uk-animation-slide-bottom-small">
+                    <!-- post header-->
+                    <div class="flex justify-between items-center lg:p-4 p-2.5">
+                        <div class="flex flex-1 items-center space-x-4">
+                            <a href="#">
+                                <img src="{{ $post->user->profile_photo_url }}" class="bg-blue-200 border border-white rounded-full w-10 h-10">
+                            </a>
+                            <div class="flex-1 font-semibold capitalize">
+                                <a href="{{ route('posts.show', $post) }}" class="text-black blue:text-blue-100">{{
+                                    $post->title }} </a>
+                                <div class="text-xs"> {{ $post->user->name }}
+                                    shared  {{ $post->created_at->diffForHumans() }} <ion-icon name="people">
+                                    </ion-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-blue-200 rounded-full p-2 transition -mr-1 blue:hover:bg-blue-700"></i>
+                            </a>
+                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-blue-500 hidden text-base border border-blue-100 blue:bg-blue-900 blue:text-blue-100 blue:border-blue-700" uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
+                                <ul class="space-y-1"> 
+                                    <li>
+                                        <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                                <i class="icon-brand-facebook-square"> </i>&nbsp; Share on Facebook</a>
+                                        </div> 
+                                    </li>
+                                    <li> 
+                                        <a href="https://twitter.com/intent/tweet?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                            <i class="icon-brand-twitter-square"> </i> &nbsp; Share on Twitter</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="https://api.whatsapp.com/share?url={{ route('posts.show', $post) }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                            <i class="icon-brand-whatsapp-square"> </i> &nbsp; Share on Whatsapp</a>
+                                    </li> 
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 border-b blue:border-blue-700">
+                        {{  $post->intro  }}... <a class="text-sm text-blue-500 mt-0.5" href="{{ route('posts.show', $post) }}">Read more</a>
+                    </div>
+                    <div uk-lightbox>
+                        <div class="grid grid-cols-2 gap-2 px-5">
+
+                            @foreach ($post->images as $image)
+                            <a href="{{ asset('storage/' . $image->path) }}" class="relative">
+                                <img src="{{ asset('storage/' . $image->path) }}" title="{{ $post->title }}" alt="{{ $post->title }}" class="rounded-md w-full h-full">
+                            </a>
+                            @endforeach
+
+                        </div>
+                    </div> 
+                    <div class="p-4 space-y-3">
+                        <div class="flex space-x-4 lg:font-bold">
+                            @auth 
+                            @php
+                            $liked = $post->likes()->where('user_id', auth()->user()->id)->exists();
+                            @endphp 
+                            @if (!$liked)
+                            <form action="{{ route('posts.like', $post) }}" method="POST">
+                                @csrf
+                                <a href="#" class="flex items-center space-x-2">
+                                    <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                        </svg>
+                                    </div>
+                                    <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} Like </button> </div>
+                            </form>
+                            @else 
+                            <a href="#" class="flex items-center space-x-2">
+                                <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                    </svg>
+                                </div>
+                                <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} You Like it</button> </div>
+                                @endif
+                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="blue:text-blue-100">
+                                            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                                        </svg>Share</a>
+                                </div>
+                                @endauth
+                                @guest
+                                <form action="{{ route('posts.like', $post) }}" method="POST">
+                                    @csrf
+                                    <a class="flex items-center space-x-2">
+                                        <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                            </svg>
+                                        </div>
+                                        <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} Like </button> </div>
+                                </form>
+                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="blue:text-blue-100">
+                                            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                                        </svg>Share</a>
+                                </div>
+                                @endguest
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                @foreach ($anniversary_posts as $post)
+                <div class="card lg:mx-0 uk-animation-slide-bottom-small">
+                    <!-- post header-->
+                    <div class="flex justify-between items-center lg:p-4 p-2.5">
+                        <div class="flex flex-1 items-center space-x-4">
+                            <a href="#">
+                                <img src="{{ $post->user->profile_photo_url }}" class="bg-blue-200 border border-white rounded-full w-10 h-10">
+                            </a>
+                            <div class="flex-1 font-semibold capitalize">
+                                <a href="{{ route('posts.show', $post) }}" class="text-black blue:text-blue-100">{{
+                                    $post->title }} </a>
+                                <div class="text-xs"> {{ $post->user->name }}
+                                    shared  {{ $post->created_at->diffForHumans() }} <ion-icon name="people">
+                                    </ion-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-blue-200 rounded-full p-2 transition -mr-1 blue:hover:bg-blue-700"></i>
+                            </a>
+                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-blue-500 hidden text-base border border-blue-100 blue:bg-blue-900 blue:text-blue-100 blue:border-blue-700" uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
+                                <ul class="space-y-1"> 
+                                    <li>
+                                        <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                                <i class="icon-brand-facebook-square"> </i>&nbsp; Share on Facebook</a>
+                                        </div> 
+                                    </li>
+                                    <li> 
+                                        <a href="https://twitter.com/intent/tweet?url={{ route('posts.show', $post) }}&amp;text=-{{ $post->title }}&amp;text=By {{ $post->user->name }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                            <i class="icon-brand-twitter-square"> </i> &nbsp; Share on Twitter</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="https://api.whatsapp.com/share?url={{ route('posts.show', $post) }}" target="_blank" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                            <i class="icon-brand-whatsapp-square"> </i> &nbsp; Share on Whatsapp</a>
+                                    </li> 
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 border-b blue:border-blue-700">
+                        {{  $post->intro  }}... <a class="text-sm text-blue-500 mt-0.5" href="{{ route('posts.show', $post) }}">Read more</a>
+                    </div>
+                    <div uk-lightbox>
+                        <div class="grid grid-cols-2 gap-2 px-5">
+
+                            @foreach ($post->images as $image)
+                            <a href="{{ asset('storage/' . $image->path) }}" class="relative">
+                                <img src="{{ asset('storage/' . $image->path) }}" title="{{ $post->title }}" alt="{{ $post->title }}" class="rounded-md w-full h-full">
+                            </a>
+                            @endforeach
+
+                        </div>
+                    </div> 
+                    <div class="p-4 space-y-3">
+                        <div class="flex space-x-4 lg:font-bold">
+                            @auth 
+                            @php
+                            $liked = $post->likes()->where('user_id', auth()->user()->id)->exists();
+                            @endphp 
+                            @if (!$liked)
+                            <form action="{{ route('posts.like', $post) }}" method="POST">
+                                @csrf
+                                <a href="#" class="flex items-center space-x-2">
+                                    <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                        </svg>
+                                    </div>
+                                    <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} Like </button> </div>
+                            </form>
+                            @else 
+                            <a href="#" class="flex items-center space-x-2">
+                                <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                    </svg>
+                                </div>
+                                <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} You Like it</button> </div>
+                                @endif
+                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="blue:text-blue-100">
+                                            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                                        </svg>Share</a>
+                                </div>
+                                @endauth
+                                @guest
+                                <form action="{{ route('posts.like', $post) }}" method="POST">
+                                    @csrf
+                                    <a class="flex items-center space-x-2">
+                                        <div class="p-2 rounded-full  text-blue lg:bg-blue-100 blue:bg-blue-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="blue:text-blue-100">
+                                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                            </svg>
+                                        </div>
+                                        <div> <button type="submit" class="btn btn-primary"> {{ $post->likes->count() }} Like </button> </div>
+                                </form>
+                                <div class="fb-share-button" data-href="https://web.facebook.com/isokancampusfellowship" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.show', $post) }}&amp;text={{ $post->title }}&amp;src=sdkpreparse" class="flex items-center px-3 py-2 hover:bg-blue-200 hover:text-blue-800 rounded-md blue:hover:bg-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" class="blue:text-blue-100">
+                                            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                                        </svg>Share</a>
+                                </div>
+                                @endguest
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div> 
             <div class="lg:w-72 w-full">
                 <a href="#">
                     <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
@@ -236,8 +405,7 @@
                             </p>
                         </div>
                     </div>
-                </a>
-
+                </a> 
                 <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
                     <h3 class="text-line-through font-semibold mb-1"> Daily Prayer Chant </h3>
                     @foreach ($sideprayers as $sideprayer)
@@ -269,8 +437,7 @@
                         <div class="text-sm text-blue-500 mt-0.5"> {{ $aud->views }} Streamed</div>
                     </div>
                 </div> 
-                @endforeach
-
+                @endforeach 
                 <div class="bg-white mb-5 px-4 py-3 rounded-md shadow">
                     <h3 class="text-line-through font-semibold mb-1"> Suggested Products </h3>
                     @foreach ($sideproducts as $sideproduct)

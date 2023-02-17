@@ -87,7 +87,7 @@
                     </div>
                     <!-- <div class="p-2 pt-0 leading-6 line-clamp-2 mt-1"> -->
                     <div class="p-5 pt-0 border-b blue:border-blue-700">
-                        {!! $fellowship_post->content !!}
+                        {{ $fellowship_post->intro }}
                     </div>
                     <div uk-lightbox>
                         <div class="grid grid-cols-2 gap-2 px-5">
