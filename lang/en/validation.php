@@ -128,6 +128,8 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'allowed_email_domain' => 'The :attribute must be a valid email with one of the following domains: gmail.com, yahoo.com, hotmail.com',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -143,9 +145,10 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+
         ],
 
-        'postImage'=>[
+        'image'=>[
             'image' => 'The file must be an Image'
         ],
     ],

@@ -29,7 +29,8 @@ class ProductController extends Controller
         if ($role == 'admin') {
             return view('products.indexAdmin', compact('products', 'recentpros'));
         } else {
-            return view('products.index', compact('products', 'recentpros'));
+            $my_products = Product::select('id', 'name', 'price', 'type', 'image', 'currency', 'slug')->where('user_id', auth()->user()->id)->latest()->get();
+            return view('products.index', compact('my_products', 'recentpros'));
         }
     }
    
@@ -41,7 +42,7 @@ class ProductController extends Controller
             "currency" => 'required',
             "price" => 'required|numeric|min:0',
             "category" => 'required',
-            "stock" => 'required|integer|min:0',
+            "stock" => 'required|string',
             "brand" => 'required',
             "image" => 'required|image|max:2048',
             "image1" => 'required|image|max:2048',

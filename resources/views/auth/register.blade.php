@@ -10,10 +10,11 @@
     </div>
     <div class="mcontainer">
         <div class="-mt-16 bg-white max-w-2xl mx-auto p-10 relative rounded-md shadow">
-            <form method="POST" action="{{ route('register')}}" >
+            <form method="POST" id="register" action="{{ route('register')}}" >
                 <x-jet-validation-errors class="mb-4" />
                 <div class="grid md:grid-cols-2 md:gap-y-7 md:gap-x-6 gap-6">
                     @csrf 
+                    <input hidden id="recaptcha_token" name="recaptcha_token">
                     <div class="line"><input class="line__input"  id="name" autofocus name="name" type="name" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name')}}" autocomplete="off"><span for="name" class="line__placeholder">First Name </span></div>
                     <div class="line"><input class="line__input"  id="lastname" autofocus name="lastname" type="lastname" onkeyup="this.setAttribute('value', this.value);" value="{{ old('lastname')}}" autocomplete="off"><span for="lastname" class="line__placeholder">Last name </span></div>
                     <div class="line"><input class="line__input"  id="email" autofocus name="email" type="email" onkeyup="this.setAttribute('value', this.value);" value="{{ old('email')}}" autocomplete="off"><span for="email" class="line__placeholder">Email </span></div>
@@ -85,10 +86,10 @@
                         </span></div>
                     <div class="line"><input class="line__input"  id="course_one" autofocus name="course_one" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('course_one')}}" autocomplete="off"><span for="course_one" class="line__placeholder">Course Of
                             Study </span></div>
-
                     <div class="line"><input class="line__input"  id="password" name="password" type="password" autocomplete="current-password" onkeyup="this.setAttribute('value', this.value);" value="{{ old('password')}}" autocomplete="off"><span for="password" class="line__placeholder">Password </span></div>
                     <div class="line"><input class="line__input" id="password" name="password_confirmation" type="password" autocomplete="current-password" onkeyup="this.setAttribute('value', this.value);" value="{{ old('password')}}" autocomplete="off"><span for="password" class="line__placeholder">Confirm Password </span>
                     </div>
+                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
                     <div class="md:col-span-2 md:flex items-center justify-between">
                         <div>
                             <div class="checkbox"><input type="checkbox" required name="remember_me"  id="chekcbox2"><label for="chekcbox2"><span class="checkbox-icon"></span><span class="font-medium text-blue-400">I belong to this fold and my information is
@@ -106,4 +107,10 @@
         </div>
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("register").submit();
+    }
+</script>
  @endsection

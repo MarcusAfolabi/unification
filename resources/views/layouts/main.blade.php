@@ -352,7 +352,7 @@
         @endauth 
         @yield('main')
     </div>
-@cache('my-key,forever')
+<!-- @cache('my-key,forever') -->
     <script src="{{ asset('assets/code.jquery.com/jquery-3.6.0.min.js')}}" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/tippy.all.min.js')}}"></script>
     <script src="{{ asset('assets/js/uikit.js')}}"></script>
@@ -394,6 +394,6 @@
 
         })(window, document);
     </script> 
-@endcache
+<!-- @endcache -->
 </body>
 </html>

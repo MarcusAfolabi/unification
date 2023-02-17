@@ -45,15 +45,15 @@ class PostController extends Controller
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
             "intro" => 'required',
-            "image*" => 'required|image|array|max:5',
+            "image" => 'required|image|array|max:5',
             "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
-            "content" => 'required',
-            "fellowship_id" => 'required',
+            'content' => 'required|string',
+            'fellowship_id' => 'required|integer',
         ]);
-
+    
         $post = new Post();
-        $post->fill($request->only(['title', 'intro', 'category', 'content', 'fellowship_id']));
+        $post->fill(Str::clean($request->only(['title', 'intro', 'category', 'content', 'fellowship_id'])));
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();

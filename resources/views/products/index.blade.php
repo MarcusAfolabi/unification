@@ -18,10 +18,10 @@
         @endif
         <x-jet-validation-errors class="mb-4" />
         <div class="card">
-            @if ($products->count() > 0)
+            @if ($my_products->count() > 0)
             <div class="px-1 py-3">
                 <ul class=" uk-child-width-1-5@m uk-child-width-1-3@s uk-child-width-1-2 uk-grid-small uk-grid">
-                    @foreach ($products as $product)
+                    @foreach ($my_products as $product)
                     <li>
                         <a href="{{ route('products.show', $product) }}">
                             <div class="card">
@@ -174,7 +174,7 @@
                 <p class="text-sm leading-6"> Your Product Listing Is Subject to Review and Proof-reading.
                     Ensure To Be
                     Accurate And Concise. </p>
-                <button class="button blue" type="submit">SELL</button>
+                <button class="button blue" type="submit">ENLIST</button>
             </div>
         </form>
     </div>

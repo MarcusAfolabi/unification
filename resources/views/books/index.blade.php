@@ -110,10 +110,8 @@
                     <div class="flex space-x-2 items-center text-sm pt-1">
                         <div> {{ $book->created_at->diffForHumans() }}</div>
                         <div>·</div>
-                        <a href="{{ route('books.edit', $book) }}"> <span class="icon-feather-edit "></span> Edit</a>
-                        <div>·</div>
-                        <a href="{{ route('books.edit', $book) }}"> <span class="icon-feather-arrow-down-circle"></span> {{ $book->view }}</a>
-                         
+                        <a href="{{ route('books.edit', $book) }}"> <span class="icon-feather-edit"></span> Edit</a>
+                        <div>·</div>                         
                         <div>
                             <form action="{{ route('books.destroy', $book) }}" method="POST">
                                 @method('delete')
@@ -155,7 +153,7 @@
                     <div class="flex-1">
                         <a href="{{ asset($book->file) }}" class="text-base font-semibold capitalize"> {{ $book->title }}
                         </a>
-                        <div class="text-sm text-blue-500 mt-0.5"> {{ $book->view }} downloads</div>
+                        <div class="text-sm text-blue-500 mt-0.5"> {{ $book->views }} downloads</div>
                     </div>
                     <a href="{{ asset($book->file) }}" class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold">
                         <span class="icon-material-outline-save-alt"></span>

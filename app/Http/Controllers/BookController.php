@@ -21,7 +21,7 @@ class BookController extends Controller
             $books = Book::where('title', 'like', '%' . $request->books . '%')
                 ->orWhere('author', 'like', '%' . $request->books . '%')->latest()->paginate(30);
         } else {
-            $books = Book::latest()->paginate(30);
+            $books = Book::where('user_id', auth()->user()->id)->latest()->paginate(30);
         }
         DB::table('books')->increment('views');
         $sidebooks = Book::where('user_id', '!=', auth()->user()->id)->inRandomOrder()->take(10)->get();
