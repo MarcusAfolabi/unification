@@ -7,6 +7,7 @@ use App\Models\Unit;
 use App\Models\User;
 use App\Models\Image;
 use App\Mail\PostMail;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Postlike;
 use App\Models\Fellowship;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
@@ -28,8 +30,8 @@ class PostController extends Controller
     }
     public function index(Request $request)
     {
-        $myposts = Post::with(['images'])->select('id', 'category', 'title', 'intro', 'created_at', 'slug')->where('user_id', auth()->user()->id)->latest()->paginate(40);
-        $all_posts = Post::with(['images'])->select('id', 'title', 'intro', 'created_at', 'category', 'user_id')->latest()->paginate(40);
+        $myposts = Post::with(['images'])->select('id', 'category', 'title', 'intro', 'created_at', 'slug', 'views')->where('user_id', auth()->user()->id)->latest()->paginate(40);
+        $all_posts = Post::with(['images'])->select('id', 'title', 'created_at', 'category', 'user_id', 'slug', 'views')->latest()->paginate(40);
         $sideproducts = Product::select('name', 'currency', 'price', 'slug', 'id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
         return view('posts.index', compact('myposts', 'all_posts', 'sideproducts'));
     }
@@ -40,20 +42,22 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
-        // $user = User::latest()->get();
+        $user = User::latest()->get();
 
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
-            "intro" => 'required',
+            "intro" => 'required|string|max:251',
             "image" => 'required|image|array|max:5',
             "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
+                        'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i'],
             'content' => 'required|string',
             'fellowship_id' => 'required|integer',
         ]);
-    
+
         $post = new Post();
         $post->fill(Str::clean($request->only(['title', 'intro', 'category', 'content', 'fellowship_id'])));
+        $content = htmlentities($request['content'], ENT_QUOTES, 'UTF-8');
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();
@@ -67,15 +71,16 @@ class PostController extends Controller
             }
         }
 
-        // Notification::route('mail', [
-        //     'info@cnsunification.org' => 'Alert! New post has been published on the website',
-        // ])->notify(new PostNotification($post));
+        Notification::route('mail', [
+            'info@cnsunification.org' => 'Alert! New post has been published on the website',
+        ])->notify(new PostNotification($post));
 
-        // Mail::to($post->user->email)->send(new PostMail($post));
+        Mail::to($post->user->email)->send(new PostMail($post));
         return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
-    public function like(Post $post){
+    public function like(Post $post)
+    {
         $user = Auth::user();
 
         // Check if the user has already liked the post
@@ -100,7 +105,8 @@ class PostController extends Controller
         return redirect()->back()->with(['status' => 'Post liked successfully.']);
     }
 
-    public function unlike(Post $post){
+    public function unlike(Post $post)
+    {
         $user = Auth::user();
 
         // Check if the user has liked the post
@@ -122,13 +128,48 @@ class PostController extends Controller
         return response()->json(['message' => 'Post unliked successfully.']);
     }
 
+    public function comment(Request $request, Post $post)
+    {
+        $validatedData = $request->validate([
+            'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i'],
+            'post_id' => ['required', 'integer', 'max:255'],
+        ]);
+
+        $user = Auth::user();  
+        $content = htmlentities($validatedData['content'], ENT_QUOTES, 'UTF-8');
+        $comment = new Comment();
+        $comment->content = $content;
+        $comment->post_id = $validatedData['post_id'];
+        $comment->user_id = $user->id;
+        $post->comments()->save($comment);
+        
+        return redirect()->back()->with(['status' => 'comment shared.']);
+        
+
+    }
+
+    public function uncomment(Comment $comment, Post $post ){
+        $user = Auth::user();
+
+        // Retrieve the post by its ID
+        $post = Post::findOrFail($post);
+    
+        // Retrieve the comment by its ID, ensuring that it belongs to the authenticated user
+        $comment = Comment::where('id', $comment)->where('user_id', $user->id)->firstOrFail();
+    
+        // Delete the comment from the post
+        $comment->delete();
+    }
+
     public function show(Post $post)
     {
 
         DB::table('posts')->increment('views');
+        $list_comments = Comment::where('post_id', $post->id)->select('user_id')->distinct()->get();
+        $comments = Comment::where('post_id', $post->id)->select('content', 'user_id')->latest()->get();
         $sideposts = Post::with(['images'])->select('id', 'title', 'created_at', 'views', 'slug')->where('category', '!=', $post->category)->latest()->take(5)->get();
         $relatedposts = Post::with(['images'])->select('id', 'title', 'created_at', 'views', 'slug')->where('id', '!=', $post->id)->latest()->take(5)->get();
-        return view('posts.show', compact('post', 'relatedposts', 'sideposts'));
+        return view('posts.show', compact('post', 'relatedposts', 'sideposts', 'comments', 'list_comments'));
     }
 
     public function edit(Post $post)
@@ -143,8 +184,8 @@ class PostController extends Controller
             "image*" => 'required|image|array|max:5',
             "image*" => 'sometimes|image|mimes:jpeg,png,jpg|max:250|dimensions:min_width=300,min_height=300,max_width=900,max_height=450',
             "category" => 'required',
-            "content" => 'required'
-        ]);
+            'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i'],
+         ]);
         $post->fill($request->only(['title', 'intro', 'category', 'content']));
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
@@ -170,7 +211,7 @@ class PostController extends Controller
         Image::find($id)->delete();
         return redirect()->back()->with('status', 'Post Image Deleted');
     }
- 
+
     public function destroy(Post $post)
     {
         $images = $post->images;

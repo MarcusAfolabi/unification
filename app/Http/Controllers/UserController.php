@@ -13,69 +13,56 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'admin']);
     }
     public function index(Request $request)
     {
         if ($request->members) {
             $users = User::where('name', 'like', '%' . $request->members . '%')
-            ->orWhere('email', 'like', '%' . $request->members . '%')
-                ->orWhere('yourfellowship', 'like', '%' . $request->members . '%')->latest()->paginate(50);
+                ->orWhere('email', 'like', '%' . $request->members . '%')
+                ->orWhere('fellowship_id', 'like', '%' . $request->members . '%')->latest()->paginate(50);
         } else {
             $users = User::latest()->paginate(50);
         }
-        $role = Auth::user()->role;
-        if ($role == 'admin') {
-            return view('user.index', compact('users'));
-        }
-        else{
-        return redirect()->back()->with('status', 'Unauthorized Action');
-        }
+        return view('user.index', compact('users'));
     }
 
-    public function president(){
-        $users = User::where('positionHeld', 'PRESIDENT')->latest()->paginate('50');
+    public function president()
+    {
+        $users = User::where('fellowship_status', 'PRESIDENT')->latest()->paginate('50');
 
-        $role = Auth::user()->role;
-        if ($role == 'admin') {
-            return view('user.president', compact('users'));
-        }
-        else{
-        return redirect()->back()->with('status', 'Unauthorized Action');
-        }    }
+        return view('user.president', compact('users'));
+    }
+    public function pro()
+    {
+        $users = User::where('fellowship_status', 'PUBLICITY SECRETARY')->latest()->paginate('50');
+
+        return view('user.pro', compact('users'));
+    }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-
-            "name" => 'required', 
+            "name" => 'required',
             "email" => 'required',
             "password" => 'required',
+            "fellowship_id" => 'required',
+            "unit_id" => 'required',
         ]);
         $input = $request->all();
         $password = Hash::make($request['email']);
         $users = User::create($validatedData);
-        // $password = Hash::make($request['password']);
-
         return redirect()->back()->with('status', 'Added Successfully');
     }
 
     public function create()
     {
-        return view('user.create');
-    }
-    public function changeStatus(Request $request)
-    {
-        $user = User::find($request->user_id);
-        $user->status = $request->status;
-        $user->save();
-
-        return response()->json(['success'=>'Status change successfully.']);
+        //
     }
     public function show(User $users)
-    { 
+    {
         $timelineproducts = Product::latest()->paginate(20);
         $timelineposts = Post::latest()->paginate(20);
-        return view('user.show', compact('timelineposts', 'timelineproducts' ));
+        return view('user.show', compact('timelineposts', 'timelineproducts'));
     }
     public function destroy(User $user)
     {

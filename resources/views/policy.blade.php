@@ -1,5 +1,4 @@
-{{-- <x-guest-layout> --}}
-    @extends('layouts.main')
+@extends('layouts.main')
 @section('title', 'Privacy Policy')
 @section('main')
     <div class="pt-4 bg-gray-100">
@@ -179,5 +178,4 @@
             </div>
         </div>
     </div>
-{{-- </x-guest-layout> --}}
 @endsection

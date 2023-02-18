@@ -12,7 +12,7 @@ class VideoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['show']);
+        $this->middleware(['auth', 'admin'])->except(['show']);
     }
 
     public function index(Request $request)
@@ -21,7 +21,7 @@ class VideoController extends Controller
             $videos = Video::where('title', 'like', '%' . $request->videos . '%')
                 ->orWhere('content', 'like', '%' . $request->videos . '%')->latest()->paginate(30);
         } else {
-            $videos = Video::where('user_id')->latest()->paginate(30);
+            $videos = Video::latest()->paginate(30);
         }
         $my_videos = Video::where('user_id', auth()->user()->id)->latest()->paginate(30);
         $sidevideos = Video::select('user_id', 'id', 'slug', 'created_at', 'image', 'views', 'title')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->take(5)->get();

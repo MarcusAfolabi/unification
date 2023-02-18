@@ -1,19 +1,21 @@
 @extends('layouts.main')@section('title', 'All Prayers')@section('description', 'This is all prayer
 supplications')@section('keywords', 'praying hands, answering prayer, pray, bible')@section('canonical',
-'https://cnsunification.org/prayers')@section('main') <div class="main_content">
-    <div class="mcontainer"> @if(auth()->user()->role==='admin' ) <div
-            class="flex justify-between items-center relative md:mb-4 mb-3">
+'https://cnsunification.org/prayers')
+@section('main')
+<div class="main_content">
+    <div class="mcontainer">
+        <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
-                <h5 class="text-1xl font-semibold"><a href="{{ route('prayers.create')}}"><i
-                            class="icon-material-outline-add"></i>New Prayer </a></h5>
+                <h5 class="text-1xl font-semibold"><a uk-tooltip="Add" href="#modal-prayer" uk-toggle><i class="icon-material-outline-add"></i>New Prayer </a></h5>
             </div>
-        </div>@if (session('status')) <p
-            class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">{{ session('status')}}
-        </p>@endif <div class="card">
+        </div>
+        <x-jet-validation-errors class="mb-4" />
+        @if (session('status')) <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">{{ session('status')}}
+        </p>@endif
+        <div class="card">
             <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"></div>
             <div class="header_search"><i class="uil-search-alt"></i>
-                <form action=""><input type="text" class="form-control" name="prayers"
-                        placeholder="Search for Bible Study, Prayer and more.." autocomplete="off"></form>
+                <form action=""><input type="text" class="form-control" name="prayers" placeholder="Search for Bible Study, Prayer and more.." autocomplete="off"></form>
             </div>
             <hr><br>
             <div class="flex flex-col">
@@ -47,48 +49,43 @@ supplications')@section('keywords', 'praying hands, answering prayer, pray, bibl
                                             Delete</th>
                                     </tr>
                                 </thead>
-                                <tbody>@forelse ($prayers as $key=> $prayer) <tr class="border-b">
+                                <tbody>
+                                    @forelse ($prayers as $key=> $prayer) 
+                                    <tr class="border-b">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">
-                                            {{ ++$key}}</td>
-                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a
-                                                href="{{ route('prayers.show', $prayer)}}"
-                                                target="_blank">{{ $prayer->title}} </a></td>
+                                            {{ ++$key}}
+                                        </td>
+                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a href="{{ route('prayers.show', $prayer)}}" target="_blank">{{ $prayer->title}} </a></td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ $prayer->author}}</td>
+                                            {{ $prayer->author}}
+                                        </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ date('l-d-M-Y', strtotime($prayer->publication))}}</td>
+                                            {{ date('l-d-M-Y', strtotime($prayer->publication))}}
+                                        </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ $prayer->category}}</td>
+                                            {{ $prayer->category}}
+                                        </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ $prayer->user->name}} </td>
+                                            {{ $prayer->user->name}}
+                                        </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ $prayer->created_at->diffForHumans()}}</td>
-                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a
-                                                href="{{ route('prayers.edit', $prayer)}}"><span
-                                                    class="icon-feather-edit "></span></a></td>
+                                            {{ $prayer->created_at->diffForHumans()}}
+                                        </td>
+                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a href="{{ route('prayers.edit', $prayer)}}"><span class="icon-feather-edit "></span></a></td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <script
-                                                src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                                                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                                                crossorigin="anonymous"></script>
+                                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
                                             <div class="switches-list">
-                                                <div class="switch-container">@if($prayer->status=='1') <label
-                                                        class="switch"><a href="{{ url('/status', $prayer)}}"><input
-                                                                type="checkbox" checked><span
-                                                                class="switch-button"></span>Active</a></label>@else
-                                                    <label class="switch"><a href="{{ url('/status', $prayer)}}"><input
-                                                                type="checkbox"><span
-                                                                class="switch-button"></span>InActive </a></label>@endif
+                                                <div class="switch-container">@if($prayer->status=='1') <label class="switch"><a href="{{ url('/status', $prayer)}}"><input type="checkbox" checked><span class="switch-button"></span>Active</a></label>@else
+                                                    <label class="switch"><a href="{{ url('/status', $prayer)}}"><input type="checkbox"><span class="switch-button"></span>InActive </a></label>@endif
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ $prayer->views}} prayed</td>
+                                            {{ $prayer->views}} prayed
+                                        </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
                                             <form action="{{ route('prayers.destroy', $prayer)}}" method="POST">
-                                                @method('delete') @csrf <button type="submit"
-                                                    onclick="return confirm('Hey, Are you sure about this?');"><span
-                                                        class="icon-feather-trash-2"></span></button></form>
+                                                @method('delete') @csrf <button type="submit" onclick="return confirm('Hey, Are you sure about this?');"><span class="icon-feather-trash-2"></span></button></form>
                                         </td>
                                     </tr>
                                     @empty <p class="text-center text-opacity-75">Nothing Here!</p>
@@ -99,100 +96,30 @@ supplications')@section('keywords', 'praying hands, answering prayer, pray, bibl
                 </div>
             </div>
         </div>
-    </div>@elseif(auth()->user()->role === 'member' ) <div class="lg:flex lg:space-x-10">
-        <div class="lg:w-2/3">
-            <div class="my-5 flex justify-between pb-3">
-                <h2 class="text-2xl font-semibold">Daily Prayers </h2>
-            </div>
-            <div class="divide-y -mt-3 card px-5 py-2 ">
-                @forelse ($prayers as $prayer)
-                @if (auth()->user()->id===$prayer->user->id)
-                <div class="flex sm:flex-row flex-col sm:space-x-4 py-4 relative w-full">
-                    <div class="flex-1 relative md:mt-0 mt-4"> <a href="{{ route('prayers.show', $prayer)}}"
-                            class="text-xl font-semibold leading-6">{{ $prayer->title}}</a>
-                        <div class="font-semibold mt-2">Minister:{{ $prayer->author}} </div>
-                        <div class="flex space-x-2 items-center text-sm pt-1">
-                            <div>{{ $prayer->created_at->diffForHumans()}}</div>
-                            <div>·</div><a href="{{ route('prayers.edit', $prayer)}}"><span
-                                    class="icon-feather-edit "></span>Edit</a>
-                            <div>·</div>
-                            <div>
-                                <form action="{{ route('prayers.destroy', $prayer)}}" method="POST">@method('delete')
-                                    @csrf <button type="submit"
-                                        onclick="return confirm('Hey, Are you sure about this?');"><span
-                                            class="icon-feather-trash-2"></span>Delete</button></form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @empty <p class="text-center text-opacity-75">Nothing Here!</p>
-                @endforelse
-            </div>
-            @endif
-        </div>
-        <div class="lg:w-1/3 w-full">
-            <div uk-sticky="media @m ; offset:80 ; bottom : true" class="card">
-                <div class="border-b flex items-center justify-between p-4">
-                    <div>
-                        <h2 class="text-lg font-semibold">Recent prayer</h2>
-                    </div>
-                </div>
-                <div class="p-3">@foreach ($recentprayers as $prayer) <div
-                        class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-blue-50"><a
-                            href="{{ route('prayers.show', $prayer)}}" iv
-                            class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative"><img
-                                src="{{ asset('assets/images/icons/bible-icon.png')}}"
-                                class="absolute w-full h-full inset-0 " alt="{{ $prayer->title}}"></a>
-                        <div class="flex-1"><a href="{{ route('prayers.show', $prayer)}}"
-                                class="text-base font-semibold capitalize line-clamp-1 mt-1">{{ $prayer->title}} </a>
-                            <div class="text-sm text-blue-500 mt-0.5">{{ $prayer->views}} Praying</div>
-                        </div>
-                    </div>@endforeach </div><a href="{{ route('prayers.index')}}"
-                    class="border-t block text-center py-2">See all </a>
-            </div>
-        </div>
-    </div> @guest <div class="lg:flex lg:space-x-10">
-        <div class="lg:w-2/3">
-            <div class="my-5 flex justify-between pb-3">
-                <h2 class="text-2xl font-semibold">Top prayers </h2>
-            </div>
-            <div class="divide-y -mt-3 card px-5 py-2 ">@foreach ($prayers as $prayer) <div
-                    class="flex sm:flex-row flex-col sm:space-x-4 py-4 relative w-full"><a
-                        href="{{ route('prayers.show', $prayer)}}">
-                        <div class="sm:w-56 w-full h-32 overflow-hidden rounded-lg relative shadow-sm flex-shrink-0">
-                            <img src="{{ asset($prayer->image)}}" alt="{{ $prayer->title}}"
-                                class="w-full h-full absolute inset-0 object-cover"></div>
-                    </a>
-                    <div class="flex-1 relative md:mt-0 mt-4"><a href="{{ route('prayers.show', $prayer)}}"
-                            class="text-xl font-semibold leading-6">{{ $prayer->title}}</a>
-                        <div class="font-semibold mt-2">Minister:{{ $prayer->author}} </div>
-                        <div class="flex space-x-2 items-center text-sm pt-1">
-                            <div>{{ $prayer->created_at->diffForHumans()}}</div>
-                        </div>
-                    </div>
-                </div>@endforeach </div><br>{{ $prayers->links()}}
-        </div>
-        <div class="lg:w-1/3 w-full">
-            <div uk-sticky="media @m ; offset:80 ; bottom : true" class="card">
-                <div class="border-b flex items-center justify-between p-4">
-                    <div>
-                        <h2 class="text-lg font-semibold">Recent Prayer</h2>
-                    </div>
-                </div>
-                <div class="p-3">@foreach ($recentprayers as $prayer) <div
-                        class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-blue-50"><a
-                            href="{{ route('prayers.show', $prayer)}}" iv
-                            class="text-base font-semibold capitalize">{{ $prayer->title}} </a>
-                        <div class="flex-1">{{-- <a href="{{ asset($prayer->file)}}" class="text-base font-semibold
-                            capitalize">{{ $prayer->title}} </a>--}} <div class="text-sm text-blue-500 mt-0.5">
-                                {{ $prayer->views}} Praying</div>
-                        </div><a href="{{ route('prayers.show', $prayer)}}"
-                            class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold">Pray
-                        </a>
-                    </div>@endforeach </div><a href="#" class="border-t block text-center py-2">See all </a>
-            </div>
-        </div>
-    </div>@endguest
+    </div> 
 </div>
-</div>@endsection
+<div id="modal-prayer" uk-modal>
+    <div class="uk-modal-dialog"> 
+        <button class="uk-modal-close-default m-3" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Share prayer</h2>
+            <h5>You can share   prayer points to members via this form</h5>
+        </div> 
+        <form method="POST" action="{{ route('prayers.store')}}" enctype="multipart/form-data">@csrf <div class="p-10 space-y-7">
+                    <div class="line"><input class="line__input" required id="title" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div>@error('title') <p style="color: red; ">{{ $message}} </p>@enderror <div class="line"><input class="line__input" id="author" name="author" required type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('author')}}" autocomplete="off"><span for="title" class="line__placeholder">Anchor/Author </span></div>@error('author') <p style="color: red; ">{{ $message}} </p>@enderror 
+                    <div class="line"><input class="line__input" required id="publication" name="publication" id="date" type="date" onkeyup="this.setAttribute('value', this.value);" value="{{ old('publication')}}" autocomplete="off"><span for="publication" class="line__placeholder">Date to Publish</span></div>@error('publication') <p style="color: red; ">{{ $message}} </p>@enderror <div class="form-group"><textarea name="content" required placeholder="Content" class="with-border px-3 py-3 ">{{ old('content')}}</textarea></div>
+                    <div><label for="category">Category </label>
+                    <select id="category" name="category" class="shadow-none selectpicker with-border " required>
+                        <option value="">{{ old('category')}} </option>
+                        <option value="Bible">Bible studies </option>
+                        <option value="Prayer">Prayer points </option>
+                    </select>
+                </div>
+                </div>
+                <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
+                    <p class="text-sm leading-6"> </p><button class="button blue" type="submit">PUBLISH</button>
+                </div>
+            </form>
+    </div>
+</div>
+@endsection

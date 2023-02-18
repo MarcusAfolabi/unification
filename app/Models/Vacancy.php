@@ -8,7 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Vacancy extends Model
 {
     use HasFactory;
-    public function user(){
+    protected $table = 'vacancies';
+    protected $fillable = [
+        'position',
+        'slug',
+        'user_id',
+        'company',
+        'location',
+        'type',
+        'website',
+        'salary',
+        'currency',
+        'scheme',
+        'description',
+        'deadline',
+        'image'
+    ];
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
-    } 
+    }
 }

@@ -12,6 +12,7 @@ use App\Models\Counter;
 use App\Models\Product;
 use App\Models\Vacancy;
 use App\Models\Convention;
+use App\Models\Fellowship;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,15 +27,10 @@ class HomeController extends Controller
 
     public function index()
     {
-        // $visitors = User::sum('views')->count();
-        DB::table('counters')->increment('views');
-        $counters = Counter::all();
-        Counter::increment('views');
-
-        $president =  User::where('positionHeld', 'PRESIDENT')->count();
-        $secretary =  User::where('positionHeld', 'SECRETARY')->count();
-        $total_cec = User::where('unificationCurrentPost', 'CEC')->count();
-        $institutions = Institution::all()->count();
+        $president =  User::where('fellowship_status', 'PRESIDENT')->count();
+        $secretary =  User::where('fellowship_status', 'SECRETARY')->count();
+        $total_cec = User::where('fellowship_status', 'CEC')->count();
+        $fellowship = Fellowship::all()->count();
         $total_users = User::all()->count();
         $posts = Post::all()->count();
         $prayers = Prayer::all()->count();
@@ -52,7 +48,7 @@ class HomeController extends Controller
 
         if(auth()->user()->role === 'admin')
         {
-            return view ('dashboard.index', compact('counters', 'president', 'secretary', 'total_cec', 'institutions', 'total_users', 'posts', 'prayers', 'jobs', 'audios', 'videos', 'products', 'books', 'convention'));
+            return view ('dashboard.index', compact('president', 'secretary', 'total_cec', 'fellowship', 'total_users', 'posts', 'prayers', 'jobs', 'audios', 'videos', 'products', 'books', 'convention'));
         }
         else{
         return redirect(route('welcome'));

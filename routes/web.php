@@ -44,21 +44,12 @@ Route::get('/terms', function () {
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
-
-// Route::get('/link', function () {
-//     Artisan::call('storage:link');
-// });
-
-
-
-//Homepage
-
-//Redirect User
+ 
+ 
+//Redirect Admin
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.index');
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-
-
 
 // Send Notification through Email
 Route::post('send', [NotificationController::class, "sendnotification"])->middleware('auth');
@@ -66,6 +57,7 @@ Route::post('send', [NotificationController::class, "sendnotification"])->middle
 // All User
 Route::resource('/user', UserController::class);
 Route::get('/user-presidents', [UserController::class, 'president'])->name('user.president');
+Route::get('/user-pro', [UserController::class, 'pro'])->name('user.pro');
 // All Post
 Route::get('/post', [PostController::class,'index'])->name('posts.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
@@ -74,15 +66,14 @@ Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 Route::get('/post/{post}/edit',[PostController::class, 'edit'])->name('posts.edit');
 Route::put('/post/{post}',[PostController::class, 'update'])->name('posts.update');
 Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-Route::get('/status/{id}', [PostController::class, 'status'])->name('status.status');
-// Route::delete('posts/{post}/images/{image}', [PostController::class, 'destroyImage'])->name('posts.images.destroy');
-// Route::delete('posts/{post}/images/{image}', 'PostController@destroyImage')->name('images.destroy');
+Route::get('/status/{id}', [PostController::class, 'status'])->name('status.status'); 
 
 Route::get('/post/deleteimage/{posts}/delete', [PostController::class, 'deleteimage'])->name('post.deleteimage');
 Route::post('/posts/{post:slug}/like', [PostController::class, 'like'])->name('posts.like');
 Route::delete('/posts/{post:slug}/unlike', [PostController::class, 'unlike'])->name('posts.unlike');
 
-
+Route::post('/posts/{post:slug}/comment', [PostController::class, 'comment'])->name('comments.add');
+Route::delete('/posts/{post:slug}/comment/{comment}', [PostController::class, 'uncomment'])->name('comments.remove');
 
 // All Video
 Route::get('/videos', [VideoController::class,'index'])->name('videos.index') ;
@@ -145,6 +136,7 @@ Route::get('/status/{id}', [PrayerController::class, 'status'])->name('status.st
 
 // All Executives
 Route::resource('/executives', ExecutiveController::class);
+Route::get('/council-executives', [ExecutiveController::class, 'list'])->name('executives.list');
 
 //Convention
 Route::resource('convention', ConventionController::class);
@@ -164,7 +156,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 Route::resource('resource', ResourceController::class);
 Route::get('/resource/{resource:slug}',[ResourceController::class, 'show'])->name('resource.show');
-Route::get('/resources',[ResourceController::class, 'list'])->name('resource.list');
+Route::get('/download-central-resources',[ResourceController::class, 'list'])->name('resource.list');
 
 Route::resource('fellowship', FellowshipController::class);
 Route::get('/fellowship/{fellowship:slug}',[FellowshipController::class, 'show'])->name('fellowship.show');

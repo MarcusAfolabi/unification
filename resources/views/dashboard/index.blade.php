@@ -1,21 +1,20 @@
 @extends('layouts.main')
 @section('title', 'Admin Dashboard')
-@section('description', 'Welcome to your dashboard')
-@section('keywords', 'Book, Message, Audio Message, PDF')
-@section('canonical', 'https://cnsunification.org/books')
+@section('description', 'Welcome to your Admin dashboard')
+@section('canonical', 'https://cnsunification.org/dashboard')
 
 @section('main')
-
-
 <div class="main_content">
     <div class="mcontainer">
         @if (session('status'))
-        <p class="bg-green-500 text-white text-center border p-4 relative rounded-md uk-alert">
-            {{ session('status') }}</p>
-    @endif
-        <h3 class="text-lg font-semibold mb-2" id="Custom-class">Admin Dashboard</h3>
+        <p class="bg-contacts-500 text-white text-center border p-4 relative rounded-md uk-alert">
+            {{ session('status') }}
+        </p>
+        @endif
+        <h3 class="text-lg font-semibold mb-2" id="Custom-class">Admin Dashboard</h3>        
         <div class="grid md:grid-cols-2 gap-4" uk-sortable="cls-custom: transform -rotate-6 shadow-2xl">
 
+            <a href="{{route('user.index')}}">
             <div class="bg-white rounded-lg shadow-md p-3 flex ">
                 <div class="bg-blue-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
@@ -24,9 +23,10 @@
                 </div>
                 <i class="icon-feather-users text-xl"></i>
             </div>
+            </a>
 
             <div class="bg-white rounded-lg shadow-md p-3 flex">
-                <div class="bg-green-600 rounded-lg w-1.5"></div>
+                <div class="bg-contacts-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
                     <div class="font-semibold text-lg">{{ $posts }}</div>
                     <p class="text-sm"> Overall Posts </p>
@@ -82,8 +82,8 @@
             <div class="bg-white rounded-lg shadow-md p-3 flex ">
                 <div class="bg-pink-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
-                    <div class="font-semibold text-lg"> @foreach ($counters as $counter )
-                        {{ $counter->views }}  @endforeach </div>
+                    <div class="font-semibold text-lg">  
+                    </div>
                     <p class="text-sm"> Pageviews </p>
                 </div>
                 <i class="icon-feather-bar-chart-2 text-xl"></i>
@@ -109,8 +109,8 @@
             <div class="bg-white rounded-lg shadow-md p-3 flex">
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
-                    <div class="font-semibold text-lg"> {{ $institutions }} </div>
-                    <p class="text-sm"> Overall Isokan Institution  </p>
+                    <div class="font-semibold text-lg"> {{ $fellowship }} </div>
+                    <p class="text-sm"> Overall Isokan Chapters </p>
                 </div>
                 <i class="icon-feather-users text-xl"></i>
             </div>
@@ -118,7 +118,7 @@
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
                     <div class="font-semibold text-lg"> {{ $total_cec }} </div>
-                    <p class="text-sm"> Overall Isokan CEC Executives  </p>
+                    <p class="text-sm"> Overall Isokan CEC Executives </p>
                 </div>
                 <i class="icon-feather-users text-xl"></i>
             </div>
@@ -127,7 +127,7 @@
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
                     <div class="font-semibold text-lg"> {{ $president }} </div>
-                    <p class="text-sm"> Overall Isokan Presidents Executives  </p>
+                    <p class="text-sm"> Overall Isokan Presidents Executives </p>
                 </div>
                 <i class="icon-feather-users text-xl"></i>
             </div>
@@ -136,7 +136,7 @@
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
                     <div class="font-semibold text-lg"> {{ $secretary }} </div>
-                    <p class="text-sm"> Overall Isokan Secretary   </p>
+                    <p class="text-sm"> Overall Isokan Secretary </p>
                 </div>
                 <i class="icon-feather-users text-xl"></i>
             </div>
@@ -149,16 +149,12 @@
                         @csrf
                         <div class="p-10 space-y-3">
                             <div class="line">
-                                <input class="line__input" id="greeting" name="greeting" type="text"
-                                    onkeyup="this.setAttribute('value', this.value);" value="{{ old('greeting') }}"
-                                    autocomplete="off">
+                                <input class="line__input" id="greeting" name="greeting" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('greeting') }}" autocomplete="off">
                                 <span for="greeting" class="line__placeholder"> Greetings </span>
                             </div>
 
                             <div class="line">
-                                <input class="line__input" id="subject" name="subject" type="text"
-                                    onkeyup="this.setAttribute('value', this.value);" value="{{ old('subject') }}"
-                                    autocomplete="off">
+                                <input class="line__input" id="subject" name="subject" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('subject') }}" autocomplete="off">
                                 <span for="subject" class="line__placeholder"> Subject </span>
                             </div>
 
@@ -170,31 +166,24 @@
                             </div>
 
                             <div class="line">
-                                <input class="line__input" id="actiontext" name="actiontext" type="text"
-                                    onkeyup="this.setAttribute('value', this.value);" value="{{ old('actiontext') }}"
-                                    autocomplete="off">
+                                <input class="line__input" id="actiontext" name="actiontext" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('actiontext') }}" autocomplete="off">
                                 <span for="actiontext" class="line__placeholder"> Action Text </span>
                             </div>
                             <div class="line">
-                                <input class="line__input" id="url" name="url" type="url"
-                                    onkeyup="this.setAttribute('value', this.value);" value="{{ old('url') }}"
-                                    autocomplete="off">
+                                <input class="line__input" id="url" name="url" type="url" onkeyup="this.setAttribute('value', this.value);" value="{{ old('url') }}" autocomplete="off">
                                 <span for="url" class="line__placeholder"> Action Url </span>
                             </div>
                             <div class="line">
-                                <input class="line__input" id="footer" name="footer" type="text"
-                                    onkeyup="this.setAttribute('value', this.value);" value="{{ old('footer') }}"
-                                    autocomplete="off">
+                                <input class="line__input" id="footer" name="footer" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('footer') }}" autocomplete="off">
                                 <span for="footer" class="line__placeholder"> Footer </span>
                             </div>
                         </div>
 
                         <!-- form footer -->
-                        <div class="border-t flex justify-between lg:space-x-10 p-7 bg-gray-50 rounded-b-md">
+                        <div class="border-t flex justify-between lg:space-x-10 p-7 bg-contacts-50 rounded-b-md">
                             <p class="text-sm leading-6"> Ensure to preview before you send. </p>
                             {{-- <input type="submit" class="button lg:w-1/1" value="Notify"> --}}
-                            <button type="submit"
-                                class="bg-red-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
+                            <button type="submit" class="bg-red-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
                                 Notify
                             </button>
                         </div>

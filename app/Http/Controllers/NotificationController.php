@@ -27,7 +27,6 @@ class NotificationController extends Controller
 
         ];
         Notification::send($user, new SendEmailNotification($details));
-        // dd('Mail Sent');
         return redirect()->back()->with('status', 'Email Notification Successfully Sent');
     }
 

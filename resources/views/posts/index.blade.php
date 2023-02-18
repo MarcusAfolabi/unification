@@ -3,7 +3,6 @@
 @section('description', 'Join us as we reflect on the highlights of the recent Cherubim and Seraphim Church Unification Campus Fellowship Convention. Read about the inspiring talks, powerful worship sessions, and meaningful connections made with fellow members.')
 @section('keywords', 'Cherubim and Seraphim Church Unification Campus Fellowship, Fellowship Convention, Recap, Inspiring Talks, Worship Sessions, Meaningful Connections, Church Members')
 @section('canonical', 'https://cnsunification.org/post')
-
 @section('main')
 <div class="main_content">
     <div class="mcontainer">
@@ -13,7 +12,6 @@
         </p>
         @endif
         <x-jet-validation-errors class="mb-4" />
-
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
                 <h5 class="text-1xl font-semibold">
@@ -30,7 +28,6 @@
                 </form>
             </div>
             <hr>
-            <br>
             @if ($all_posts->count() > 0)
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -48,8 +45,6 @@
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Category</th>
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
-                                            Intro</th>
-                                        <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Creator</th>
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Date</th>
@@ -57,8 +52,6 @@
                                             Edit</th>
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Delete</th>
-                                        <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
-                                            Status</th>
                                         <th scope="col" class="text-sm font-medium text-blue-900 px-6 py-4 text-left">
                                             Views</th>
                                     </tr>
@@ -74,8 +67,6 @@
                                         </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $post->category }}</td>
-                                        <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $post->intro }}</td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"> <a href="{{ route('user.index', $post->user->id) }}">
                                                 {{ $post->user->name }} </a></td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"> {{
@@ -88,10 +79,8 @@
                                                 @method('delete')
                                                 <button type="submit" onclick="return confirm('Hey, Are you sure about this?');">
                                                     <span class="icon-feather-trash-2"></span> </button>
-
                                             </form>
                                         </td>
-
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
                                             {{ $post->views }} read
                                         </td>
@@ -111,7 +100,7 @@
         </div>
         @endif
         @if(auth()->user()->role === 'member' )
-        <div class="lg:flex  lg:space-x-12"> 
+        <div class="lg:flex  lg:space-x-12">
             <div class="lg:w-3/4">
                 <div class="card divide-y divide-blue-100 px-4">
                     @foreach ($myposts as $post)
@@ -192,26 +181,29 @@
     </div>
 </div>
 <div id="modal-post" uk-modal>
-    <div class="uk-modal-dialog"> 
+    <div class="uk-modal-dialog">
         <button class="uk-modal-close-default m-3" type="button" uk-close></button>
         <div class="uk-modal-header">
             <h2 class="uk-modal-title">Add New Story</h2>
             <h5>You can add pictures - (upto 5), Anniversary events and other fellowship activities from here.</h5>
-        </div> 
+        </div>
         <form method="POST" action="{{ route('posts.store')}}" enctype="multipart/form-data">@csrf <div class="p-10 space-y-7">
-                <div class="line"><input class="line__input" id="title" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div> <div class="line"><input class="line__input" id="intro" name="intro" maxlength="250" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('intro')}}" autocomplete="off"><span for="intro" class="line__placeholder">Intro </span></div>
+                <div class="line"><input class="line__input" id="title" maxlength="100" name="title" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('title')}}" autocomplete="off"><span for="title" class="line__placeholder">Title </span></div>
+                <div class="line"><input class="line__input" id="intro" name="intro" maxlength="250" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('intro')}}" autocomplete="off"><span for="intro" class="line__placeholder">Intro </span></div>
                 <input class="with-border" hidden name="fellowship_id" value="{{ auth()->user()->fellowship_id }}">
                 <div uk-form-custom class="w-full py-3">
                     <div class="bg-blue-100 border-2 border-dashed flex flex-col h-32 items-center justify-center relative w-full rounded-lg blue:bg-blue-800 blue:border-blue-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
                             <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
                             <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                         </svg></div><input type="file" id="image" required accept="image/*" multiple name="image[]"><a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">Images 5 max </a>
-                </div><div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
+                </div>
+                <div><label for="category">Category </label><select id="category" name="category" class="shadow-none selectpicker with-border " required>
                         <option value="">{{ old('category')}} </option>
                         <option value="Anniversary">Annual Anniversary </option>
                         <option value="Fellowship">Fellowship Activities </option>
                         @if(auth()->user()->role==='admin') <option value="CEC">CEC News</option>@endif
-                    </select></div> <div class="form-group">
+                    </select></div>
+                <div class="form-group">
                     <textarea name="content" id="content" class="with-border px-3 py-3" placeholder="Content">{{ old('content')}}</textarea>
                 </div>
             </div>

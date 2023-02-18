@@ -1,15 +1,10 @@
 @extends('layouts.main')
 @section('title', $product->name )
-@section('description', $product->name)
+@section('description', $product->description)
 @section('keywords', 'selling product, buying product, items, amazon, shop, shopping, shoprite, justrite, ikeja mall, allen avenue mall,
 ecommerce, facebook, facebook shop, shop, buyers, sellers, small business, enterprise')
 @section('canonical', 'https://cnsunification.org/products')
-
-@section('main')
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous"
-    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=562231884526354&autoLogAppEvents=1"
-    nonce="t3DkjUu0"></script>
+@section('main') 
 <div class="main_content">
     <div class="mcontainer"> 
         <div class="lg:flex lg:space-x-10">
@@ -122,7 +117,6 @@ ecommerce, facebook, facebook shop, shop, buyers, sellers, small business, enter
                 <a href="{{ route('products.index') }}" class="hover:text-blue-600 hover:underline"> See All </a>
             </div>
         </div>
-
     </div>
 </div>
 @endsection

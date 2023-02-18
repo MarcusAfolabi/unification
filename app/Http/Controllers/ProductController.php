@@ -6,10 +6,11 @@ use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
-{ 
+{
 
     public function __construct()
     {
@@ -27,13 +28,13 @@ class ProductController extends Controller
         $role = Auth::user()->role;
 
         if ($role == 'admin') {
-            return view('products.indexAdmin', compact('products', 'recentpros'));
+            return view('products.list', compact('products', 'recentpros'));
         } else {
             $my_products = Product::select('id', 'name', 'price', 'type', 'image', 'currency', 'slug')->where('user_id', auth()->user()->id)->latest()->get();
             return view('products.index', compact('my_products', 'recentpros'));
         }
     }
-   
+
     public function store(Request $request)
     {
         $request->validate([
@@ -47,7 +48,7 @@ class ProductController extends Controller
             "image" => 'required|image|max:2048',
             "image1" => 'required|image|max:2048',
         ]);
-        
+
         $product = Product::create([
             'name' => $request->input('name'),
             'slug' => Str::slug($request->input('name'), '-'),
@@ -62,7 +63,7 @@ class ProductController extends Controller
             'image' => 'storage/' . $request->file('image')->store('productImages', 'public'),
             'image1' => 'storage/' . $request->file('image1')->store('productImages', 'public'),
         ]);
-        
+
         return redirect(route('products.index'))->with('status', 'Product Created Successfully. We ensure it is valid before we publish');
     }
 
@@ -73,12 +74,12 @@ class ProductController extends Controller
         $sidepros = Product::latest()->take(10)->get();
         return view('products.show', compact('product', 'sideproducts', 'sidepros'));
     }
- 
+
     public function edit(Product $product)
     {
         return view('products.edit', compact('product'));
     }
- 
+
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -89,9 +90,10 @@ class ProductController extends Controller
             "category" => 'required',
             "stock" => 'required',
             "brand" => 'required',
-            "image" => 'required',
-            "image1" => 'required',
+            "image" => 'sometimes|image',
+            "image1" => 'sometimes|image',
         ]);
+
         $name = $request->input('name');
         $slug = Str::slug($name, '-');
         $type = $request->input('type');
@@ -102,8 +104,15 @@ class ProductController extends Controller
         $brand = $request->input('brand');
         $description = $request->input('description');
 
-        $image = 'storage/' . $request->file('image')->store('productImages', 'public');
-        $image1 = 'storage/' . $request->file('image1')->store('productImages', 'public');
+        $image = '';
+        if ($request->hasFile('image')) {
+            $image = 'storage/' . $request->file('image')->store('productImages', 'public');
+        }
+
+        $image1 = '';
+        if ($request->hasFile('image1')) {
+            $image1 = 'storage/' . $request->file('image1')->store('productImages', 'public');
+        }
 
         $product->name = $name;
         $product->slug = $slug;
@@ -118,10 +127,18 @@ class ProductController extends Controller
         $product->image1 = $image1;
 
         $product->save();
+
         return redirect(route('products.index'))->with('status', 'Product Updated Successfully. We ensure it is valid before we publish');
-    } 
+    }
     public function destroy(Product $product)
     {
+        // Delete the associated image files from storage
+        Storage::disk('public')->delete([
+            str_replace('storage/', '', $product->image),
+            str_replace('storage/', '', $product->image1),
+        ]);
+
+        // Delete the product record from the database
         $product->delete();
         return redirect()->back()->with('status', 'Product Delete Successfully.');
     }

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Notifications\ResourceNotification;
 use Illuminate\Support\Facades\Notification; 
 
@@ -17,28 +18,21 @@ class ResourceController extends Controller
 { 
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except('index');
+        $this->middleware(['auth', 'admin'])->except('list');
     }
     public function index()
     {
-       $views= DB::table('resources')->increment('views');
-
-        if(auth()->user()->role === 'admin' ){
+       $views = DB::table('resources')->increment('views');
         $sideposts = Post::all()->take(5);
         $sideproducts = Product::all()->take(5); 
         $resources = Resource::latest()->paginate(5);
         return view('resource.index', compact('resources', 'sideproducts', 'sideposts'));
-        }
-        elseif(auth()->user()->role === 'member' ){
-            $resources = Resource::latest()->paginate(5);
-            return view('resource.list', compact('resources', 'views'));
-        } 
     }
  
-    public function create()
+    public function list()
     { 
-            return view('resource.create');
-        
+        $resources = Resource::latest()->paginate(5);
+        return view('resource.list', compact('resources'));        
     }
  
     public function store(Request $request)
@@ -63,7 +57,7 @@ class ResourceController extends Controller
        return redirect(route('resource.index'))->with('status', 'File Added Successfully');
     }
  
-    public function show(Resource $resource)
+    public function show()
     {
         // return view('resource.show', compact('resource'));
     }
@@ -92,6 +86,7 @@ class ResourceController extends Controller
  
     public function destroy(Resource $resource)
     {
+        Storage::disk('public')->delete($resource->file); // Remove the image from storage
         $resource->delete();
         return redirect()->back()->with('status', 'File Deleted Successfully');
     }

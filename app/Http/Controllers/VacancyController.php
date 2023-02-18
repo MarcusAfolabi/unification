@@ -12,15 +12,10 @@ use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Notification;
 
 class VacancyController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+{ 
     public function __construct()
     {
-        $this->middleware('auth')->except(['show', 'index']);
+        $this->middleware('auth');
     }
     public function index(Request $request)
     {
@@ -31,29 +26,16 @@ class VacancyController extends Controller
             $vacancies = Vacancy::latest()->paginate(30);
         }
         $othervacancies = Vacancy::latest()->take(10)->get();
-        // $vacancytags = Vacancy::distinct()->get();
+        $vacancytags = Vacancy::distinct()->get();
         // $vacancytags = Vacancy::table('users')->distinct()->get();
         $vacancytags = Vacancy::latest()->take(5)->get();
          return view('vacancies.index', compact('vacancies', 'othervacancies', 'vacancytags'));
     }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function create()
     {
-        return view('vacancies.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+       //
+    } 
     public function store(Request $request)
     {
         // $user = User::all();
@@ -95,43 +77,23 @@ class VacancyController extends Controller
         $vacancy->image = $image;
 
         $vacancy->save();
-        // Notification::send($user, new NewPostNotification($vacancy));
         return redirect()->back()->with('status', 'Job Opportunity Created Successfully. We ensure it is valid before we publish');
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Vacancy  $vacancy
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show(Vacancy $vacancy)
     {
-        DB::table('vancancies')->increment('views');
-        $othervacancy = Vacancy::all();
+        DB::table('vacancies')->increment('views');
+        $othervacancies = Vacancy::all();
         $vacancytags = Vacancy::latest()->get();
-        return view('vacancies.show', compact('vacancy', 'othervacancy', 'vacancytags'));
+        return view('vacancies.show', compact('vacancy', 'othervacancies', 'vacancytags'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vacancy  $vacancy
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function edit(Vacancy $vacancy)
     {
         return view('vacancies.edit', compact('vacancy'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vacancy  $vacancy
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function update(Request $request, Vacancy $vacancy)
     {
         $request->validate([
@@ -172,31 +134,7 @@ class VacancyController extends Controller
 
         return redirect(route('vacancies.index'))->with('status', 'Job Opportunity Updated Successfully. We ensure it is valid before we publish');
 
-    }
-
-    public function status($id)
-    {
-        $vacancy = Vacancy::select('status')->where('id','=',$id)->first();
-
-        if($vacancy->status == '1')
-        {
-            $status = '0';
-        }else{
-            $status = '1';
-        }
-
-        $values = array('status' => $status);
-        Vacancy::where('id', $id)->update($values);
-
-        return redirect()->back()->with('status', 'Status Updated');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Vacancy  $vacancy
-     * @return \Illuminate\Http\Response
-     */
+    } 
     public function destroy(Vacancy $vacancy)
     {
         $vacancy->delete();

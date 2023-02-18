@@ -1,4 +1,3 @@
-{{-- <x-guest-layout> --}}
     @extends('layouts.main')
 @section('title', 'Terms and Condition')
 @section('main')
@@ -8,8 +7,7 @@
                 <br>
                 <br>
                  <br>
-             </div>
-
+             </div> 
             <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
                 <div class="section">
                     <div class="dropdown-divider"></div>
@@ -78,5 +76,4 @@
             </div>
         </div>
     </div>
-{{-- </x-guest-layout> --}}
 @endsection

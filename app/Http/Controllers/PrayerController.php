@@ -30,18 +30,7 @@ class PrayerController extends Controller
 
         return view('prayers.index', compact('prayers', 'recentprayers'));
     }
- 
-    public function create()
-    {
-        if(auth()->user()->role != 'admin' ){
-            redirect()->back()->with('Ask admin for access!');
-
-        }else{
-            return view('prayers.create');
-
-        }
-
-    }
+  
  
     public function store(Request $request)
     {
@@ -57,6 +46,7 @@ class PrayerController extends Controller
         $slug = Str::slug($title, '-');
         $user_id = Auth::user()->id;
         $publication = $request->input('publication');
+        $category = $request->input('category');
         $author = $request->input('author');
         $content = $request->input('content');
 
@@ -66,6 +56,7 @@ class PrayerController extends Controller
         $prayer->slug= $slug;
         $prayer->user_id = $user_id;
         $prayer->publication=$publication;
+        $prayer->category=$category;
         $prayer->author=$author;
         $prayer->content=$content;
 
@@ -116,12 +107,14 @@ class PrayerController extends Controller
         $slug = Str::slug($title, '-');
         $publication = $request->input('publication');
         $author = $request->input('author');
+        $category = $request->input('category');
         $content = $request->input('content');
 
         $prayer->title= $title;
         $prayer->slug= $slug;
         $prayer->publication=$publication;
         $prayer->author=$author; 
+        $prayer->category=$category;
         $prayer->content=$content;
 
         $prayer->save();

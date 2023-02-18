@@ -99,6 +99,7 @@ return [
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
+    'allowed_content' => 'The :You are using words we do not accept. Profer a better word!',
     'numeric' => 'The :attribute must be a number.',
     'present' => 'The :attribute field must be present.',
     'prohibited' => 'The :attribute field is prohibited.',
@@ -129,7 +130,7 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'allowed_email_domain' => 'The :attribute must be a valid email with one of the following domains: gmail.com, yahoo.com, hotmail.com',
-
+    'allowed_content' => 'The :You are using words we do not accept. Profer a better word!: Words not allowed',
 
     /*
     |--------------------------------------------------------------------------
@@ -149,7 +150,9 @@ return [
         ],
 
         'image'=>[
-            'image' => 'The file must be an Image'
+            'image' => 'The file must be an Image',
+            'allowed_content' => 'You are using words we do not accept. Profer a better word!'
+
         ],
     ],
 

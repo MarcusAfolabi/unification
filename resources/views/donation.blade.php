@@ -280,15 +280,7 @@
                             <p>Yes! you can donate to support the convention, conferences and the church convention
                                 building at Wasimi</p>
                         </div>
-                    </li>
-                    {{-- <li class="bg-blue-100 rounded-lg py-2.5 px-3">
-                        <a class="uk-accordion-title text-base font-semibold" href="#">How do fees work?</a>
-                        <div class="uk-accordion-content mt-2.5">
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur. Excepteur sint occaecat cupidatat proident.</p>
-                            <a href="#" class="block font-medium mt-3 text-blue-600 text-sm"> See full article</a>
-                        </div>
-                    </li> --}}
+                    </li> 
                 </ul>
 
             </div>

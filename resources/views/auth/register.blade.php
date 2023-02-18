@@ -62,10 +62,11 @@
                     <div class="line"><select name="unit_id"  class="selectpicker">
                             <option selected disabled>Unit in Fellowship? Pls
                                 Select </option>
-                            @foreach(App\Models\Unit::all() as $unit)
+                            @foreach(App\Models\Unit::select('id', 'name')->latest()->get() as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }} </option>
                             @endforeach
-                        </select></div>
+                        </select>
+                    </div>
                     <div class="line"><select name="qualification_one"  class="selectpicker">
                             <option selected disabled value="{{ old('qualification_one')}}">Other Qualification?
                                 Pls Select </option>
