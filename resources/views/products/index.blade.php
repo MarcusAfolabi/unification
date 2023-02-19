@@ -12,7 +12,7 @@
             </div>
         </div>
         @if (session('status'))
-        <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">
+        <p class="bg-blue-500 text-center border p-4 relative rounded-md uk-alert">
             {{ session('status') }}
         </p>
         @endif
@@ -145,7 +145,7 @@
                             </svg>
                         </div>
                         <input type="file" id="image" required accept="image/*" name="image">
-                        <a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">
+                        <a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 uk-position-bottom uk-transition-bottom-small">
                             Product Cover Image</a>
                     </div>
                     <div uk-form-custom class="w-full py-3">
@@ -156,7 +156,7 @@
                             </svg>
                         </div>
                         <input type="file" id="image1" required accept="image/*" name="image1">
-                        <a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 text-white uk-position-bottom uk-transition-bottom-small">
+                        <a href="#" class="bg-blue-200 flex font-medium h-9 items-center justify-center px-5 rounded-b-xl text-blue-600 uk-position-bottom uk-transition-bottom-small">
                             Product Back Image</a>
                     </div>
                 </div>

@@ -7,12 +7,13 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show']);
+        $this->middleware(['auth', 'verified', 'admin'])->except(['show']);
     }
 
     public function index(Request $request)
@@ -93,6 +94,9 @@ class VideoController extends Controller
 
     public function destroy(Video $video)
     {
+        Storage::disk('public')->delete([
+            str_replace('storage/', '', $video->image),
+        ]);
         $video->delete();
         return redirect()->back()->with('status', 'Video Deleted Successfully.');
     }

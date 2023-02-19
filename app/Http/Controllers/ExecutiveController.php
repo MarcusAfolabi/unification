@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Executive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ExecutiveController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except(['show']);
+        $this->middleware(['auth', 'verified', 'admin'])->except(['show']);
     }
 
     public function index(Request $request)
@@ -89,10 +90,19 @@ class ExecutiveController extends Controller
 
         return redirect(route('executives.index'))->with('status', 'Executive Updated Successfully');
     }
-    public function destroy(Executive $executive)
+    public function destroy($id)
     {
-        Storage::disk('public')->delete($executive->image); // Remove the image from storage
-        $executive->delete(); // Delete the executive record from the database
-        return redirect(route('executives.index'))->with('status', 'Executive Deleted Successfully');
+        $executive = Executive::findOrFail($id);
+        $image = '/'.$executive->image;
+        $path = str_replace('\\','/',public_path());
+
+        if (file_exists($path.$image)) {
+            unlink($path.$image);
+            $executive->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        } else {
+            $executive->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        }
     }
 }

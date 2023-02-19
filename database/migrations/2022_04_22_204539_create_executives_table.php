@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('email');
             $table->text('profile');
             $table->string('image');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');            
             $table->timestamps();
         });
     } 

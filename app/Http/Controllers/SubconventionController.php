@@ -10,18 +10,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewMemberNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\ConventionNotification;
 
 class SubconventionController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-
-     */
+{ 
     public function __construct()
     {
-        $this->middleware('auth')->except(['create']);
+        $this->middleware(['auth', 'verified', 'admin'])->except(['create']);
     }
     public function index(Request $request)
     {
@@ -39,13 +34,7 @@ class SubconventionController extends Controller
         }else{
             abort(419);
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    } 
     public function create(Request $request)
     {
             return view('subconvention.create');
@@ -62,13 +51,7 @@ class SubconventionController extends Controller
 
         }
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(Request $request)
     {
         $request->validate([
@@ -131,42 +114,24 @@ class SubconventionController extends Controller
 
         Notification::route('mail', [
             'info@cnsunification.org' => 'A Member Just Pick Up Convention Form',
-        ])->notify(new NewMemberNotification($subconvention));
+        ])->notify(new ConventionNotification($subconvention));
 
         Mail::to($subconvention->email)->send(new WelcomeMail($subconvention));
 
         return redirect(route('convention.payment'))->with('status', 'Your Sub Convention Registration is Received Successfully. Proceed to make payment if you have not');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show($id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     
     public function subpayment()
     {
         return view('subconvention.payment');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    } 
+    
     public function destroy(Subconvention $subconvention)
     {
         $subconvention->delete();

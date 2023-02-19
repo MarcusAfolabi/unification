@@ -13,7 +13,7 @@ class BookController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified'])->except(['show']);
     }
     public function index(Request $request)
     {
@@ -97,12 +97,28 @@ class BookController extends Controller
         return redirect()->back()->with('status', 'Book Updated Successfully. We ensure it edify the body of Christ before we publish');
     }
 
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        Storage::disk('public')->delete($book->image);
-        Storage::disk('public')->delete($book->file);
-        $book->delete();
-        return redirect()->back()->with('status', 'Book Deleted Successfully!');
+        $book = Book::findOrFail($id);
+        $image = '/'.$book->image;
+        $file = '/'.$book->file;
+        $path = str_replace('\\','/',public_path());
 
+        if (file_exists($path.$image)) {
+            unlink($path.$image);
+            $book->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        } else {
+            $book->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        }
+        if (file_exists($path.$file)) {
+            unlink($path.$file);
+            $book->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        } else {
+            $book->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        }
     }
 }

@@ -10,7 +10,7 @@
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
                 <h5 class="text-1xl font-semibold">
-                    <a href="{{ route('fellowship.create') }}"><i class="icon-material-outline-add"></i> New
+                    <a uk-tooltip="Add" href="#modal-fellowship" uk-toggle><i class="icon-material-outline-add"></i> New
                         fellowship </a>
                 </h5>
             </div>
@@ -98,5 +98,66 @@
         </div>
     </div>
 </div>
+<div id="modal-fellowship" uk-modal>
+    <div class="uk-modal-dialog">
 
+        <button class="uk-modal-close-default m-3" type="button" uk-close></button>
+
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Add Fellowship</h2>
+        </div>
+
+        <form method="POST" action="{{ route('fellowship.store') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="p-10 space-y-7">
+                <div class="line">
+                    <input class="line__input" id="name" required name="name" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name') }}" autocomplete="off">
+                    <span for="name" class="line__placeholder"> Name Of Fellowship </span>
+                </div>
+                @error('name')
+                <p style="color: red; ">{{ $message }} </p>
+                @enderror
+
+                <div class="line">
+                    <input class="line__input" id="acronyms" required name="acronyms" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('acronyms') }}" autocomplete="off">
+                    <span for="acronyms" class="line__placeholder"> Fellowship Acronym </span>
+                </div>
+                @error('acronyms')
+                <p style="color: red; ">{{ $message }} </p>
+                @enderror
+
+                <div class="line">
+                    <input class="line__input" id="phone" required name="phone" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('phone') }}" autocomplete="off">
+                    <span for="phone" class="line__placeholder"> Fellowship Phone No </span>
+                </div>
+                @error('phone')
+                <p style="color: red; ">{{ $message }} </p>
+                @enderror
+
+                <div class="line">
+                    <input class="line__input" id="address" required name="address" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('address') }}" autocomplete="off">
+                    <span for="address" class="line__placeholder"> Fellowship Address </span>
+                </div>
+                @error('address')
+                <p style="color: red; ">{{ $message }} </p>
+                @enderror
+
+                <div class="line">
+                    <input class="line__input" id="file" required name="logo" type="file" onkeyup="this.setAttribute('value', this.value);" value="{{ old('logo') }}" autocomplete="off">
+                    <span for="logo" class="line__placeholder"> Fellowship Logo </span>
+                </div>
+                @error('logo')
+                <p style="color: red; ">{{ $message }} </p>
+                @enderror
+
+
+            </div>
+            <div class="border-t flex justify-between lg:space-x-10 p-7 bg-gray-50 rounded-b-md">
+                <p class="text-sm leading-6"> </p>
+                <button class="button blue" type="submit">ADD</button>
+            </div>
+
+        </form>
+    </div>
+</div>
 @endsection

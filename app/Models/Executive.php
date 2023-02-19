@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Executive extends Model
 {
     use HasFactory;
-    
-    public function user(){
-        return $this->belongsTo(User::class);
-    } 
+
+    protected $table = 'executives';
+
+    protected $fillable = [
+        'name',
+        'position',
+        'hobby',
+        'email',
+        'profile',
+        'image'
+    ]; 
 }

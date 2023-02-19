@@ -41,7 +41,7 @@ class ContactController extends Controller
         'info@cnsunification.org' => 'Alert! You have received a new contact request on the website',
     ])->notify(new ContactNotification($contact));
     
-    return redirect()->back()->with(['success', 'Thanks for contacting us. One of our official we get back to you']);
+    return redirect()->back()->with(['status', 'Thanks for contacting us. One of our official we get back to you']);
     
    }
 }

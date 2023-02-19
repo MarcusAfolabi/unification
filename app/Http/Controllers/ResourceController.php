@@ -18,7 +18,7 @@ class ResourceController extends Controller
 { 
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'])->except('list');
+        $this->middleware(['auth', 'verified', 'admin'])->except('list');
     }
     public function index()
     {

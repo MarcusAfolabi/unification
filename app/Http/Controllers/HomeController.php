@@ -52,7 +52,6 @@ class HomeController extends Controller
         }
         else{
         return redirect(route('welcome'));
-        // return view('welcome', compact('auth', 'users', 'timelineposts', 'timelineproducts'));
         }
     }
  }

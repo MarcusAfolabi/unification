@@ -13,7 +13,7 @@ class AudioController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['show']);
+        $this->middleware(['auth', 'verified'])->except(['show']);
     }
     public function index(Request $request)
     {
@@ -91,9 +91,19 @@ class AudioController extends Controller
         return redirect(route('audios.index'))->with('status', 'Audio Updated Successfully. We ensure it edify the body of Christ before we publish');
     }
 
-    public function destroy(Audio $audio)
+    public function destroy($id)
     {
-        $audio->delete();
-        return redirect()->back()->with('status', 'Audio Deleted Successfully.');
+        $audio = Audio::findOrFail($id);
+        $image = '/'.$audio->image;
+        $path = str_replace('\\','/',public_path());
+
+        if (file_exists($path.$image)) {
+            unlink($path.$image);
+            $audio->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        } else {
+            $audio->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        }
     }
 }

@@ -18,7 +18,7 @@ class ConventionController extends Controller
 { 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'store', 'payment']);
+        $this->middleware(['auth', 'verified'])->except(['index', 'store', 'payment']);
     }
     public function index(Request $request)
     {

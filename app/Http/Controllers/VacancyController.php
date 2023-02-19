@@ -15,7 +15,7 @@ class VacancyController extends Controller
 { 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     public function index(Request $request)
     {
@@ -135,9 +135,19 @@ class VacancyController extends Controller
         return redirect(route('vacancies.index'))->with('status', 'Job Opportunity Updated Successfully. We ensure it is valid before we publish');
 
     } 
-    public function destroy(Vacancy $vacancy)
+    public function destroy($id)
     {
-        $vacancy->delete();
-        return redirect()->back()->with('status', 'Vacancy Delete Successfully.');
+        $vacancy = Vacancy::findOrFail($id);
+        $image = '/'.$vacancy->image;
+        $path = str_replace('\\','/',public_path());
+
+        if (file_exists($path.$image)) {
+            unlink($path.$image);
+            $vacancy->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        } else {
+            $vacancy->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        }
     }
 }

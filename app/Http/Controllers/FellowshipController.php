@@ -15,7 +15,7 @@ class FellowshipController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->except(['index']);
+        $this->middleware(['auth', 'verified'])->except(['index']);
     }
     public function index(Request $request)
     {
@@ -61,11 +61,7 @@ class FellowshipController extends Controller
 
     public function show(Fellowship $fellowship, Unit $unit, User $user, Post $post)
     {
-
-        // $postlikes = Postlike::where('post_id', $post->id)->inRandomOrder()->limit(3)->get();
         $postlikes = Postlike::where('post_id', $post->id)->with('user')->get();
-
-        // dd($postlikes);
         $unit_members = User::where('fellowship_id', $fellowship->id)->select('unit_id')->distinct()->get();
         $unit_count = User::where('unit_id', auth()->user()->unit_id)->pluck('unit_id')->unique()->count();
         $unit_counts = User::where('fellowship_id', $fellowship->id)
@@ -111,9 +107,19 @@ class FellowshipController extends Controller
         return redirect(route('fellowship.index'))->back()->with('status', 'Updated Successfully');
     }
 
-    public function destroy(Fellowship $fellowship)
+    public function destroy($id)
     {
-        $fellowship->delete();
-        return redirect()->back()->with('status', 'Deleted Successfully');
+        $fellowship = Fellowship::findOrFail($id);
+        $image = '/'.$fellowship->logo;
+        $path = str_replace('\\','/',public_path());
+
+        if (file_exists($path.$image)) {
+            unlink($path.$image);
+            $fellowship->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        } else {
+            $fellowship->delete();
+            return redirect()->back()->with('status', 'Deleted Successfully');
+        }
     }
 }
