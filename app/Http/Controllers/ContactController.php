@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Mail;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Notifications\ContactNotification;

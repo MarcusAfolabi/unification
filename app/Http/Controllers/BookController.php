@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -52,6 +52,7 @@ class BookController extends Controller
         ]);
 
         $book->save();
+        event(new ItemStored()); 
         return redirect()->back()->with('status', 'Book Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 

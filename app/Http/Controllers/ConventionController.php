@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Rules\Recaptcha;
-use App\Mail\WelcomeMail;
 use App\Models\Convention;
 use App\Models\Fellowship;
 use App\Mail\ConventionMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Notifications\NewMemberNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ConventionNotification;
 

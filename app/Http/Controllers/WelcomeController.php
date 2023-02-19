@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Audio;
-use App\Models\Video;
 use App\Models\Prayer;
 use App\Models\Product;
 use App\Models\Vacancy;

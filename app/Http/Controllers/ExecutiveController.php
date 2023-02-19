@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Executive;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request; 
 
 class ExecutiveController extends Controller
 {

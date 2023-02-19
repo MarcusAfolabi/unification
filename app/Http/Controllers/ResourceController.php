@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\User;
 use App\Models\Product;
 use App\Models\Resource;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Notifications\ResourceNotification;
-use Illuminate\Support\Facades\Notification; 
 
 class ResourceController extends Controller
 { 
@@ -37,7 +34,6 @@ class ResourceController extends Controller
  
     public function store(Request $request)
     {  
-         $user= User::all();
         
         $request->validate([
             "name" => 'required',
@@ -53,7 +49,7 @@ class ResourceController extends Controller
         $resource->slug = $slug;
         $resource->file = $file;
         $resource->save();
-        Notification::send($user, new ResourceNotification($resource)); 
+        event(new ItemStored()); 
        return redirect(route('resource.index'))->with('status', 'File Added Successfully');
     }
  

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Video;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,8 @@ class VideoController extends Controller
         ]);
 
         $video->save();
+        event(new ItemStored()); 
+
         return redirect()->back()->with('status', 'Video Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 

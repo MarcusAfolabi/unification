@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audio;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,14 +21,13 @@ class AudioController extends Controller
         DB::table('audios')->increment('views');
         $audios = Audio::where('user_id', auth()->user()->id)->latest()->get();
         $all_audios = Audio::latest()->paginate(20);
-        // $side_audios = Audio::select('id', 'slug', 'title', 'image', 'file')->latest()->get();
         $side_audios = Audio::select('id', 'slug', 'title', 'image', 'file', 'user_id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->take(5)->get();
         return view('audios.index', compact('audios', 'all_audios', 'side_audios'));
     }
 
     public function create()
     {
-        return view('audios.create');
+       //
     }
 
     public function store(Request $request)
@@ -44,10 +44,15 @@ class AudioController extends Controller
         $data = $request->only(['title', 'author', 'content', 'url']);
         $data['slug'] = Str::slug($data['title'], '-');
         $data['user_id'] = Auth::id();
-        $data['image'] = 'storage/' . $request->file('image')->store('audioImages', 'public');
-        $data['file'] = 'storage/' . $request->file('file')->store('audioFiles', 'public');
+        if ($request->hasFile('image')) {
+            $data['image'] = 'storage/' . $request->file('image')->store('audioImages', 'public');
+        }
 
+        if ($request->hasFile('file')) {
+            $data['file'] = 'storage/' . $request->file('file')->store('audioFiles', 'public');
+        } 
         $audio = Audio::create($data);
+        event(new ItemStored()); 
         return redirect(route('audios.index'))->with('status', 'Audio Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 

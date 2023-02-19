@@ -8,15 +8,10 @@ use App\Models\User;
 use App\Models\Audio;
 use App\Models\Video;
 use App\Models\Prayer;
-use App\Models\Counter;
 use App\Models\Product;
 use App\Models\Vacancy;
 use App\Models\Convention;
-use App\Models\Fellowship;
-use App\Models\Institution;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Fellowship; 
 
 class HomeController extends Controller
 {

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Subconvention;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Notifications\NewMemberNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ConventionNotification;
 

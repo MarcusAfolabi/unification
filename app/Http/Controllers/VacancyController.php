@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Vacancy;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-// use App\Notifications\NewPostNotification;
-// use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth; 
 
 class VacancyController extends Controller
 { 
@@ -27,7 +25,6 @@ class VacancyController extends Controller
         }
         $othervacancies = Vacancy::latest()->take(10)->get();
         $vacancytags = Vacancy::distinct()->get();
-        // $vacancytags = Vacancy::table('users')->distinct()->get();
         $vacancytags = Vacancy::latest()->take(5)->get();
          return view('vacancies.index', compact('vacancies', 'othervacancies', 'vacancytags'));
     }
@@ -77,6 +74,7 @@ class VacancyController extends Controller
         $vacancy->image = $image;
 
         $vacancy->save();
+        event(new ItemStored()); 
         return redirect()->back()->with('status', 'Job Opportunity Created Successfully. We ensure it is valid before we publish');
 
     }

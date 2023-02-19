@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\User;
 use App\Models\Prayer;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-// use App\Notifications\NewPostNotification;
-// use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth; 
 
 class PrayerController extends Controller
 { 
@@ -62,7 +60,7 @@ class PrayerController extends Controller
 
         $prayer->save();
 
-        // Notification::send($user, new NewPostNotification($prayer));
+        event(new ItemStored()); 
 
         return redirect(route('prayers.index'))->with('status', 'Prayer Created Successfully. We Ensure it edify the body of Christ before we publish');
     }

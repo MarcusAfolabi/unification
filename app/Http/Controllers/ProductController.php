@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Events\ItemStored;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,7 @@ class ProductController extends Controller
             'image' => 'storage/' . $request->file('image')->store('productImages', 'public'),
             'image1' => 'storage/' . $request->file('image1')->store('productImages', 'public'),
         ]);
-
+        event(new ItemStored()); 
         return redirect(route('products.index'))->with('status', 'Product Created Successfully. We ensure it is valid before we publish');
     }
 
