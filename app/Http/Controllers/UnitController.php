@@ -11,7 +11,7 @@ class UnitController extends Controller
     
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'admin'])->except(['show']);
+        // $this->middleware(['auth', 'verified', 'admin'])->except(['show']);
     }
     public function index()
     {

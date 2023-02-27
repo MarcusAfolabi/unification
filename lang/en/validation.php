@@ -149,8 +149,7 @@ return [
 
         ],
 
-        'image'=>[
-            'image' => 'The file must be an Image',
+        'allowed_content'=> [
             'allowed_content' => 'You are using words we do not accept. Profer a better word!'
 
         ],

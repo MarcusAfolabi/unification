@@ -45,16 +45,17 @@ class PostController extends Controller
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
             "intro" => 'required|string|max:251',
-            "image" => 'required|image|array|max:5',
-            "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
+            "image" => 'required|array|max:5',
+            "image.*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
-                        'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i'],
-            'content' => 'required|string',
-            'fellowship_id' => 'required|integer',
+            "content" => 'required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i',
+            'fellowship_id' => 'required',
         ]);
 
         $post = new Post();
-        $post->fill(Str::clean($request->only(['title', 'intro', 'category', 'content', 'fellowship_id'])));
+        $postData = $request->only(['title', 'intro', 'category', 'content', 'fellowship_id']);
+        $postData = array_map('strip_tags', $postData);
+        $post->fill($postData);
         $content = htmlentities($request['content'], ENT_QUOTES, 'UTF-8');
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;

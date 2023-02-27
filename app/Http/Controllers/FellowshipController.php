@@ -14,7 +14,7 @@ class FellowshipController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['index']);
+        // $this->middleware(['auth', 'verified'])->except(['list']);
     }
     public function index(Request $request)
     {
@@ -24,17 +24,15 @@ class FellowshipController extends Controller
         } else {
             $fellowships = Fellowship::latest()->paginate(30);
         }
-        if (auth()->user()->role === 'member') {
-            $chapters = Fellowship::latest()->paginate(30);
-            return view('fellowship.list', compact('chapters'));
-        } elseif (auth()->user()->role === 'admin')
+         
             return view('fellowship.index', compact('fellowships'));
     }
 
 
-    public function create()
+    public function list()
     {
-        //
+        $chapters = Fellowship::latest()->paginate(30);
+            return view('fellowship.list', compact('chapters'));
     }
 
 
@@ -101,9 +99,13 @@ class FellowshipController extends Controller
         $fellowship->acronyms = $request->input('acronyms');
         $fellowship->phone = $request->input('phone');
         $fellowship->address = $request->input('address');
-        $fellowship->logo = 'storage/' . $request->file('logo')->store('fellowshipLogo', 'public');
+        if ($request->hasFile("logo")) {
+            $image = "storage/" . $request->file("image")->store("fellowshipLogo", "public");
+            $fellowship->image = $image;
+        }
+
         $fellowship->save();
-        return redirect(route('fellowship.index'))->back()->with('status', 'Updated Successfully');
+        return redirect(route('fellowship.index'))->with('status', 'Updated Successfully');
     }
 
     public function destroy($id)

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('phone'); 
             $table->string('academic_status');
             $table->string('fellowship_status'); 
-            $table->string('unit_id'); 
-            $table->foreignId('fellowship_id')->references('id')->on('fellowships');
+            $table->foreignId('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreignId('fellowship_id')->references('id')->on('fellowships')->onDelete('cascade');
             $table->string('profile_image');  
             $table->timestamps();
         });

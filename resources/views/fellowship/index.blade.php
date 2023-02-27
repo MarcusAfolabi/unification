@@ -15,6 +15,11 @@
                 </h5>
             </div>
         </div>
+        @if (session('status'))
+            <div class="bg-whit border-t-4 border-red-600 p-5 shadow-lg relative rounded-md" uk-alert>
+                {{ session('status') }}
+            </div>
+            @endif
         <div class="card">
             <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"> </div>
             <div class="header_search"><i class="uil-search-alt"></i>
@@ -92,63 +97,46 @@
                             Sorry, nothing to show</p>
                         @endif
                     </div>
-                    {{ $fellowships->links() }}
                 </div>
             </div>
+            {{ $fellowships->links() }}
+
         </div>
     </div>
 </div>
 <div id="modal-fellowship" uk-modal>
     <div class="uk-modal-dialog">
-
         <button class="uk-modal-close-default m-3" type="button" uk-close></button>
-
         <div class="uk-modal-header">
             <h2 class="uk-modal-title">Add Fellowship</h2>
         </div>
-
         <form method="POST" action="{{ route('fellowship.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="p-10 space-y-7">
                 <div class="line">
                     <input class="line__input" id="name" required name="name" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('name') }}" autocomplete="off">
                     <span for="name" class="line__placeholder"> Name Of Fellowship </span>
-                </div>
-                @error('name')
-                <p style="color: red; ">{{ $message }} </p>
-                @enderror
+                </div> 
 
                 <div class="line">
                     <input class="line__input" id="acronyms" required name="acronyms" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('acronyms') }}" autocomplete="off">
                     <span for="acronyms" class="line__placeholder"> Fellowship Acronym </span>
-                </div>
-                @error('acronyms')
-                <p style="color: red; ">{{ $message }} </p>
-                @enderror
+                </div> 
 
                 <div class="line">
-                    <input class="line__input" id="phone" required name="phone" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('phone') }}" autocomplete="off">
+                    <input class="line__input" id="phone" required name="phone" type="text" onkeyup="this.setAttribute('value', this.value);" value="+234{{ old('phone') }}" autocomplete="off">
                     <span for="phone" class="line__placeholder"> Fellowship Phone No </span>
-                </div>
-                @error('phone')
-                <p style="color: red; ">{{ $message }} </p>
-                @enderror
+                </div> 
 
                 <div class="line">
                     <input class="line__input" id="address" required name="address" type="text" onkeyup="this.setAttribute('value', this.value);" value="{{ old('address') }}" autocomplete="off">
                     <span for="address" class="line__placeholder"> Fellowship Address </span>
-                </div>
-                @error('address')
-                <p style="color: red; ">{{ $message }} </p>
-                @enderror
+                </div> 
 
                 <div class="line">
                     <input class="line__input" id="file" required name="logo" type="file" onkeyup="this.setAttribute('value', this.value);" value="{{ old('logo') }}" autocomplete="off">
                     <span for="logo" class="line__placeholder"> Fellowship Logo </span>
-                </div>
-                @error('logo')
-                <p style="color: red; ">{{ $message }} </p>
-                @enderror
+                </div> 
 
 
             </div>

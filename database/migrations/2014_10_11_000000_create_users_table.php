@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('academic_status')->nullable();
             $table->string('fellowship_status')->nullable();
             $table->string('school_level')->nullable();
-            $table->foreignId('fellowship_id')->references('id')->on('fellowships');
-            $table->foreignId('unit_id')->references('id')->on('units');
+            $table->foreignId('fellowship_id')->references('id')->on('fellowships')->onDelete('cascade');
+            $table->foreignId('unit_id')->references('id')->on('units')->onDelete('cascade');
             $table->string('qualification_one')->nullable();
             $table->string('degree_one')->nullable();
             $table->string('course_one')->nullable(); 

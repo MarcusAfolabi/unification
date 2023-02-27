@@ -62,7 +62,7 @@ Route::get('/user-pro', [UserController::class, 'pro'])->name('user.pro');
 Route::get('/post', [PostController::class,'index'])->name('posts.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
 Route::get('/post/{post:slug}',[PostController::class, 'show'])->name('posts.show');
-Route::post('/post', [PostController::class, 'store'])->name('posts.store');
+Route::post('/post/store', [PostController::class, 'store'])->name('posts.store');
 Route::get('/post/{post}/edit',[PostController::class, 'edit'])->name('posts.edit');
 Route::put('/post/{post}',[PostController::class, 'update'])->name('posts.update');
 Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
@@ -160,6 +160,7 @@ Route::get('/download-central-resources',[ResourceController::class, 'list'])->n
 
 Route::resource('fellowship', FellowshipController::class);
 Route::get('/fellowship/{fellowship:slug}',[FellowshipController::class, 'show'])->name('fellowship.show');
+Route::get('/isokan-chapters',[FellowshipController::class, 'list'])->name('fellowship.list');
 
 Route::resource('house', HouseController::class);
 
