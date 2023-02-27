@@ -13,13 +13,14 @@
             <div class="profiles_content">
                 <div class="profile_avatar">
                     <div class="profile_avatar_holder">
-                        <img src="{{ asset($fellowship->logo) }}" title="{{ $fellowship->name }}" alt="{{ $fellowship->name }}">
+                        
+                        <img src="{{ asset('storage/app/public/' . $fellowship->logo) }}" title="{{ $fellowship->name }}" alt="{{ $fellowship->name }}">
                     </div>
                     <div class="icon_change_photo" hidden> <ion-icon name="camera" class="text-xl"></ion-icon> </div>
                 </div>
                 <div class="profile_info">
                     <h1> {{ $fellowship->name }} </h1>
-                    <p>{{ $fellowship->acronyms }} · {{ $fellowship_member }} members</p>
+                    <p>{{ $fellowship->acronyms }} 路 {{ $fellowship_member }} members</p>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center -space-x-4">

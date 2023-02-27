@@ -14,7 +14,7 @@ class FellowshipController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware(['auth', 'verified'])->except(['list']);
+        $this->middleware(['auth', 'verified'])->except(['list']);
     }
     public function index(Request $request)
     {
@@ -51,7 +51,7 @@ class FellowshipController extends Controller
         $fellowship->acronyms = $request->input('acronyms');
         $fellowship->phone = $request->input('phone');
         $fellowship->address = $request->input('address');
-        $fellowship->logo = 'storage/' . $request->file('logo')->store('fellowshipLogo', 'public');
+        $fellowship->logo = '/' . $request->file('logo')->store('fellowshipLogo', 'public');
         $fellowship->save();
         return redirect()->back()->with('status', 'Added Successfully');
     }
