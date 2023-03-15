@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Sub Convention Member')
+@section('title', 'Convention list')
 @section('main')
 <!--  breadcrumb -->
 

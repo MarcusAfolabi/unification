@@ -58,6 +58,9 @@ Route::post('send', [NotificationController::class, "sendnotification"])->middle
 Route::resource('/user', UserController::class);
 Route::get('/user-presidents', [UserController::class, 'president'])->name('user.president');
 Route::get('/user-pro', [UserController::class, 'pro'])->name('user.pro');
+Route::get('/profile/{user}/edit', [UserController::class, 'editMember'])->name('user.editMember');
+Route::put('/profile/{user}', [UserController::class, 'updateMember'])->name('user.updateMember');
+Route::put('/profile-pass/{user}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 // All Post
 Route::get('/post', [PostController::class,'index'])->name('posts.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
@@ -139,9 +142,19 @@ Route::resource('/executives', ExecutiveController::class);
 Route::get('/council-executives', [ExecutiveController::class, 'list'])->name('executives.list');
 
 //Convention
-Route::resource('convention', ConventionController::class);
-Route::get('/payment', [ConventionController::class,'payment'])->name('convention.payment');
+// Route::resource('convention', ConventionController::class);
+Route::get('/convention', [ConventionController::class,'index'])->name('convention.index') ;
+
+Route::get('/convention-list', [ConventionController::class,'list'])->name('convention.list') ;
+
 Route::get('/id-card', [ConventionController::class, 'card'])->name('convention.idcard');
+
+Route::post('/convention/store', [ConventionController::class, 'store'])->name('convention.store');
+
+Route::get('/convention/payment', [ConventionController::class,'payment'])->name('convention.payment');
+
+Route::delete('/convention/{convention}', [ConventionController::class, 'destroy'])->name('convention.destroy');
+
 
 
 //SubConvention
@@ -160,7 +173,7 @@ Route::get('/download-central-resources',[ResourceController::class, 'list'])->n
 
 Route::resource('fellowship', FellowshipController::class);
 Route::get('/fellowship/{fellowship:slug}',[FellowshipController::class, 'show'])->name('fellowship.show');
-Route::get('/isokan-chapters',[FellowshipController::class, 'list'])->name('fellowship.list');
+Route::get('/fellowships',[FellowshipController::class, 'list'])->name('fellowship.list');
 
 Route::resource('house', HouseController::class);
 

@@ -61,6 +61,7 @@
             <x-jet-input id="lastname" type="text" class="mt-1 block w-full" wire:model.defer="state.lastname" />
             <x-jet-input-error for="lastname" class="mt-2" />
         </div>
+
         <!-- Phone Number -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="phone" value="{{ __('Phone Number') }}" />
@@ -73,61 +74,75 @@
             <x-jet-input id="email" type="email" class="mt-1 block w-full" ReadOnly wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Address -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="address" value="{{ __('Contact Address') }}" />
-            <x-jet-input id="address" type="address" class="mt-1 block w-full" wire:model.defer="state.address" />
+            <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.address" />
             <x-jet-input-error for="address" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Status -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="academic_status" value="{{ __('Academic Status') }}" />
             <x-jet-input id="academic_status" type="text" class="mt-1 block w-full" wire:model.defer="state.academic_status" />
             <x-jet-input-error for="academic_status" class="mt-2" />
         </div>
-        <!-- Email -->
+
+        <!-- school_level -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="school_level" value="{{ __('Level In School') }}" />
             <x-jet-input id="school_level" type="text" class="mt-1 block w-full" wire:model.defer="state.school_level" />
             <x-jet-input-error for="school_level" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Fellowship post -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="fellowship_status" value="{{ __('Position Held') }}" />
             <x-jet-input id="fellowship_status" type="text" class="mt-1 block w-full" wire:model.defer="state.fellowship_status" />
             <x-jet-input-error for="fellowship_status" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Chapter -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="fellowship_id" value="{{ __('Chapter Fellowship') }}" />
-            <x-jet-input id="fellowship_id" type="text" class="mt-1 block w-full" wire:model.defer="state.fellowship_id" />
+            @php
+            $fellowships = App\Models\Fellowship::select('id', 'name')->orderBy('name')->get();
+            @endphp
+
+            <select class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" name="fellowship_id">
+                @foreach($fellowships as $fellowship)
+                <option value="{{ $state->fellowship->id }}">{{$state->fellowship->name}}</option>
+
+                <option value="{{ $fellowship->id }}" {{ old('fellowship_id') == $fellowship->id ? 'selected' : '' }}>
+                    {{ $fellowship->name }}
+                </option>
+                @endforeach
+            </select>
+
             <x-jet-input-error for="fellowship_id" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Unit -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="unit_id" value="{{ __('Unit in Fellowship') }}" />
             <x-jet-input id="unit_id" type="text" class="mt-1 block w-full" wire:model.defer="state.unit_id" />
             <x-jet-input-error for="unit_id" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Quaification -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="qualification_one" value="{{ __('First Degree Qualification') }}" />
             <x-jet-input id="qualification_one" type="text" class="mt-1 block w-full" wire:model.defer="state.qualification_one" />
             <x-jet-input-error for="qualification_one" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Degree -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="degree_one" value="{{ __('First Degree Institution') }}" />
             <x-jet-input id="degree_one" type="text" class="mt-1 block w-full" wire:model.defer="state.degree_one" />
             <x-jet-input-error for="degree_one" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Course -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="course_one" value="{{ __('First Degree Course') }}" />
             <x-jet-input id="course_one" type="text" class="mt-1 block w-full" wire:model.defer="state.course_one" />
             <x-jet-input-error for="course_one" class="mt-2" />
         </div>
-        <!-- Email -->
+        <!-- Year Graduated -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="year_graduated" value="{{ __('Graduation Year') }}" />
             <x-jet-input id="year_graduated" type="tel" class="mt-1 block w-full" wire:model.defer="state.year_graduated" />

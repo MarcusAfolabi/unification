@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
+use App\Mail\LikeMail;
 use App\Mail\PostMail;
 use App\Models\Comment;
 use App\Models\Product;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\NotificationPost;
 use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
@@ -33,22 +35,18 @@ class PostController extends Controller
         $sideproducts = Product::select('name', 'currency', 'price', 'slug', 'id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
         return view('posts.index', compact('myposts', 'all_posts', 'sideproducts'));
     }
-
-    public function create()
-    {
-        //
-    }
+ 
     public function store(Request $request)
     {
-        $user = User::latest()->get();
+        // $users = User::latest()->get();
 
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
             "intro" => 'required|string|max:251',
             "image" => 'required|array|max:5',
-            "image.*" => 'required|image|mimes:jpeg,png,jpg|max:500',
+            "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
-            "content" => 'required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i',
+            'content' => 'required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate|kiss|fuck).*$/i',
             'fellowship_id' => 'required',
         ]);
 
@@ -56,10 +54,12 @@ class PostController extends Controller
         $postData = $request->only(['title', 'intro', 'category', 'content', 'fellowship_id']);
         $postData = array_map('strip_tags', $postData);
         $post->fill($postData);
-        $content = htmlentities($request['content'], ENT_QUOTES, 'UTF-8');
+        $content = htmlentities($request->input('content'), ENT_QUOTES, 'UTF-8');
+        $post->content = $content;
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();
+        
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
                 $path = $image->store('postImages', 'public');
@@ -71,12 +71,13 @@ class PostController extends Controller
         }
 
         Notification::route('mail', [
-            'info@cnsunification.org' => 'Alert! New post has been published on the website',
+            'isokanmagazine@gmail.com' => 'Alert! New post has been published on the website',
         ])->notify(new PostNotification($post));
 
-        Mail::to($post->user->email)->send(new PostMail($post));
-        event(new ItemStored()); 
-        return redirect()->back()->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
+        $users = User::all();
+        Notification::send($users, new NotificationPost($post));
+
+        return redirect(route('posts.index'))->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
     public function like(Post $post)
@@ -101,6 +102,8 @@ class PostController extends Controller
 
         // Update the post's like count
         // $post->likes()->increment('count');
+        
+        Mail::to($like->post->user->email)->send(new LikeMail($like));
 
         return redirect()->back()->with(['status' => 'Post liked successfully.']);
     }

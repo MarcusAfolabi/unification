@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
 
     protected $table = 'users';
-    
+
     protected $fillable = [
         'name',
         'lastname',
@@ -34,7 +34,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'qualification_one',
         'degree_one',
         'course_one',
-        'password'
+        'professional_skill',
+        'occupation',
+        'password',
+        'profile_photo_path'
     ];
 
     protected $hidden = [
@@ -48,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-   
+
     public function fellowship()
     {
         return $this->belongsTo(Fellowship::class);
@@ -67,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Comment::class);
     }
-    
+
     public function likes()
     {
         return $this->hasMany(PostLike::class);
