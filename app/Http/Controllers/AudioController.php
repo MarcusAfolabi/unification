@@ -14,7 +14,7 @@ class AudioController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['show']);
+        $this->middleware(['auth', 'verified'])->except(['list']);
     }
     public function index(Request $request)
     {
@@ -56,10 +56,13 @@ class AudioController extends Controller
         return redirect(route('audios.index'))->with('status', 'Audio Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
-    public function show(Audio $audio)
+    public function list(Audio $audio)
     {
-        DB::table('audio')->increment('views');
-        return view('audios.audio', compact('audio'));
+        
+        DB::table('audios')->increment('views');
+        $side_audios = Audio::latest()->paginate(10);
+        $audios = Audio::latest()->paginate(10);
+        return view('audios.list', compact('audios', 'side_audios'));
     }
 
     public function edit(Audio $audio)

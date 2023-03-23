@@ -18,6 +18,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ExecutiveController;
 use App\Http\Controllers\ConventionController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FellowshipController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SubconventionController;
@@ -33,9 +34,9 @@ use App\Http\Controllers\SubconventionController;
 |
 */
 
-Route::get('/donation', function () {
-    return view('donation');
-})->name('donation');
+// Route::get('/donation', function () {
+//     return view('donation');
+// })->name('donation');
  
 Route::get('/terms', function () {
     return view('terms');
@@ -45,6 +46,11 @@ Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
  
+Route::get('/donation', [DonationController::class, 'index'])->name('donation.index');
+Route::get('/donation/list', [DonationController::class, 'list'])->name('donation.list'); 
+Route::post('/fundraise', [DonationController::class, 'fund'])->name('fundraise.store');
+Route::get('/redirect', [DonationController::class, 'success'])->name('fundraise.redirect');
+Route::get('/fundraise/{fundraise:slug}', [DonationController::class, 'show'])->name('fundraise.show');
  
 //Redirect Admin
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.index');
@@ -61,6 +67,9 @@ Route::get('/user-pro', [UserController::class, 'pro'])->name('user.pro');
 Route::get('/profile/{user}/edit', [UserController::class, 'editMember'])->name('user.editMember');
 Route::put('/profile/{user}', [UserController::class, 'updateMember'])->name('user.updateMember');
 Route::put('/profile-pass/{user}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+// Route::delete('/user-delete/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::delete('/logout', [UserController::class, 'logout'])->name('user.logout');
+
 // All Post
 Route::get('/post', [PostController::class,'index'])->name('posts.index');
 Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
@@ -97,6 +106,7 @@ Route::get('/audios/{audio}/edit',[AudioController::class, 'edit'])->name('audio
 Route::put('/audio/{audio}',[AudioController::class, 'update'])->name('audios.update');
 Route::delete('/audio/{audio}', [AudioController::class, 'destroy'])->name('audios.destroy');
 Route::get('/status/{id}', [AudioController::class, 'status'])->name('status.status');
+Route::get('/audio-messages', [AudioController::class, 'list'])->name('audios.list');
 
 // All vacancies
 Route::get('/vacancies', [VacancyController::class,'index'])->name('vacancies.index') ;

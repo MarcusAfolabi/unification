@@ -139,4 +139,10 @@ class UserController extends Controller
         $user->delete();
         return redirect()->back()->with('status', 'User Deleted Successfully.');
     }
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect(route('login'))->with('status', 'Logout Successfully');
+    }
 }

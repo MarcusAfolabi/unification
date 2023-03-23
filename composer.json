@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "flutterwavedev/flutterwave-v3": "^1.0",
         "google/apiclient": "^2.13",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
