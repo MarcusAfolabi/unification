@@ -34,7 +34,7 @@ class Post extends Model
 
     public function likes()
     {
-        return $this->hasMany(PostLike::class);
+        return $this->hasMany(Postlike::class);
     }
 
     public function likedBy(User $user)
