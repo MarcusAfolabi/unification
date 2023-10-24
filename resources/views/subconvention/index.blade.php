@@ -23,7 +23,7 @@
                     <input type="text" placeholder="First name" value="{{ old('firstname') }}" name="firstname" class="with-border">
                     <input type="text" placeholder="Last name" value="{{ old('lastname') }}" name="lastname" class="with-border">
                     <input type="email" placeholder="Email" value="{{ old('email') }}" name="email" class="with-border">
-                    <input type="tel" placeholder="Phone no" value="{{ old('phone') }}" name="phone" maxlength="11" id="phone" pattern="^0(?:70|71|80|81|90|91)[0-9]{8}$" class="shadow-none mt-0 px-5 with-border">
+                    <input type="tel" placeholder="09012345678" value="{{ old('phone') }}" name="phone" maxlength="11" id="phone" pattern="^0(?:70|71|80|81|90|91)[0-9]{8}$" class="shadow-none mt-0 px-5 with-border">
 
                     <select type="text" placeholder="Gender" name="gender" class="shadow-none selectpicker with-border">
                         <option value="{{ old('gender') }}"> {{ old('gender') }} Select Gender </option>

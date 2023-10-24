@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Vacancy;
 use App\Models\Convention;
 use App\Models\Fellowship; 
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
