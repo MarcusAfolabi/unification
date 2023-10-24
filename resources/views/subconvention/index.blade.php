@@ -1,163 +1,111 @@
 @extends('layouts.main')
 @section('title', 'Sub Convention Registration')
-@section('description', 'Register for the coming sub convention and ensure to make payment as onsite payment would not
-be allowed.')
+@section('description', 'Register for the coming sub convention and ensure to make payment as onsite payment would not be allowed.')
 @section('keywords', 'convention, praying ground, mountain, retreat, family reunion, christian, religion, religiou')
 @section('canonical', 'https://cnsunification.org/convention')
 
 @section('main')
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 <div class="main_content">
-    <div class="mcontainer">
-        <div class="flex justify-between items-center relative md:mb-4 mb-3">
-            <div class="flex-1">
-                <h2 class="text-2xl font-semibold">
-                    All Sub Convention Members
-                </h2>
-            </div>
-            <a uk-tooltip="Add" href="{{ route('subconvention.create') }}"
-                class="flex items-center justify-center h-8 lg:px-3 px-2 rounded-md bg-red-600 text-white space-x-1 absolute right-0 z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                        clip-rule="evenodd"></path>
-                </svg> <span class="md:block hidden"> Add</span>
-            </a>
+    <div class="bg-gradient-to-tr flex from-blue-400 h-52 items-center justify-center lg:h-80 pb-10 relative to-blue-300 via-blue-400 w-full">
+        <div class="text-center max-w-xl mx-auto z-10 relative px-5">
+            <div class="lg:text-4xl text-2xl text-white font-semibold mb-3"> SUB - CONVENTION 2023 </div>
+            <div class="text-white text-lg font-medium text-opacity-90"> Ensure to provide accurate information and
+                proceed to make payment</div>
         </div>
-        <div class="card">
-            <div class="header_search"><i class="uil-search-alt"></i>
-                <form action="">
-                    <input type="text" class="form-control" name="search" placeholder="Search..." autocomplete="off">
-                </form>
-            </div>
-            <hr>
-            <br>
-            <x-jet-validation-errors class="alert alert-danger" />
-            @if (session('status'))
-            <div class="bg-whit border-t-4 border-red-600 p-5 shadow-lg relative rounded-md" uk-alert>
-                {{ session('status') }}
-            </div>
-            @endif
-            @if ($subconventions->count() > 0)
-            <div class="flex flex-col">
-                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full border-collapse border border-slate-400">
-                                <thead class="border-b">
-                                    <tr>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">S/N
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Name
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Institution
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Academic Status
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Position Held
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Graduated Year
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Phone
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Email
-                                        </th>
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">
-                                            Contact Address
-                                        </th>
+    </div>
+    <form method="POST" action="{{ route('subconvention.store') }}" enctype="multipart/form-data">
+    <div class="mcontainer">
+        <div class="-mt-16 bg-white max-w-2xl mx-auto p-10 relative rounded-md shadow">
+                <x-jet-validation-errors class="mb-4" />
+                <div class="grid md:grid-cols-2 md:gap-y-7 md:gap-x-6 gap-6">
+                    @csrf
+                    <input type="text" placeholder="First name" value="{{ old('firstname') }}" name="firstname" class="with-border">
+                    <input type="text" placeholder="Last name" value="{{ old('lastname') }}" name="lastname" class="with-border">
+                    <input type="email" placeholder="Email" value="{{ old('email') }}" name="email" class="with-border">
+                    <input type="tel" placeholder="Phone Number" value="{{ old('phoneNumber') }}" name="phone" class="shadow-none mt-0 px-5 with-border">
+                   
+                    <select type="text" placeholder="Gender" name="gender" class="shadow-none selectpicker with-border">
+                        <option value="{{ old('gender') }}"> {{ old('gender') }} Select Gender </option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+
+                  
+                    <select type="text" name="fellowship_id" class="shadow-none selectpicker with-border">
+                        <option disabled value="{{ old('fellowship_id') }}">Select your fellowship </option>
+                        @foreach (App\Models\Fellowship::all() as $institution)
+                        <option value="{{$institution->name}}">{{$institution->name}}</option>
+                        @endforeach
+                    </select>
+
+                    <select type="text" name="academic_status" class="shadow-none selectpicker with-border">
+                        <option disabled value="{{ old('academic_status') }}"> Select your level in school </option>
+                        <option value="Pre-ND"> Pre-ND </option>
+                        <option value="Pre-Degree"> Pre-Degree </option>
+                        <option value="HND1"> HND1 </option>
+                        <option value="HND2"> HND2 </option>
+                        <option value="ND1"> ND1 </option>
+                        <option value="ND2"> ND2 </option>
+                        <option value="100 Level"> 100 Level</option>
+                        <option value="200 Level"> 200 Level</option>
+                        <option value="300 Level"> 300 Level</option>
+                        <option value="400 Level"> 400 Level</option>
+                        <option value="500 Level"> 500 Level</option>
+                        <option value="600 Level"> 600 Level</option>
+                        <option value="Graduate"> Graduate </option>
+                        <option value="Post Graduate"> Post Graduate </option>
+
+                    </select>
+
+                    <select type="text" name="fellowship_status" class="shadow-none selectpicker with-border">
+                        <option disabled value="{{ old('fellowship_status') }}">Select your fellowship post </option>
+                        <option value="ASSISTANT SECRETARY"> ASSISTANT SECRETARY </option>
+                        <option value="CHOIR MASTER/MISTRESS"> CHOIR MASTER/MISTRESS </option>
+                        <option value="EVANGELISM SECRETARY"> EVANGELISM SECRETARY </option>
+                        <option value="FEMALE CO-ORDINATOR"> FEMALE CO-ORDINATOR </option>
+                        <option value="FINANCIAL SECRETARY"> FINANCIAL SECRETARY </option>
+                        <option value="LEVITE CO-ORDINATOR"> LEVITE CO-ORDINATOR </option>
+                        <option value="PRAYER MINISTRY LEADER"> PRAYER MINISTRY LEADER </option>
+                        <option value="PRESIDENT"> PRESIDENT </option>
+                        <option value="PUBLICITY SECRETARY"> PUBLICITY SECRETARY </option>
+                        <option value="SECRETARY"> SECRETARY </option>
+                        <option value="TREASURY SECRETARY"> TREASURY SECRETARY </option>
+                        <option value="VICE PRESIDENT"> VICE PRESIDENT </option>
+                        <option value="WELFARE SECRETARY"> WELFARE SECRETARY </option>
+                        <option value="MEMBER"> MEMBER </option>
+                        <option value="OTHERS"> OTHERS </option>
+                    </select>
 
 
-                                        <th scope="col"
-                                            class="text-sm font-medium text-dark px-1 py-1 border border-slate-300">Delete
-                                        </th>
-                                    </tr>
-                                </thead>
+                    <select type="text" name="unit_id" class="shadow-none selectpicker with-border">
+                        <option selected disabled value="{{ old('unit_id') }}">Select your unit in the fellowship </option>
+                        <option value="Drama Unit"> Drama Unit </option>
+                        <option value="Choir Unit"> Choir Unit </option>
+                        <option value="Decorating Unit"> Decorating Unit </option>
+                        <option value="Usering Unit"> Usering Unit </option>
+                        <option value="Levites Unit"> Levites Unit </option>
+                        <option value="Prayer Unit"> Prayer Unit </option>
+                        <option value="Bible Unit"> Bible Unit </option>
+                        <option value="Evangelism Unit"> Evangelism Unit </option>
+                        <option value="Academic Unit"> Academic Unit </option>
+                        <option value="Media/Publicity Unit"> Media/Publicity Unit </option>
+                        <option value="OTHER"> OTHERS </option>
+                    </select> 
 
-                                <tbody>
-                                    @foreach ($subconventions as $key => $subconvention)
-                                    <tr class="bg-white border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{
-                                            ++$key }}</td>
+                    <div class="flex items-center text-center justify-between mt-6">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('subconvention.payment') }}">
+                            {{ __('Already registered? Make Payment Now') }}
+                        </a>
 
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            {{ $subconvention->firstname }} {{ $subconvention->lastname }} {{
-                                            $subconvention->middlename }}
-                                        </td>
-                                        <td
-                                        class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                        {{ $subconvention->yourFellowship }}
-                                    </td>
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            {{ $subconvention->academicStatus }} | {{
-                                            $subconvention->unificationCurrentPost }} | {{
-                                            $subconvention->unificationStatus }}
-                                        </td>
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            {{ $subconvention->positionHeld }}
-                                        </td>
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            {{ $subconvention->graduationYear }}
-                                        </td>
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            {{ $subconvention->phoneNumber }}
-                                        </td>
-                                        <td
-                                        class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                        {{ $subconvention->email }}
-                                    </td>
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            {{ $subconvention->contactAddress }}
-                                        </td>
-
-                                        <td
-                                            class="text-sm text-gray-900 font-light px-1 py-1 whitespace-nowrap border border-slate-300">
-                                            <form action="{{ route('subconvention.destroy', $subconvention) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" uk-tooltip="Delete Member"
-                                                    onclick="return confirm('Hey, Are you sure about this?');">
-                                                    <span style="color: red" class="icon-feather-trash-2"></span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        @else
-                        <p class="text-center text-opacity-75"> <span class="icon-material-outline-user"></span>
-                            Welcome {{ auth()->user()->name }}, Click the <b>Add</b> button above to get started!
-                        </p>
-                        @endif
+                        <x-jet-button class="ml-5 justify-end">
+                            {{ __('Register') }}
+                        </x-jet-button>
                     </div>
+
                 </div>
             </div>
-            {{ $subconventions->links() }}
         </div>
-
-    </div>
+    </form>
 </div>
 @endsection

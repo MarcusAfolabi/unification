@@ -8,7 +8,7 @@
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
                 <h5 class="text-1xl font-semibold">
-                    <a href="{{ route('convention.index') }}"><i class="icon-material-outline-add"></i> New </a>
+                    <a href="{{ route('subconvention.index') }}"><i class="icon-material-outline-add"></i> New </a>
                 </h5>
             </div>
         </div>
@@ -26,7 +26,7 @@
             </div>
             <hr>
             <br>
-            @if ($conventions->count() > 0)
+            @if ($subconventions->count() > 0)
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">

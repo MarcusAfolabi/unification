@@ -22,6 +22,5 @@ class Subconvention extends Model
         'fellowship_id',
         'unit_id',
         'profile_image',
-        'recaptcha_token'
     ];
 }
