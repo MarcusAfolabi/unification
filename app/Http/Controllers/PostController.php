@@ -70,12 +70,12 @@ class PostController extends Controller
             }
         }
 
-        Notification::route('mail', [
-            'isokanmagazine@gmail.com' => 'Alert! New post has been published on the website',
-        ])->notify(new PostNotification($post));
+        // Notification::route('mail', [
+        //     'isokanmagazine@gmail.com' => 'Alert! New post has been published on the website',
+        // ])->notify(new PostNotification($post));
 
-        $users = User::all();
-        Notification::send($users, new NotificationPost($post));
+        // $users = User::all();
+        // Notification::send($users, new NotificationPost($post));
 
         return redirect(route('posts.index'))->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }

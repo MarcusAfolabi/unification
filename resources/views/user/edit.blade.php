@@ -15,7 +15,7 @@
                     <div class="sm:col-span-6">
                         <label for="photo" class="block text-sm font-medium text-blue-blue-900"> </label>
                         <div class="mt-1 flex items-center">
-                            <img class="inline-block h-24 w-24 rounded-full" src="{{ asset($user->profile_photo_url) }}" alt="{{ $user->name }}" title="{{ $user->name }}">
+                            <img class="inline-block h-24 w-24 rounded-full" src="{{ ($user->profile_photo_url) }}" alt="{{ $user->name }}" title="{{ $user->name }}">
                             <div class="ml-4 flex">
                                 <div class="relative bg-white py-2 px-3 border border-blue-blue-300 rounded-md shadow-sm flex items-center cursor-pointer hover:bg-blue-blue-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-blue-blue-50 focus-within:ring-blue-500">
                                     <label for="user-photo" class="relative text-sm font-medium text-blue-blue-900 pointer-events-none">
