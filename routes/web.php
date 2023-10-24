@@ -37,6 +37,11 @@ use App\Http\Controllers\SubconventionController;
 // Route::get('/donation', function () {
 //     return view('donation');
 // })->name('donation');
+
+Route::get('/create-storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage link created!';
+});
  
 Route::get('/terms', function () {
     return view('terms');
