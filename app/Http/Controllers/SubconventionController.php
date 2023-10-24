@@ -75,8 +75,7 @@ class SubconventionController extends Controller
         $academic_status = $request->input('academic_status');
         $fellowship_status = $request->input('fellowship_status');
         $unit_id = $request->input('unit_id');
-        $fellowship_id = $request->input('fellowship_id');
-        $fellowship_name = $request->input('fellowship_name');
+        $fellowship_id = $request->input('fellowship_id'); 
         
 
         $subconvention = new Subconvention();
@@ -88,8 +87,7 @@ class SubconventionController extends Controller
         $subconvention->academic_status = $academic_status;
         $subconvention->fellowship_status = $fellowship_status;
         $subconvention->unit_id = $unit_id;
-        $subconvention->fellowship_id = $fellowship_id;
-        $subconvention->fellowship_name = $fellowship_name;
+        $subconvention->fellowship_id = $fellowship_id; 
         $subconvention->save();
 
         Notification::route('mail', [

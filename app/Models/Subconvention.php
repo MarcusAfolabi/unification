@@ -19,8 +19,7 @@ class Subconvention extends Model
         'phone',
         'academic_status',
         'fellowship_status',
-        'fellowship_id',
-        'fellowship_name',
+        'fellowship_id', 
         'unit_id',
         'profile_image',
     ];
