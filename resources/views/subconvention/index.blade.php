@@ -1,6 +1,6 @@
 @extends('layouts.main')
-@section('title', 'Sub Convention Registration')
-@section('description', 'Register for the coming sub convention and ensure to make payment as onsite payment would not be allowed.')
+@section('title', ' Sub Convention Registration')
+@section('description', 'Cherubim and Seraphim Unification Campus Fellowship present Register for the coming sub convention and ensure to make payment as onsite payment would not be allowed.')
 @section('keywords', 'convention, praying ground, mountain, retreat, family reunion, christian, religion, religiou')
 @section('canonical', 'https://cnsunification.org/subconvention')
 

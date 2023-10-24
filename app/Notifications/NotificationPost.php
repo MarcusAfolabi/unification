@@ -34,7 +34,7 @@ class NotificationPost extends Notification
                     ->line('Please note that all posts must adhere to the values and teachings of the Cherubim and Seraphim Church. We expect all members to maintain a respectful and uplifting tone in all posts and comments.')
                     ->line("We hope you find the new post informative and inspiring. If you have any questions or concerns, please don't hesitate to contact us.")
                     ->line('Thank you for being a part of the Cherubim and Seraphim Church Unification Campus Fellowship platform.')
-                    ->action('Read now', url('https://cnsunification.org'))
+                    ->action('Read now', url('https://cnsunification.org'));
     }
  
     public function toArray($notifiable)
