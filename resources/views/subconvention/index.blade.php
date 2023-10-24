@@ -15,8 +15,8 @@
         </div>
     </div>
     <form method="POST" action="{{ route('subconvention.store') }}" enctype="multipart/form-data">
-    <div class="mcontainer">
-        <div class="-mt-16 bg-white max-w-2xl mx-auto p-10 relative rounded-md shadow">
+        <div class="mcontainer">
+            <div class="-mt-16 bg-white max-w-2xl mx-auto p-10 relative rounded-md shadow">
                 <x-jet-validation-errors class="mb-4" />
                 <div class="grid md:grid-cols-2 md:gap-y-7 md:gap-x-6 gap-6">
                     @csrf
@@ -25,14 +25,14 @@
                     <input type="email" placeholder="Email" value="{{ old('email') }}" name="email" class="with-border">
                     <input type="hidden" value="1" name="fellowship_id" class="with-border">
                     <input type="tel" placeholder="Phone Number" value="{{ old('phoneNumber') }}" name="phone" class="shadow-none mt-0 px-5 with-border">
-                   
+
                     <select type="text" placeholder="Gender" name="gender" class="shadow-none selectpicker with-border">
                         <option value="{{ old('gender') }}"> {{ old('gender') }} Select Gender </option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
 
-                  
+
                     <select type="text" name="fellowship_name" class="shadow-none selectpicker with-border">
                         <option disabled value="{{ old('fellowship_name') }}">Select your fellowship </option>
                         @foreach (App\Models\Fellowship::all() as $institution)
@@ -92,7 +92,7 @@
                         <option value="Academic Unit"> Academic Unit </option>
                         <option value="Media/Publicity Unit"> Media/Publicity Unit </option>
                         <option value="OTHER"> OTHERS </option>
-                    </select> 
+                    </select>
 
                     <div class="flex items-center text-center justify-between mt-6">
                         <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('subconvention.payment') }}">
