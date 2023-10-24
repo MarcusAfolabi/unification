@@ -23,6 +23,7 @@
                     <input type="text" placeholder="First name" value="{{ old('firstname') }}" name="firstname" class="with-border">
                     <input type="text" placeholder="Last name" value="{{ old('lastname') }}" name="lastname" class="with-border">
                     <input type="email" placeholder="Email" value="{{ old('email') }}" name="email" class="with-border">
+                    <input type="hidden" value="1" name="fellowship_id" class="with-border">
                     <input type="tel" placeholder="Phone Number" value="{{ old('phoneNumber') }}" name="phone" class="shadow-none mt-0 px-5 with-border">
                    
                     <select type="text" placeholder="Gender" name="gender" class="shadow-none selectpicker with-border">
@@ -32,8 +33,8 @@
                     </select>
 
                   
-                    <select type="text" name="fellowship_id" class="shadow-none selectpicker with-border">
-                        <option disabled value="{{ old('fellowship_id') }}">Select your fellowship </option>
+                    <select type="text" name="fellowship_name" class="shadow-none selectpicker with-border">
+                        <option disabled value="{{ old('fellowship_name') }}">Select your fellowship </option>
                         @foreach (App\Models\Fellowship::all() as $institution)
                         <option value="{{$institution->name}}">{{$institution->name}}</option>
                         @endforeach

@@ -20,6 +20,7 @@ class Subconvention extends Model
         'academic_status',
         'fellowship_status',
         'fellowship_id',
+        'fellowship_name',
         'unit_id',
         'profile_image',
     ];

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('academic_status');
             $table->string('fellowship_status'); 
             $table->string('unit_id') ;
-            $table->string('fellowship_id');
+            $table->string('fellowship_id')->nullable();
+            $table->string('fellowship_name');
             $table->timestamps();
         });
     }
