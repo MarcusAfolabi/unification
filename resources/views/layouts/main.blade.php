@@ -169,7 +169,7 @@
                     <li class="{{ Request::routeIs('donation.index') ? 'active' : ''}}"><a href="{{ route('donation.index')}}"><svg fill="currentColor" class="text-red-500" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                             </svg><span>Donate </span></a></li>
-                    <li class="{{ Request::routeIs('fellowship.index') ? 'active' : ''}}"><a href="{{ route('fellowship.index')}}"><svg width="20px" height="20px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                    <li class="{{ Request::routeIs('fellowship.list') ? 'active' : ''}}"><a href="{{ route('fellowship.list')}}"><svg width="20px" height="20px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
                                 <path fill="#BCBEC0" d="M20 2h-1V1a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v6a1 1 0 1 0 2 0V4h1a1 1 0 1 0 0-2z">
                                 </path>
                                 <path fill="#FFD983" d="M18 9l-5.143 4H13v9h10v-9h.143z"></path>
@@ -181,7 +181,7 @@
                                 <path fill="#662113" d="M12.999 31A2 2 0 1 0 9 31v5h4v-5h-.001zm7-2A2 2 0 0 0 16 29v7h4l-.001-7zm7 2A2 2 0 0 0 23 31v5h4l-.001-5z">
                                 </path>
                             </svg><span>Fellowships </span></a></li>
-                    <li><a href="{{ route('resource.index')}}"><svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <li><a href="{{ route('resource.list')}}"><svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
                                 <path style="fill:#9BC9FF;" d="M505.751,475.563l-90.815-90.815c33.944-40.71,54.397-93.04,54.397-150.064 c0-129.395-105.271-234.667-234.667-234.667S0,105.287,0,234.684s105.271,234.667,234.667,234.667 c57.041,0,109.389-20.467,150.103-54.43l90.813,90.813c4.166,4.166,9.626,6.249,15.084,6.249s10.92-2.082,15.084-6.249 C514.084,497.401,514.084,483.893,505.751,475.563z" />
                                 <path style="fill:#BDFDFF;" d="M234.667,42.684c-105.869,0-192,86.13-192,192c0,105.869,86.131,192,192,192s192-86.131,192-192 C426.667,128.814,340.535,42.684,234.667,42.684z M135.111,334.239c0-54.987,44.574-99.556,99.556-99.556 c-35.345,0-64.001-28.654-64.001-64s28.656-64,64.001-64s64,28.652,64,63.999s-28.655,64-64,64c54.98,0,99.554,44.568,99.554,99.556 h-199.11V334.239z" />
                                 <circle style="fill:#EFC27B;" cx="234.667" cy="170.68" r="64" />
