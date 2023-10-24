@@ -11,7 +11,8 @@ use App\Models\Prayer;
 use App\Models\Product;
 use App\Models\Vacancy;
 use App\Models\Convention;
-use App\Models\Fellowship; 
+use App\Models\Fellowship;
+use App\Models\Subconvention;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -23,19 +24,20 @@ class HomeController extends Controller
 
     public function index()
     {
-        $president =  User::where('fellowship_status', 'PRESIDENT')->count();
-        $secretary =  User::where('fellowship_status', 'SECRETARY')->count();
-        $total_cec = User::where('fellowship_status', 'CEC')->count();
-        $fellowship = Fellowship::all()->count();
-        $total_users = User::all()->count();
-        $posts = Post::all()->count();
-        $prayers = Prayer::all()->count();
-        $jobs = Vacancy::all()->count();
-        $audios = Audio::all()->count();
-        $videos = Video::all()->count();
-        $products = Product::all()->count();
-        $books = Book::all()->count();
-        $convention = Convention::all()->count();
+        $president =  User::select('id', 'fellowship_status')->where('fellowship_status', 'PRESIDENT')->count();
+        $secretary =  User::select('id', 'fellowship_status')->where('fellowship_status', 'SECRETARY')->count();
+        $total_cec = User::select('id', 'fellowship_status')->where('fellowship_status', 'CEC')->count();
+        $fellowship = Fellowship::select('id')->count();
+        $total_users = User::select('id')->count();
+        $posts = Post::select('id')->count();
+        $prayers = Prayer::select('id')->count();
+        $jobs = Vacancy::select('id')->count();
+        $audios = Audio::select('id')->count();
+        $videos = Video::select('id')->count();
+        $products = Product::select('id')->count();
+        $books = Book::select('id')->count();
+        $convention = Convention::select('id')->count();
+        $subconvention = Subconvention::select('id')->count();
 
         $auth = Auth::user();
         $users = User::latest()->paginate(50);
@@ -44,7 +46,7 @@ class HomeController extends Controller
 
         if(auth()->user()->role === 'admin')
         {
-            return view ('dashboard.index', compact('president', 'secretary', 'total_cec', 'fellowship', 'total_users', 'posts', 'prayers', 'jobs', 'audios', 'videos', 'products', 'books', 'convention'));
+            return view ('dashboard.index', compact('subconvention', 'president', 'secretary', 'total_cec', 'fellowship', 'total_users', 'posts', 'prayers', 'jobs', 'audios', 'videos', 'products', 'books', 'convention'));
         }
         else{
         return redirect(route('welcome'));

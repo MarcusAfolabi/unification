@@ -77,18 +77,8 @@
                     <p class="text-sm"> Total Products </p>
                 </div>
                 <i class="icon-feather-shopping-cart text-xl"></i>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-3 flex ">
-                <div class="bg-pink-600 rounded-lg w-1.5"></div>
-                <div class="ml-4 flex-1">
-                    <div class="font-semibold text-lg">  
-                    </div>
-                    <p class="text-sm"> Pageviews </p>
-                </div>
-                <i class="icon-feather-bar-chart-2 text-xl"></i>
-            </div>
-
+            </div> 
+            
             <div class="bg-white rounded-lg shadow-md p-3 flex">
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
@@ -102,10 +92,20 @@
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
                     <div class="font-semibold text-lg"> {{ $convention }} </div>
+                    <p class="text-sm"> Registered Convention </p>
+                </div>
+                <i class="icon-feather-users text-xl"></i>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-3 flex">
+                <div class="bg-yellow-600 rounded-lg w-1.5"></div>
+                <div class="ml-4 flex-1">
+                    <div class="font-semibold text-lg"> {{ $subconvention }} </div>
                     <p class="text-sm"> Registered Sub Convention </p>
                 </div>
                 <i class="icon-feather-users text-xl"></i>
             </div>
+
             <div class="bg-white rounded-lg shadow-md p-3 flex">
                 <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
