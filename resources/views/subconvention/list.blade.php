@@ -50,8 +50,7 @@
                                             Fellowship Status</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Unit member</th>
-                                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Fellowship ID</th>
+                                           
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             When</th>
 
@@ -67,7 +66,7 @@
                                             {{ $convention->lastname }} {{ $convention->firstname }} </a>
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $convention->fellowship_name }}</td>
+                                            $convention->fellowship_id }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $convention->gender }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
@@ -77,9 +76,7 @@
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
                                             $convention->fellowship_status }} </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
-                                            $convention->unit_id }} </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
-                                            $convention->fellowship_id }} </td>
+                                            $convention->unit_id }} </td> 
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $convention->created_at->diffForHumans() }}</td>
                                     </tr>
