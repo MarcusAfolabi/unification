@@ -59,7 +59,9 @@
                     </select>
 
                     <select type="text" name="fellowship_status" class="shadow-none selectpicker with-border">
-                        <option disabled value="{{ old('fellowship_status') }}">Select your fellowship post </option>
+                        <option disabled  value="{{ old('fellowship_status') }}">Select your fellowship post </option>
+                        <option value="CEC"> CEC </option>
+                        <option value="CENTRAL ADMIN"> CENTRAL ADMIN </option>
                         <option value="ASSISTANT SECRETARY"> ASSISTANT SECRETARY </option>
                         <option value="CHOIR MASTER/MISTRESS"> CHOIR MASTER/MISTRESS </option>
                         <option value="EVANGELISM SECRETARY"> EVANGELISM SECRETARY </option>
