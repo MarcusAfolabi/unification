@@ -98,12 +98,13 @@
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-3 flex">
-                <div class="bg-yellow-600 rounded-lg w-1.5"></div>
+               <a href="{{ route('subconvention.list') }}"> <div class="bg-yellow-600 rounded-lg w-1.5"></div>
                 <div class="ml-4 flex-1">
                     <div class="font-semibold text-lg"> {{ $subconvention }} </div>
                     <p class="text-sm"> Registered Sub Convention </p>
                 </div>
                 <i class="icon-feather-users text-xl"></i>
+            </a>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-3 flex">
