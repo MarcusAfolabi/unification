@@ -59,7 +59,9 @@
                     </select>
 
                     <select type="text" name="fellowship_status" class="shadow-none selectpicker with-border">
-                        <option disabled value="{{ old('fellowship_status') }}">Select your fellowship post </option>
+                        <option selected hidden value="{{ old('fellowship_status') }}"> {{ old('fellowship_status') ?? 'Select your post' }} </option>
+                        <option value="CEC"> CEC </option>
+                        <option value="CENTRAL ADMIN"> CENTRAL ADMIN </option>
                         <option value="ASSISTANT SECRETARY"> ASSISTANT SECRETARY </option>
                         <option value="CHOIR MASTER/MISTRESS"> CHOIR MASTER/MISTRESS </option>
                         <option value="EVANGELISM SECRETARY"> EVANGELISM SECRETARY </option>
@@ -94,7 +96,7 @@
                     </select>
 
                     <div class="flex items-center text-center justify-between mt-6">
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('subconvention.payment') }}">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('convention.payment') }}">
                             {{ __('Already registered? Make Payment Now') }}
                         </a>
 

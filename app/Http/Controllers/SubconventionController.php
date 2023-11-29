@@ -14,10 +14,7 @@ use App\Notifications\ConventionNotification;
 
 class SubconventionController extends Controller
 { 
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'admin'])->except(['index', 'store', '']);
-    }
+   
     public function index(Request $request)
     {
         return view('subconvention.index');
@@ -90,9 +87,9 @@ class SubconventionController extends Controller
         $subconvention->fellowship_id = $fellowship_id; 
         $subconvention->save();
 
-        Notification::route('mail', [
-            'info@cnsunification.org' => 'A Member Just Pick Up Convention Form',
-        ])->notify(new ConventionNotification($subconvention));
+        // Notification::route('mail', [
+        //     'info@cnsunification.org' => 'A Member Just Pick Up Convention Form',
+        // ])->notify(new ConventionNotification($subconvention));
 
         Mail::to($subconvention->email)->send(new Subconvent($subconvention));
 
@@ -107,7 +104,9 @@ class SubconventionController extends Controller
     
     public function subpayment()
     {
-        return view('subconvention.payment');
+        // return view('convention.payment');
+        return redirect(route('convention.payment'));
+
     } 
     
     public function destroy(Subconvention $subconvention)

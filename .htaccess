@@ -10,7 +10,7 @@ RewriteRule ^(.*)$ public/$1 [L]
    php_value max_execution_time 30
    php_value max_input_time 60
    php_value max_input_vars 1000
-   php_value memory_limit 512M
+   php_value memory_limit 256M
    php_value post_max_size 32M
    php_value session.gc_maxlifetime 1440
    php_value session.save_path "/var/cpanel/php/sessions/ea-php81"
@@ -22,7 +22,7 @@ RewriteRule ^(.*)$ public/$1 [L]
    php_value max_execution_time 30
    php_value max_input_time 60
    php_value max_input_vars 1000
-   php_value memory_limit 512M
+   php_value memory_limit 256M
    php_value post_max_size 32M
    php_value session.gc_maxlifetime 1440
    php_value session.save_path "/var/cpanel/php/sessions/ea-php81"
