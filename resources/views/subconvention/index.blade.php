@@ -59,7 +59,11 @@
                     </select>
 
                     <select type="text" name="fellowship_status" class="shadow-none selectpicker with-border">
+<<<<<<< HEAD
                         <option selected hidden value="{{ old('fellowship_status') }}"> {{ old('fellowship_status') ?? 'Select your post' }} </option>
+=======
+                        <option disabled  value="{{ old('fellowship_status') }}">Select your fellowship post </option>
+>>>>>>> 265afca43976210eae4f2f4d9d515c953268e6fb
                         <option value="CEC"> CEC </option>
                         <option value="CENTRAL ADMIN"> CENTRAL ADMIN </option>
                         <option value="ASSISTANT SECRETARY"> ASSISTANT SECRETARY </option>
