@@ -14,14 +14,14 @@
         </div>
         @if (session('status'))
         <p class="bg-green-500 text-white text-center border p-4 relative rounded-md uk-alert">
-            {{ session('status') }}</p>
+            {{ session('status') }}
+        </p>
         @endif
         <div class="card">
             <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"> </div>
             <div class="header_search"><i class="uil-search-alt"></i>
                 <form action="">
-                    <input type="text" class="form-control" name="prayers"
-                        placeholder="Search for Bible Study, Prayer and more.." autocomplete="off">
+                    <input type="text" class="form-control" name="prayers" placeholder="Search for Bible Study, Prayer and more.." autocomplete="off">
                 </form>
             </div>
             <hr>
@@ -39,16 +39,17 @@
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Full Name</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Fellowship</th>
+                                            Gender</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Position</th>
+                                            Phone Number</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Unit</th>
-                                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                                Level</th>
-
+                                            Academic Status</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Date</th>
+                                            Fellowship Status</th>
+                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                            Unit member</th>
+                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                            When</th>
 
                                     </tr>
                                 </thead>
@@ -58,20 +59,25 @@
                                     <tr class="border-b">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{
                                             ++$key}}</td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> <a
-                                                href="{{ route('convention.show', $convention) }}" target="_blank">
-                                                {{ $convention->lastname }} {{ $convention->middlename }} {{ $convention->firstname }} </a>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {{ $convention->lastname }} {{ $convention->firstname }} </a>
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $convention->yourFellowship }}</td>
+                                            $convention->fellowship_name }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            date('l-d-M-Y', strtotime($convention->positionHeld)) }}</td>
+                                            $convention->gender }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
-                                            $convention->unificationCurrentPost }}</td>
+                                            $convention->phone }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
-                                            $convention->levelInSchool }} </td>
+                                            $convention->academic_status }} </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
+                                            $convention->fellowship_status }} </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
+                                            $convention->unit_id }} </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
+                                            $convention->fellowship_id }} </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $convention->created_at->diffForHumans() }}</td> 
+                                            $convention->created_at->diffForHumans() }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
