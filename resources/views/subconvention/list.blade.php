@@ -78,7 +78,7 @@
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
                                             $convention->unit_id }} </td> 
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $convention->created_at->diffForHumans() }}</td>
+                                            $convention->created_at }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
