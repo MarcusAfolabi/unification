@@ -38,7 +38,7 @@
                                             S/No</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Full Name</th>
-                                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Fellowship Name</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Gender</th>
@@ -50,7 +50,7 @@
                                             Fellowship Status</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Unit member</th>
-                                           
+
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             When</th>
 
@@ -76,9 +76,11 @@
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
                                             $convention->fellowship_status }} </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{
-                                            $convention->unit_id }} </td> 
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $convention->created_at }}</td>
+                                            $convention->unit_id }} </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS M. Y g:ia') }}
+                                        </td>
+
                                     </tr>
                                     @endforeach
                                 </tbody>
