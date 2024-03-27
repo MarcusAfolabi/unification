@@ -7,10 +7,10 @@
     <title>@yield('title') - Cherubim and Seraphim Church Unification Campus Fellowship </title>
     <meta name="description" content="@yield('description') ">
     <meta name="keywords" content="@yield('keywords')">
-    <link rel="canonical" href="@yield('canonical')" />
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <link rel="canonical" href="https://cnsunification.org" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/isokan_logo.png') }}" />
+    <link rel="canonical" wire:navigate href="@yield('canonical')" />
+    <link rel="shortcut icon" wire:navigate href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="canonical" wire:navigate href="https://cnsunification.org" />
+    <link rel="shortcut icon" wire:navigate href="{{ asset('assets/images/isokan_logo.png') }}" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="@yield('canonical')">
     <meta property="og:title" content="@yield('title')">
@@ -28,17 +28,17 @@
     <meta name="og:site_name" content="@yield('title')">
     <meta name="og:application-name" content="@yield('title')">
     <meta name="og:author" content="Afolabi Marcus - +2349035155129">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('assets/images/favicon/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('assets/images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" wire:navigate href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" wire:navigate href="{{ asset('assets/images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" wire:navigate href="{{ asset('assets/images/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" wire:navigate href="{{ asset('assets/images/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" wire:navigate href="{{ asset('assets/images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="{{ asset('assets/css/icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/uikit.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link href="{{ asset('assets/tailwindcss%402.2.19/dist/tailwind.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" wire:navigate href="{{ asset('assets/css/icons.css') }}">
+    <link rel="stylesheet" wire:navigate href="{{ asset('assets/css/uikit.css') }}">
+    <link rel="stylesheet" wire:navigate href="{{ asset('assets/css/style.css') }}">
+    <link wire:navigate href="{{ asset('assets/tailwindcss%402.2.19/dist/tailwind.min.css') }}" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RBZ3GDR92P"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -51,7 +51,7 @@
     </script>
     <script src="https://www.googleoptimize.com/optimize.js?id=GTM-5L3ZJLW"></script>
 
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
+    <link rel="stylesheet" wire:navigate href="https://cdn.plyr.io/3.5.6/plyr.css" />
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const controls = [
@@ -91,7 +91,7 @@
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                     <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" fill="currentColor"></path>
                                 </svg></span>
-                            <div id="logo"><a href="/"><img src="{{ asset('assets/images/logo.png') }}"
+                            <div id="logo"><a wire:navigate href="/"><img src="{{ asset('assets/images/logo.png') }}"
                                         title="Unification Campus Fellowship" alt="Unification Campus Fellowship"><img
                                         src="{{ asset('assets/images/logo.png') }}" class="logo_mobile"
                                         title="Unification Campus Fellowship" alt="Unification Campus Fellowship"></a>
@@ -105,24 +105,24 @@
                         <div class="right_side">
                             <div class="header_widgets">
                                 @if (Route::has('login')) @auth
-                                    <a href="{{ route('convention.index') }}" class="is_link">Convention</a>
+                                    <a wire:navigate href="{{ route('convention.index') }}" class="is_link">Convention</a>
                                 @else
-                                    <a href="{{ route('login') }}" class="is_link">Log in</a>
+                                    <a wire:navigate href="{{ route('login') }}" class="is_link">Log in</a>
                                     @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="is_link">Become a Member</a>
+                                        <a wire:navigate href="{{ route('register') }}" class="is_link">Become a Member</a>
                                     @endif @endauth
                                 @endif
                                 @if (Route::has('login'))
-                                    @auth @php $user = auth()->user(); @endphp <a href="{{ route('user.index') }}"><img
+                                    @auth @php $user = auth()->user(); @endphp <a wire:navigate href="{{ route('user.index') }}"><img
                                                 src="{{ asset($user->profile_photo_url) }}" class="is_avatar"
                                                 alt=""></a>
                                     @else
-                                        <a href="#"><img src="{{ asset('assets/images/avatars/avatar-1.png') }}"
+                                        <a wire:navigate href="#"><img src="{{ asset('assets/images/avatars/avatar-1.png') }}"
                                             class="is_avatar" alt=""></a>@endauth
                                 @endif
                                 <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
                                     @if (Route::has('login')) @auth
-                                        <a href="{{ route('user.index') }}" class="user">
+                                        <a wire:navigate href="{{ route('user.index') }}" class="user">
                                             <div class="user_avatar"><img src="{{ asset($user->profile_photo_url) }}"
                                                     class="is_avatar" title="Unification Campus Fellowship"
                                                     alt="Unification Campus Fellowship"></div>
@@ -131,7 +131,7 @@
                                                 </span>
                                             </div>
                                         </a>
-                                        <hr><a href="{{ route('convention.index') }}" class="is-link"><svg
+                                        <hr><a wire:navigate href="{{ route('convention.index') }}" class="is-link"><svg
                                                 fill="currentColor" viewBox="0 0 20 20"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd"
@@ -139,13 +139,13 @@
                                                     clip-rule="evenodd"></path>
                                             </svg>2023 - Convention </span></a>
                                         @php $user = Auth::user()->id @endphp
-                                        <hr><a href="{{ route('user.editMember', $user) }}"><svg fill="currentColor"
+                                        <hr><a wire:navigate href="{{ route('user.editMember', $user) }}"><svg fill="currentColor"
                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd"
                                                     d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
                                                     clip-rule="evenodd"></path>
                                             </svg>Manage account </a>
-                                        <a href="{{ route('user.logout', $user) }}"><svg fill="#000000" height="800px"
+                                        <a wire:navigate href="{{ route('user.logout', $user) }}"><svg fill="#000000" height="800px"
                                                 width="800px" version="1.1" id="Capa_1"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.3 490.3"
@@ -158,7 +158,7 @@
                                                             d="M385.4,337.65c2.4,2.4,5.5,3.6,8.7,3.6s6.3-1.2,8.7-3.6l83.9-83.9c4.8-4.8,4.8-12.5,0-17.3l-83.9-83.9 c-4.8-4.8-12.5-4.8-17.3,0s-4.8,12.5,0,17.3l63,63H218.6c-6.8,0-12.3,5.5-12.3,12.3c0,6.8,5.5,12.3,12.3,12.3h229.8l-63,63 C380.6,325.15,380.6,332.95,385.4,337.65z" />
                                                     </g>
                                                 </g>
-                                            </svg>Logout </a><a href="#" id="night-mode"
+                                            </svg>Logout </a><a wire:navigate href="#" id="night-mode"
                                             class="btn-night-mode"><svg xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 20 20" fill="currentColor">
                                                 <path
@@ -166,12 +166,12 @@
                                             </svg>Night mode <span class="btn-night-mode-switch"><span
                                                     class="uk-switch-button"></span></span></a>
                                     @else
-                                        <a href="{{ route('login') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                        <a wire:navigate href="{{ route('login') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                                                 </path>
-                                            </svg>Login </a><a href="{{ route('register') }}"><svg
+                                            </svg>Login </a><a wire:navigate href="{{ route('register') }}"><svg
                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -193,7 +193,7 @@
 
                 <ul>
                     @guest
-                        <li class="{{ Request::routeIs('login') ? 'active' : '' }}"><a href="{{ route('login') }}">
+                        <li class="{{ Request::routeIs('login') ? 'active' : '' }}"><a wire:navigate href="{{ route('login') }}">
                                 <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1024 1024"
                                     xmlns="http://www.w3.org/2000/svg" class="icon">
                                     <defs>
@@ -203,7 +203,7 @@
                                         d="M521.7 82c-152.5-.4-286.7 78.5-363.4 197.7-3.4 5.3.4 12.3 6.7 12.3h70.3c4.8 0 9.3-2.1 12.3-5.8 7-8.5 14.5-16.7 22.4-24.5 32.6-32.5 70.5-58.1 112.7-75.9 43.6-18.4 90-27.8 137.9-27.8 47.9 0 94.3 9.3 137.9 27.8 42.2 17.8 80.1 43.4 112.7 75.9 32.6 32.5 58.1 70.4 76 112.5C865.7 417.8 875 464.1 875 512c0 47.9-9.4 94.2-27.8 137.8-17.8 42.1-43.4 80-76 112.5s-70.5 58.1-112.7 75.9A352.8 352.8 0 0 1 520.6 866c-47.9 0-94.3-9.4-137.9-27.8A353.84 353.84 0 0 1 270 762.3c-7.9-7.9-15.3-16.1-22.4-24.5-3-3.7-7.6-5.8-12.3-5.8H165c-6.3 0-10.2 7-6.7 12.3C234.9 863.2 368.5 942 520.6 942c236.2 0 428-190.1 430.4-425.6C953.4 277.1 761.3 82.6 521.7 82zM395.02 624v-76h-314c-4.4 0-8-3.6-8-8v-56c0-4.4 3.6-8 8-8h314v-76c0-6.7 7.8-10.5 13-6.3l141.9 112a8 8 0 0 1 0 12.6l-141.9 112c-5.2 4.1-13 .4-13-6.3z" />
                                 </svg><span>Login </span></a></li>
                         <li class="{{ Request::routeIs('register') ? 'active' : '' }}"><a
-                                href="{{ route('register') }}"><svg width="800px" height="800px"
+                                wire:navigate href="{{ route('register') }}"><svg width="800px" height="800px"
                                     viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="512" cy="512" r="512" style="fill:#112e51" />
                                     <path
@@ -211,7 +211,7 @@
                                         style="fill:#fff" />
                                 </svg><span>Become a member </span></a></li>
                         <li hidden class="{{ Request::routeIs('convention.index') ? 'active' : '' }}"><a
-                                href="{{ route('convention.index') }}"><svg width="20px" height="20px"
+                                wire:navigate href="{{ route('convention.index') }}"><svg width="20px" height="20px"
                                     viewBox="0 0 1024 1024" class="icon" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -231,7 +231,7 @@
                                 </svg><span>Convention Registration </span></a></li>
 
                         <li class="{{ Request::routeIs('convention.index') ? 'active' : '' }}"><a
-                                href="{{ route('convention.index') }}"><svg width="20px" height="20px"
+                                wire:navigate href="{{ route('convention.index') }}"><svg width="20px" height="20px"
                                     viewBox="0 0 1024 1024" class="icon" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -250,14 +250,14 @@
                                         fill="#90A4AE" />
                                 </svg><span>Convention Registration </span></a></li>
                         <li class="{{ Request::routeIs('donation.index') ? 'active' : '' }}"><a
-                                href="{{ route('donation.index') }}"><svg fill="currentColor" class="text-red-500"
+                                wire:navigate href="{{ route('donation.index') }}"><svg fill="currentColor" class="text-red-500"
                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
                                         clip-rule="evenodd"></path>
                                 </svg><span>Donate </span></a></li>
                         <li class="{{ Request::routeIs('fellowship.list') ? 'active' : '' }}"><a
-                                href="{{ route('fellowship.list') }}"><svg width="20px" height="20px"
+                                wire:navigate href="{{ route('fellowship.list') }}"><svg width="20px" height="20px"
                                     viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
                                     class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
@@ -276,7 +276,7 @@
                                         d="M12.999 31A2 2 0 1 0 9 31v5h4v-5h-.001zm7-2A2 2 0 0 0 16 29v7h4l-.001-7zm7 2A2 2 0 0 0 23 31v5h4l-.001-5z">
                                     </path>
                                 </svg><span>Fellowships </span></a></li>
-                        <li><a href="{{ route('resource.list') }}"><svg height="800px" width="800px" version="1.1"
+                        <li><a wire:navigate href="{{ route('resource.list') }}"><svg height="800px" width="800px" version="1.1"
                                     id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                                     xml:space="preserve">
@@ -296,13 +296,13 @@
 
                         @auth @if (auth()->user()->role === 'admin')
                             <li class="{{ Request::routeIs('welcome') ? 'active' : '' }}"><a
-                                    href="{{ route('welcome') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('welcome') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-blue-600">
                                         <path
                                             d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                                     </svg><span>Home </span></a></li>
                             <li class="{{ Request::route('dashboard.index') ? 'active' : '' }}"><a
-                                    href="{{ route('dashboard.index') }}"><svg fill="#000000" width="20px" height="20px"
+                                    wire:navigate href="{{ route('dashboard.index') }}"><svg fill="#000000" width="20px" height="20px"
                                         viewBox="0 0 24 24" id="dashboard-alt" data-name="Flat Color"
                                         xmlns="http://www.w3.org/2000/svg" class="icon flat-color">
                                         <path id="primary"
@@ -313,7 +313,7 @@
                                         </path>
                                     </svg><span>Dashboard </span></a></li>
                             <li class="{{ Request::route('convention.list') ? 'active' : '' }}"><a
-                                    href="{{ route('convention.list') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('convention.list') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M7 2C7.55228 2 8 2.44772 8 3V5C8 5.55228 7.55228 6 7 6C6.44772 6 6 5.55228 6 5V3C6 2.44772 6.44772 2 7 2Z"
@@ -332,7 +332,7 @@
                                             fill="#152C70" />
                                     </svg><span>Convention </span></a></li>
                             <li class="{{ Request::routeIs('fellowship.index') ? 'active' : '' }}"><a
-                                    href="{{ route('fellowship.index') }}"><svg width="20px" height="20px"
+                                    wire:navigate href="{{ route('fellowship.index') }}"><svg width="20px" height="20px"
                                         viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
                                         class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
@@ -352,7 +352,7 @@
                                         </path>
                                     </svg><span>Fellowships </span></a></li>
                             <li class="{{ Request::routeIs('unit.index') ? 'active' : '' }}"><a
-                                    href="{{ route('unit.index') }}"><svg width="20px" height="20px" viewBox="0 0 36 36"
+                                    wire:navigate href="{{ route('unit.index') }}"><svg width="20px" height="20px" viewBox="0 0 36 36"
                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         aria-hidden="true" role="img" class="iconify iconify--twemoji"
                                         preserveAspectRatio="xMidYMid meet">
@@ -372,7 +372,7 @@
                                         </path>
                                     </svg><span>Units </span></a></li>
                             <li class="{{ Request::routeIs('house.index') ? 'active' : '' }}"><a
-                                    href="{{ route('house.index') }}"><svg width="20px" height="20px"
+                                    wire:navigate href="{{ route('house.index') }}"><svg width="20px" height="20px"
                                         viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
                                         class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
@@ -392,7 +392,7 @@
                                         </path>
                                     </svg><span>Houses </span></a></li>
                             <li class="{{ Request::routeIs('user.index') ? 'active' : '' }}"><a
-                                    href="{{ route('user.index') }}"><svg height="20px" width="20px" version="1.1"
+                                    wire:navigate href="{{ route('user.index') }}"><svg height="20px" width="20px" version="1.1"
                                         id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 58 58" xml:space="preserve">
                                         <path style="fill:#3083C9;"
@@ -401,13 +401,13 @@
                                             d="M54.07,46.444l-9.774-4.233c-0.535-0.267-0.971-0.836-1.277-1.453 c-0.277-0.557,0.136-1.212,0.758-1.212h6.883c0,0,2.524,0.242,4.471-0.594c1.14-0.49,1.533-1.921,0.82-2.936 c-2.085-2.969-6.396-9.958-6.535-17.177c0,0-0.239-11.112-11.202-11.202c-2.187,0.018-3.97,0.476-5.438,1.188 C33.152,10.324,33,11.5,33,11.5v5.783c0.609,0.55,1,1.337,1,2.217v4c0,1.345-0.902,2.477-2.127,2.854 c-0.683,2.122-1.667,4.145-2.969,5.984C28.576,32.802,28.268,33.195,28,33.5v3.748c0,0.853,0.299,1.659,0.818,2.297h2.751 c0.687,0,0.99,0.868,0.451,1.293c-0.186,0.147-0.364,0.283-0.53,0.406l8.077,4.038C42.283,46.642,44,49.419,44,52.457V55.5h14 v-2.697C58,50.11,56.479,47.648,54.07,46.444z" />
                                     </svg><span>Members </span></a></li>
                             <li class="{{ Request::routeIs('executives.index') ? 'active' : '' }}"><a
-                                    href="{{ route('executives.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('executives.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-blue-500">
                                         <path
                                             d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                                     </svg><span>CEC Council </span></a></li>
                             <li class="{{ Request::routeIs('posts.index') ? 'active' : '' }}"><a
-                                    href="{{ route('posts.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('posts.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-pink-500">
                                         <path fill-rule="evenodd"
                                             d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
@@ -415,7 +415,7 @@
                                         <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z" />
                                     </svg><span>Stories</span></a></li>
                             <li class="{{ Request::routeIs('resource.index') ? 'active' : '' }}"><a
-                                    href="{{ route('resource.index') }}"><svg height="800px" width="800px" version="1.1"
+                                    wire:navigate href="{{ route('resource.index') }}"><svg height="800px" width="800px" version="1.1"
                                         id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                                         xml:space="preserve">
@@ -432,42 +432,42 @@
                                             d="M135.111,334.239h99.556v-99.556C179.685,234.684,135.111,279.252,135.111,334.239z" />
                                     </svg><span>Downloads</span></a></li>
                             <li class="{{ Request::routeIs('prayers.index') ? 'active' : '' }}"><a
-                                    href="{{ route('prayers.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('prayers.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-yellow-500">
                                         <path fill-rule="evenodd"
                                             d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
                                             clip-rule="evenodd"></path>
                                     </svg><span>Prayers </span></a></li>
                             <li class="{{ Request::routeIs('videos.index') ? 'active' : '' }}"><a
-                                    href="{{ route('videos.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('videos.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-yellow-500">
                                         <path fill-rule="evenodd"
                                             d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
                                             clip-rule="evenodd"></path>
                                     </svg><span>Shorts</span></a></li>
                             <li class="{{ Request::routeIs('audios.index') ? 'active' : '' }}"><a
-                                    href="{{ route('audios.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('audios.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-yellow-500">
                                         <path fill-rule="evenodd"
                                             d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
                                             clip-rule="evenodd"></path>
                                     </svg><span>Audio Clips</span></a></li>
                             <li class="{{ Request::routeIs('vacancies.index') ? 'active' : '' }}"><a
-                                    href="{{ route('vacancies.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('vacancies.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-yellow-500">
                                         <path fill-rule="evenodd"
                                             d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
                                             clip-rule="evenodd"></path>
                                     </svg><span>Vacancies</span></a></li>
                             <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}"><a
-                                    href="{{ route('products.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('products.index') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-yellow-500">
                                         <path fill-rule="evenodd"
                                             d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
                                             clip-rule="evenodd"></path>
                                     </svg><span>Products</span></a></li>
                             <li class="{{ Request::routeIs('donation.index') ? 'active' : '' }}"><a
-                                    href="{{ route('donation.index') }}"><svg fill="currentColor" class="text-red-500"
+                                    wire:navigate href="{{ route('donation.index') }}"><svg fill="currentColor" class="text-red-500"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
                                             d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
@@ -475,12 +475,12 @@
                                     </svg><span>Donation </span></a></li>
                             @elseif(auth()->user()->role === 'member')
                             <li class="{{ Request::routeIs('welcome') ? 'active' : '' }}"><a
-                                    href="{{ route('welcome') }}"><svg xmlns="http://www.w3.org/2000/svg"
+                                    wire:navigate href="{{ route('welcome') }}"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" class="text-blue-600">
                                         <path
                                             d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                                     </svg><span>Home </span></a></li>
-                            <li><a href="{{ route('resource.index') }}"><svg height="800px" width="800px" version="1.1"
+                            <li><a wire:navigate href="{{ route('resource.index') }}"><svg height="800px" width="800px" version="1.1"
                                         id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                                         xml:space="preserve">
@@ -498,7 +498,7 @@
                                     </svg><span>CEC Resources </span></a></li>
                             @if (App\Models\Convention::select('email')->where('email') === auth()->user()->email)
                             <li class="{{ Request::route('convention.idcard') ? 'active' : '' }}"><a
-                                    href="{{ route('convention.idcard') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('convention.idcard') }}"><svg width="800px" height="800px"
                                         viewBox="0 -4.19 48 48" xmlns="http://www.w3.org/2000/svg">
                                         <g id="_3" data-name="3" transform="translate(-385 -155.852)">
                                             <g id="Group_273" data-name="Group 273">
@@ -513,7 +513,7 @@
                                     </svg><span>Convention ID Card </span></a></li>
                             @endif
                             <li class="{{ Request::route('convention.index') ? 'active' : '' }}"><a
-                                    href="{{ route('convention.index') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('convention.index') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M5 7C5 4.23858 7.23858 2 10 2C12.7614 2 15 4.23858 15 7C15 9.76142 12.7614 12 10 12C7.23858 12 5 9.76142 5 7ZM10 4C8.34315 4 7 5.34315 7 7C7 8.65685 8.34315 10 10 10C11.6569 10 13 8.65685 13 7C13 5.34315 11.6569 4 10 4Z"
@@ -526,7 +526,7 @@
                                             fill="#4296FF" />
                                     </svg><span>Convention </span></a></li>
                             <li class="{{ Request::routeIs('posts.index') ? 'active' : '' }}"><a
-                                    href="{{ route('posts.index') }}"><svg fill="#000000" width="800px" height="800px"
+                                    wire:navigate href="{{ route('posts.index') }}"><svg fill="#000000" width="800px" height="800px"
                                         viewBox="0 0 24 24" id="discussion" data-name="Flat Color"
                                         xmlns="http://www.w3.org/2000/svg" class="icon flat-color">
                                         <path id="secondary"
@@ -537,7 +537,7 @@
                                             style="fill: rgb(0, 0, 0);"></path>
                                     </svg><span>Stories </span></a></li>
                             <li class="{{ Request::routeIs('videos.index') ? 'active' : '' }}"><a
-                                    href="{{ route('videos.index') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('videos.index') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M3 6C3 4.34315 4.34315 3 6 3H14C15.6569 3 17 4.34315 17 6V14C17 15.6569 15.6569 17 14 17H6C4.34315 17 3 15.6569 3 14V6Z"
@@ -549,7 +549,7 @@
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg><span>Shorts </span></a></li>
                             <li class="{{ Request::routeIs('audios.index') ? 'active' : '' }}"><a
-                                    href="{{ route('audios.index') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('audios.index') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 1024 1024" class="icon" version="1.1"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -569,7 +569,7 @@
                                             fill="#154B8B" />
                                     </svg><span>Audio Clips </span></a></li>
                             <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}"><a
-                                    href="{{ route('products.index') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('products.index') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 32 32" id="Layer_1" version="1.1" xml:space="preserve"
                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <style type="text/css">
@@ -609,7 +609,7 @@
                                         </g>
                                     </svg><span>Store </span></a></li>
                             <li class="{{ Request::routeIs('books.index') ? 'active' : '' }}"><a
-                                    href="{{ route('books.index') }}"><svg height="800px" width="800px" version="1.1"
+                                    wire:navigate href="{{ route('books.index') }}"><svg height="800px" width="800px" version="1.1"
                                         id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                                         xml:space="preserve">
@@ -629,7 +629,7 @@
                                         </g>
                                     </svg><span>Book Store </span></a></li>
                             <li class="{{ Request::routeIs('fellowship.index') ? 'active' : '' }}"><a
-                                    href="{{ route('fellowship.index') }}"><svg width="800px" height="800px"
+                                    wire:navigate href="{{ route('fellowship.index') }}"><svg width="800px" height="800px"
                                         viewBox="-40.61 0 538.137 538.137" xmlns="http://www.w3.org/2000/svg">
                                         <g id="Group_13" data-name="Group 13" transform="translate(-1124.204 -2310.279)">
                                             <path id="path206"
@@ -767,18 +767,18 @@
                             @endif
                         @endauth
                     </ul>
-                    <div class="footer-links"><a href="https://www.facebook.com/isokancampusfellowship"><i
-                                class="icon-brand-facebook"></i>Facebook </a><a href="https://twitter.com/isokancampus"><i
+                    <div class="footer-links"><a wire:navigate href="https://www.facebook.com/isokancampusfellowship"><i
+                                class="icon-brand-facebook"></i>Facebook </a><a wire:navigate href="https://twitter.com/isokancampus"><i
                                 class="icon-brand-twitter"></i>Twitter </a><a
-                            href="https://www.instagram.com/isokancampusfellowship/"><i
+                            wire:navigate href="https://www.instagram.com/isokancampusfellowship/"><i
                                 class="icon-brand-instagram"></i>Instagram
-                        </a><a href="https://t.me/unificationcampusfellowships"><i
+                        </a><a wire:navigate href="https://t.me/unificationcampusfellowships"><i
                                 class="icon-brand-telegram"></i>Telegram
-                        </a><a href="https://www.youtube.com/channel/UC2UQ-kfj__DO2_zoEExg0UQ"><i
+                        </a><a wire:navigate href="https://www.youtube.com/channel/UC2UQ-kfj__DO2_zoEExg0UQ"><i
                                 class="icon-brand-youtube"></i>Youtube </a><br><br>
-                        <hr><br><a href="{{ url('contact') }}">Contact Us </a><a
-                            href="{{ route('donation.index') }}">Support</a><a href="{{ url('policy') }}">Privacy Policy
-                        </a><a href="{{ url('terms') }}">Terms and Condition</a>
+                        <hr><br><a wire:navigate href="{{ url('contact') }}">Contact Us </a><a
+                            wire:navigate href="{{ route('donation.index') }}">Support</a><a wire:navigate href="{{ url('policy') }}">Privacy Policy
+                        </a><a wire:navigate href="{{ url('terms') }}">Terms and Condition</a>
                     </div>
                 </div>
                 <!-- sidebar overly for mobile -->
