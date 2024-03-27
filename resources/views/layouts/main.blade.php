@@ -313,7 +313,7 @@
                                         </path>
                                     </svg><span>Dashboard </span></a></li>
                             <li class="{{ Request::route('convention.list') ? 'active' : '' }}"><a
-                                    href="{{ route('convention.index') }}"><svg width="800px" height="800px"
+                                    href="{{ route('convention.list') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M7 2C7.55228 2 8 2.44772 8 3V5C8 5.55228 7.55228 6 7 6C6.44772 6 6 5.55228 6 5V3C6 2.44772 6.44772 2 7 2Z"
