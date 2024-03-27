@@ -63,7 +63,7 @@
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
 
-            <div class="mb-8 line">
+            <div class="mb-14 line">
                 <label>Gender</label>
                 <select wire:model.blur="gender" class="px-3 py-3 with-border">
                     <option></option>
@@ -75,7 +75,7 @@
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
 
-            <div class="mb-8 line">
+            <div class="mb-14 line">
                 <label>Are you a Graduate?</label>
                 <select wire:model.blur="academic_status" class="px-3 py-3 with-border">
                     <option></option>
@@ -88,7 +88,7 @@
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
 
-            <div class="mb-8 line">
+            <div class="mb-14 line">
                 <label>From which Fellowship?</label>
                 <select wire:model.blur="fellowship" class="px-3 py-3 with-border">
                     <option></option>
@@ -103,7 +103,7 @@
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
 
-            <div class="mb-8 line">
+            <div class="mb-14 line">
                 <label>Your status in Fellowship</label>
                 <select wire:model.blur="fellowship_status" class="px-3 py-3 with-border">
                     <option></option>
@@ -115,7 +115,7 @@
             @error('fellowship_status')
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
-            <div class="mb-8 line">
+            <div class="mb-14 line">
                 <label>Your unit in Fellowship</label>
                 <select wire:model.blur="unit" class="px-3 py-3 with-border">
                     <option></option>
