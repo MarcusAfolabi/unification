@@ -28,7 +28,7 @@
                 <img class="w-1/2 rounded-xl" src="{{ $payment_proof->temporaryUrl() }}">
             @endif
             <div class="mb-4 line">
-                <input wire:model.blur="firstname" class="line__input" autofocus name="firstname" type="text"
+                <input wire:model.blur="firstname" class="line__input"  name="firstname" type="text"
                     autocomplete="off">
                 <span for="firstname" class="line__placeholder">Firstname</span>
             </div>
@@ -36,7 +36,7 @@
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
             <div class="mb-4 line">
-                <input wire:model.blur="lastname" class="line__input" autofocus name="lastname" type="text"
+                <input wire:model.blur="lastname" class="line__input"  name="lastname" type="text"
                     autocomplete="off">
                 <span for="lastname" class="line__placeholder">Last name</span>
             </div>
@@ -46,8 +46,8 @@
 
 
             <div class="mb-4 line">
-                <input wire:model.blur="email" class="line__input" autofocus name="email" type="email"
-                    autocomplete="off">
+                <input wire:model.blur="email" class="line__input" name="email" type="email"
+                    >
                 <span for="email" class="line__placeholder">Email</span>
             </div>
             @error('email')
@@ -55,8 +55,8 @@
             @enderror
 
             <div class="mb-4 line">
-                <input wire:model.blur="phone" class="line__input" maxlength="11" id="tel" autofocus
-                    name="phone" placeholder="08033440133" type="tel" autocomplete="off">
+                <input wire:model.blur="phone" class="line__input" maxlength="11" id="tel" 
+                    name="phone" type="tel" >
                 <span for="phone" class="line__placeholder">Phone Number</span>
             </div>
             @error('phone')
