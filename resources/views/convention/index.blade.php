@@ -90,44 +90,44 @@
                                             @foreach ($conventions as $key => $convention)
                                                 <tr class="bg-white border-b">
                                                     <td
-                                                        class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                        class="px-6 py-4 text-sm font-medium dark:text-white text-gray-900 whitespace-nowrap">
                                                         {{ ++$key }}</td>
 
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->firstname }} {{ $convention->lastname }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->fellowship }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->academic_status }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->fellowship_status }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->phone }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->email }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         <a href="{{ asset($convention->payment_proof) }}">Download Receipt</a>
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                        {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS F Y') }}
                                                     </td>
 
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         <form action="{{ route('convention.destroy', $convention) }}"
                                                             method="POST">
                                                             @csrf
