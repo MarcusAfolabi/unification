@@ -230,7 +230,7 @@
                                         fill="#90A4AE" />
                                 </svg><span>Convention Registration </span></a></li>
 
-                        {{-- <li class="{{ Request::routeIs('subconvention.index') ? 'active' : '' }}"><a --}}
+                        {{-- <li class="{{ Request::routeIs('subconvention.index') ? 'active' : '' }}"><a
                                 href="{{ route('subconvention.index') }}"><svg width="20px" height="20px"
                                     viewBox="0 0 1024 1024" class="icon" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +248,7 @@
                                     <path
                                         d="M277.333333 426.666667h85.333334v85.333333h-85.333334zM405.333333 426.666667h85.333334v85.333333h-85.333334zM533.333333 426.666667h85.333334v85.333333h-85.333334zM661.333333 426.666667h85.333334v85.333333h-85.333334zM277.333333 554.666667h85.333334v85.333333h-85.333334zM405.333333 554.666667h85.333334v85.333333h-85.333334zM533.333333 554.666667h85.333334v85.333333h-85.333334zM661.333333 554.666667h85.333334v85.333333h-85.333334zM277.333333 682.666667h85.333334v85.333333h-85.333334zM405.333333 682.666667h85.333334v85.333333h-85.333334zM533.333333 682.666667h85.333334v85.333333h-85.333334zM661.333333 682.666667h85.333334v85.333333h-85.333334z"
                                         fill="#90A4AE" />
-                                </svg><span>Sub-Convention Registration </span></a></li>
+                                </svg><span>Sub-Convention Registration </span></a></li> --}}
                         <li class="{{ Request::routeIs('donation.index') ? 'active' : '' }}"><a
                                 href="{{ route('donation.index') }}"><svg fill="currentColor" class="text-red-500"
                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
