@@ -94,7 +94,7 @@ class ConventionController extends Controller
         return view('convention.payment');
     }
  
-    public function destroy(Convention $convention)
+    public function destroy(FourthConvention $convention)
     {
         $convention->delete();
         return redirect()->back()->with('status', 'Deleted Successfully');;
