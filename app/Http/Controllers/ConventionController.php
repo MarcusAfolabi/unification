@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Convention;
 use App\Models\Fellowship;
 use App\Mail\ConventionMail;
+use App\Models\FourthConvention;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -26,10 +27,10 @@ class ConventionController extends Controller
     public function list(Request $request)
     {
         if ($request->conventions) {
-            $conventions = Convention::where('firstname', 'like', '%' . $request->conventions . '%')
+            $conventions = FourthConvention::where('firstname', 'like', '%' . $request->conventions . '%')
                 ->orWhere('email', 'like', '%' . $request->conventions . '%')->latest()->paginate(30);
         } else {
-            $conventions = Convention::latest()->paginate(30);
+            $conventions = FourthConvention::latest()->paginate(30);
         }
         $role = Auth::user()->role;
 

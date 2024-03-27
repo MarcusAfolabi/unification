@@ -230,7 +230,7 @@
                                         fill="#90A4AE" />
                                 </svg><span>Convention Registration </span></a></li>
 
-                        <li class="{{ Request::routeIs('subconvention.index') ? 'active' : '' }}"><a
+                        {{-- <li class="{{ Request::routeIs('subconvention.index') ? 'active' : '' }}"><a --}}
                                 href="{{ route('subconvention.index') }}"><svg width="20px" height="20px"
                                     viewBox="0 0 1024 1024" class="icon" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg">
