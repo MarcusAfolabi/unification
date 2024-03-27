@@ -2,9 +2,11 @@
     <p class="text-xl font-bold text-red-500">STEP 1</p>
     <div class="mb-12 text-lg font-medium text-slate-900 dark:text-white text-opacity-90">
         ONLINE PAYMENT OPTION: <b>BANK TRANSFER</b>
-        <li class='text-sm'>Account no: 2016294268</li>
+        <li class='text-sm'>Account no: <b>2016294268</b></li>
         <li class='text-sm'>Bank: First Bank of Nigeria Plc</li>
         <li class='text-sm'>Account name: Cherubim and Seraphim Church Unification Campus Fellowship</li>
+        <li class='text-sm'>Student Reg. Fee = &#8358;1,500</li>
+        <li class='text-sm'>Graduate Reg. Fee = &#8358;3,000</li>
     </div>
     <form wire:submit.prevent='register'>
         <div>
