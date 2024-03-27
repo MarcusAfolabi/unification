@@ -77,10 +77,12 @@
             });
         });
     </script>
+    @livewireStyles
 </head>
 
 <body>
     <div id="wrapper" class="is-collapse">
+    @persist('header')
         <header>
             <div class="header_wrap">
                 <div class="header_inner mcontainer">
@@ -426,10 +428,11 @@
             <!-- sidebar overly for mobile -->
             <div class="side_overly" uk-toggle="target: #wrapper ; cls: is-collapse is-active"></div>
         </div>
+        @endpersist
         <!-- Main Contents -->
         @yield('main')
     </div>
-
+@livewireScripts
 
     <script src="{{ asset('assets/code.jquery.com/jquery-3.6.0.min.js')}}" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/tippy.all.min.js')}}"></script>

@@ -14,7 +14,7 @@
         "laravel/jetstream": "^2.7",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.10",
+        "livewire/livewire": "^2.12",
         "queueworker/sansdaemon": "^1.2"
     },
     "require-dev": {
