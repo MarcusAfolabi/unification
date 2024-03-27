@@ -75,8 +75,10 @@
                                                     class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
                                                     Email
                                                 </th>
-
-
+                                                <th scope="col"
+                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    When
+                                                </th>
                                                 <th scope="col"
                                                     class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
                                                     Delete
@@ -114,6 +116,10 @@
                                                     <td
                                                         class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->email }}
+                                                    </td>
+                                                    <td
+                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                       {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS F Y') }}
                                                     </td>
 
                                                     <td
