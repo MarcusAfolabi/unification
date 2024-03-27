@@ -312,7 +312,7 @@
                                             style="fill: rgb(44, 169, 188);">
                                         </path>
                                     </svg><span>Dashboard </span></a></li>
-                            <li class="{{ Request::route('convention.index') ? 'active' : '' }}"><a
+                            <li class="{{ Request::route('convention.list') ? 'active' : '' }}"><a
                                     href="{{ route('convention.index') }}"><svg width="800px" height="800px"
                                         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
