@@ -1,5 +1,6 @@
 <div class="relative max-w-2xl p-10 mx-auto -mt-16 bg-white rounded-md shadow">
-    <div class="mb-8 text-lg font-medium text-slate-900 dark:text-white text-opacity-90">
+    <p class="text-xl font-bold text-red-500">STEP 1</p>
+    <div class="mb-12 text-lg font-medium text-slate-900 dark:text-white text-opacity-90">
         ONLINE PAYMENT OPTION: <b>BANK TRANSFER</b>
         <li class='text-sm'>Account no: 2016294268</li>
         <li class='text-sm'>Bank: First Bank of Nigeria Plc</li>
@@ -7,7 +8,20 @@
     </div>
     <form wire:submit.prevent='register'>
         <div>
+            <p class="text-xl font-bold text-red-500">STEP 2</p>
 
+            <div class="mb-12 line">
+                <label>Upload proof of payment</label>
+                <input wire:model.blur="payment_proof" type="file" class="form-control with-border"
+                    accept="image/jpeg,image/png,application/pdf">
+            </div>
+            @error('payment_proof')
+                <em class="mb-4 text-red-500">{{ $message }}</em>
+            @enderror
+
+            @if ($payment_proof)
+                <img class="w-1/2 rounded-xl" src="{{ $payment_proof->temporaryUrl() }}">
+            @endif
             <div class="mb-4 line">
                 <input wire:model.blur="firstname" class="line__input" autofocus name="firstname" type="text"
                     autocomplete="off">
@@ -47,6 +61,7 @@
             <div class="mb-8 line">
                 <label>Gender</label>
                 <select wire:model.blur="gender" class="px-3 py-3 with-border">
+                    <option></option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
@@ -58,6 +73,7 @@
             <div class="mb-8 line">
                 <label>Are you a Graduate?</label>
                 <select wire:model.blur="academic_status" class="px-3 py-3 with-border">
+                    <option></option>
                     <option value="Graduate">Yes, Graduate</option>
                     <option value="Undergraduate">No, Undergraduate</option>
                     <option value="Postgraduate">No, Postgraduate</option>
@@ -70,6 +86,7 @@
             <div class="mb-8 line">
                 <label>From which Fellowship?</label>
                 <select wire:model.blur="fellowship" class="px-3 py-3 with-border">
+                    <option></option>
                     @if ($fellowships)
                         @foreach ($fellowships as $fellowship)
                             <option value="{{ $fellowship->name }}">{{ $fellowship->name }}</option>
@@ -84,6 +101,7 @@
             <div class="mb-8 line">
                 <label>Your status in Fellowship</label>
                 <select wire:model.blur="fellowship_status" class="px-3 py-3 with-border">
+                    <option></option>
                     @foreach ($fellowshipStatusOptions as $status)
                         <option value="{{ $status }}">{{ $status }}</option>
                     @endforeach
@@ -106,18 +124,7 @@
                 <em class="mb-4 text-red-500">{{ $message }}</em>
             @enderror
 
-            <div class="mb-12 line">
-                <label>Upload proof of payment</label>
-                <input wire:model.blur="payment_proof" type="file" class="form-control with-border"
-                    accept="image/jpeg,image/png,application/pdf">
-            </div>
-            @error('payment_proof')
-                <em class="mb-4 text-red-500">{{ $message }}</em>
-            @enderror
 
-            @if ($payment_proof)
-                <img class="w-1/2 rounded-xl" src="{{ $payment_proof->temporaryUrl() }}">
-            @endif
             <div class="form-group">
                 <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
                 <div class="flex items-center justify-end mt-6">
