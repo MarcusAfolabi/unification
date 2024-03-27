@@ -15,7 +15,7 @@
                         All Registered Convention Members
                     </h2>
                 </div>
-                <a uk-tooltip="Add" href="{{ route('convention.create') }}"
+                <a uk-tooltip="Add" href="{{ route('convention.index') }}"
                     class="absolute right-0 z-10 flex items-center justify-center h-8 px-2 space-x-1 text-white bg-red-600 rounded-md lg:px-3">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4">
                         <path fill-rule="evenodd"
