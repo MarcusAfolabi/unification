@@ -118,6 +118,7 @@
             <div class="mb-8 line">
                 <label>Your unit in Fellowship</label>
                 <select wire:model.blur="unit" class="px-3 py-3 with-border">
+                    <option></option>
                     @if ($units)
                         @foreach ($units as $unit)
                             <option value="{{ $unit->name }}">{{ $unit->name }}</option>
