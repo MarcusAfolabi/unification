@@ -60,8 +60,9 @@ class Convention extends Component
     public function mount()
     {
         $this->units = Unit::latest()->get();
-        $this->fellowships =
-            Fellowship::select('id', 'name')->latest()->get();
+        $this->fellowships = Fellowship::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
     }
 
     public function updated($propertyName)
@@ -87,7 +88,6 @@ class Convention extends Component
         session()->flash('status', '2024 Convention registration successful');
         $this->reset(['firstname', 'lastname', 'email', 'gender', 'phone', 'academic_status', 'fellowship', 'fellowship_status', 'unit', 'payment_proof']);
         $this->reset('payment_proof');
-
     }
 
     public function render()

@@ -119,6 +119,10 @@
                                                     </td>
                                                     <td
                                                         class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        <a href="{{ asset($convention->payment_proof) }}">Download Receipt</a>
+                                                    </td>
+                                                    <td
+                                                        class="px-1 py-1 text-sm font-light text-gray-900 border whitespace-nowrap border-slate-300">
                                                        {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS F Y') }}
                                                     </td>
 
