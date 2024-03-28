@@ -24,7 +24,6 @@ class Convention extends Component
 
     public $fellowships;
     public $units;
-    public $successMessage = '';
     public $fellowshipStatusOptions = [
         'ASSISTANT SECRETARY',
         'CHOIR MASTER/MISTRESS',
