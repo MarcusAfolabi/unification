@@ -50,9 +50,9 @@ class Convention extends Component
         'gender' => 'required|string',
         'phone' => 'required|string|max:11|min:11|unique:fourth_conventions',
         'academic_status' => 'required|string',
-        'fellowship' => 'sometimes',
+        'fellowship' => 'required',
         'fellowship_status' => 'required|string',
-        'unit' => 'sometimes',
+        'unit' => 'required',
         'payment_proof' => 'required|file|mimes:jpeg,png,pdf|max:5120',
     ];
 
