@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('fellowship');
             $table->string('fellowship_status');
             $table->string('unit');
-            $table->string('payment_proof');
             $table->timestamps();
         });
     }

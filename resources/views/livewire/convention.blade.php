@@ -1,5 +1,5 @@
 <div class="relative max-w-2xl p-10 mx-auto -mt-16 bg-white rounded-md shadow">
-    <p class="text-xl font-bold text-red-500">STEP 1</p>
+    {{-- <p class="text-xl font-bold text-red-500">STEP 1</p>
     <div class="mb-12 text-lg font-medium text-slate-900 dark:text-white text-opacity-90">
         ONLINE PAYMENT: <b>BANK TRANSFER</b>
         <li class='text-sm'>Account no: <b>2016294268</b></li>
@@ -10,23 +10,20 @@
         <p class="mt-4 font-bold">LATE REG. Start 29th April, 2024</p>
         <li class='text-sm'>Student Reg. Fee = &#8358;2,500</li>
         <li class='text-sm'>Graduate Reg. Fee = &#8358;4,000</li>
-    </div>
+    </div> --}}
     <form wire:submit.prevent='register'>
         <div>
-            <p class="text-xl font-bold text-red-500">STEP 2</p>
+            {{-- <p class="text-xl font-bold text-red-500">STEP 2</p>
 
             <div class="mb-12 line">
                 <label>Upload proof of payment</label>
                 <input wire:model.blur="payment_proof" type="file" class="form-control with-border"
                     accept="image/jpeg,image/png,application/pdf">
-            </div>
+            </div> 
             @error('payment_proof')
                 <em class="mb-4 text-red-500">{{ $message }}</em>
-            @enderror
-
-            @if ($payment_proof)
-                <img class="w-1/2 rounded-xl" src="{{ $payment_proof->temporaryUrl() }}">
-            @endif
+            @enderror--}}
+ 
             <div class="mb-4 line">
                 <input wire:model.blur="firstname" class="line__input"  name="firstname" type="text"
                     autocomplete="off">

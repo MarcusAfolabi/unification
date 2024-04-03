@@ -18,7 +18,6 @@ class FourthConvention extends Model
         'fellowship',
         'fellowship_status',
         'unit',
-        'payment_proof',
     ];
     protected $table = 'fourth_conventions';
 }

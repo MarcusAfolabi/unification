@@ -53,7 +53,6 @@ class Convention extends Component
         'fellowship' => 'required',
         'fellowship_status' => 'required|string',
         'unit' => 'required',
-        'payment_proof' => 'required|file|mimes:jpeg,png,pdf|max:5120',
     ];
 
     public function mount()
@@ -82,11 +81,9 @@ class Convention extends Component
             'fellowship' => $this->fellowship,
             'fellowship_status' => $this->fellowship_status,
             'unit' => $this->unit,
-            'payment_proof' => $this->payment_proof->store(path: 'paymentProof'),
         ]);
         session()->flash('status', '2024 Convention registration successful');
-        $this->reset(['firstname', 'lastname', 'email', 'gender', 'phone', 'academic_status', 'fellowship', 'fellowship_status', 'unit', 'payment_proof']);
-        $this->reset('payment_proof');
+        $this->reset(['firstname', 'lastname', 'email', 'gender', 'phone', 'academic_status', 'fellowship', 'fellowship_status', 'unit']);
     }
 
     public function render()
