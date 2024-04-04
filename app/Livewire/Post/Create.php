@@ -33,7 +33,13 @@ class Create extends Component
     public function create()
     {
         $this->validate();
+
         $post = new Post();
+        // Check if the number of images exceeds the maximum allowed (4)
+        if (count($this->images) > 4) {
+            $this->addError('images', 'You can upload a maximum of 4 images.');
+            return;
+        }
         $post->title = $this->title;
         $post->category = $this->category;
         $post->content = htmlentities($this->content, ENT_QUOTES, 'UTF-8');
