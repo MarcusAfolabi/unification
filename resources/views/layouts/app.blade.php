@@ -10,7 +10,7 @@
 
         <link rel="canonical" href="https://cnsunification.org" />
         <link rel="shortcut icon" href="{{ asset('assets/images/isokan_logo.png') }}" />
-    
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -18,7 +18,6 @@
         {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
         @vite('resources/css/app.css')
 
-        @livewireStyles 
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -43,6 +42,5 @@
 
         @stack('modals')
 
-        @livewireScripts
     </body>
 </html>
