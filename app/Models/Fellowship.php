@@ -14,9 +14,9 @@ class Fellowship extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasOne(User::class);
     }
-    
+
     public function units()
     {
         return $this->hasMany(Unit::class);

@@ -12,7 +12,7 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $fillable = [
-        'title', 'intro', 'slug', 'category', 'content', 'user_id', 'status', 'views', 'fellowship_id'
+        'title', 'slug', 'category', 'content', 'user_id', 'status', 'views', 'fellowship_id'
     ];
 
     public function images()

@@ -5,7 +5,7 @@
 <div class="main_content">
     <div class="mcontainer">
 
-        <div class="breadcrumb-area py-0">
+        <div class="py-0 breadcrumb-area">
             <div class="breadcrumb">
                 <ul class="m-0">
                     <li>
@@ -20,14 +20,14 @@
         </div>
 
         <!-- create page-->
-        <div class="max-w-2xl m-auto shadow-md rounded-md bg-white lg:mt-20">
+        <div class="max-w-2xl m-auto bg-white rounded-md shadow-md lg:mt-20">
 
             <!-- form header -->
             @if(session('status'))
-            <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">{{ session('status') }}</p>
+            <p class="relative p-4 text-center text-white bg-blue-500 border rounded-md uk-alert">{{ session('status') }}</p>
             @endif
-            <div class="text-center border-b border-blue-100 py-6">
-                <h3 class="font-bold text-xl"> Edit Post </h3>
+            <div class="py-6 text-center border-b border-blue-100">
+                <h3 class="text-xl font-bold"> Edit Post </h3>
             </div>
             <form method="POST" action="{{ route('posts.update', $post) }}" enctype="multipart/form-data">
                 @csrf
@@ -47,10 +47,10 @@
                     <label>Current Images</label>
 
                     @if(count($post->images) > 0)
-                    <div class="grid lg:grid-cols-3 gap-3">
+                    <div class="grid gap-3 lg:grid-cols-3">
                         @foreach ($post->images as $img)
                         <div uk-form-custom class="w-full py-3">
-                            <div class="bg-gray-100 border-2 border-dashed flex flex-col h-15 items-center justify-center relative w-full rounded-lg dark:bg-gray-800 dark:border-gray-600">
+                            <div class="relative flex flex-col items-center justify-center w-full bg-gray-100 border-2 border-dashed rounded-lg h-15 dark:bg-gray-800 dark:border-gray-600">
                                 <a href="{{ url('post/deleteimage/'.$img->id.'/delete') }}">
                                     <!-- <form action="{{ route('post.deleteimage', $img->id) }}" method="POST">
                                         @csrf
@@ -99,7 +99,7 @@
                 </div>
 
                 <!-- form footer -->
-                <div class="border-t flex justify-between lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
+                <div class="flex justify-between border-t lg:space-x-10 p-7 bg-blue-50 rounded-b-md">
                     <p class="text-sm leading-6"> Your Post Is Subject to Review and Proof-reading. Ensure To Be
                         Accurate And Concise. </p>
                     <button class="button blue" type="submit">UPDATE</button>
@@ -112,12 +112,12 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
-        .create(document.querySelector('#content'))
-        .then(content => {
-            console.log(content);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        .create( document.querySelector( '#content' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
 </script>
 @endsection

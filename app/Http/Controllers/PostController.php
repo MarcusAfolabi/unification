@@ -30,7 +30,7 @@ class PostController extends Controller
     }
     public function index(Request $request)
     {
-        $myposts = Post::with(['images'])->select('id', 'category', 'title', 'intro', 'created_at', 'slug', 'views')->where('user_id', auth()->user()->id)->latest()->paginate(40);
+        $myposts = Post::with(['images'])->select('id', 'category', 'title', 'created_at', 'slug', 'views')->where('user_id', auth()->user()->id)->latest()->paginate(40);
         $all_posts = Post::with(['images'])->select('id', 'title', 'created_at', 'category', 'user_id', 'slug', 'views')->latest()->paginate(40);
         $sideproducts = Product::select('name', 'currency', 'price', 'slug', 'id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
         return view('posts.index', compact('myposts', 'all_posts', 'sideproducts'));
@@ -40,7 +40,6 @@ class PostController extends Controller
     {
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
-            "intro" => 'required|string|max:251',
             "image" => 'required|array|max:5',
             "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
@@ -49,7 +48,7 @@ class PostController extends Controller
         ]);
 
         $post = new Post();
-        $postData = $request->only(['title', 'intro', 'category', 'content', 'fellowship_id']);
+        $postData = $request->only(['title', 'category', 'content', 'fellowship_id']);
         $postData = array_map('strip_tags', $postData);
         $post->fill($postData);
         $content = htmlentities($request->input('content'), ENT_QUOTES, 'UTF-8');
@@ -137,11 +136,10 @@ class PostController extends Controller
         $post->comments()->save($comment);
 
         return redirect()->back()->with(['status' => 'comment shared.']);
-
-
     }
 
-    public function uncomment(Comment $comment, Post $post ){
+    public function uncomment(Comment $comment, Post $post)
+    {
         $user = Auth::user();
 
         // Retrieve the post by its ID
@@ -173,13 +171,12 @@ class PostController extends Controller
     {
         $request->validate([
             "title" => 'required|string|max:255',
-            "intro" => 'required',
             "image*" => 'required|image|array|max:5',
             "image*" => 'sometimes|image|mimes:jpeg,png,jpg|max:250|dimensions:min_width=300,min_height=300,max_width=900,max_height=450',
             "category" => 'required',
             'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i'],
-         ]);
-        $post->fill($request->only(['title', 'intro', 'category', 'content']));
+        ]);
+        $post->fill($request->only(['title',  'category', 'content']));
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();
