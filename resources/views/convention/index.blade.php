@@ -48,39 +48,39 @@
                                         <thead class="border-b dark:bg-white">
                                             <tr>
                                                 <th scope="col"
-                                                    class="px-1 py-1 dark:text-white text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     S/N
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Full name
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Fellowship
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Academic Status
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Position Held
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Phone
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Email
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     When
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 text-sm font-medium border text-red-500 border-slate-300">
                                                     Delete
                                                 </th>
                                             </tr>
@@ -90,41 +90,41 @@
                                             @foreach ($conventions as $key => $convention)
                                                 <tr class="bg-white border-b">
                                                     <td
-                                                        class="px-6 py-4 text-sm font-medium dark:text-white text-gray-900 whitespace-nowrap">
+                                                        class="px-6 py-4 text-sm font-medium  text-red-900 whitespace-nowrap">
                                                         {{ ++$key }}</td>
 
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->firstname }} {{ $convention->lastname }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->fellowship }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->academic_status }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->fellowship_status }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->phone }}
                                                     </td>
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->email }}
                                                     </td>
 
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS F Y') }}
                                                     </td>
 
                                                     <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
+                                                        class="px-1 py-1 text-sm font-light  text-red-900 border whitespace-nowrap border-slate-300">
                                                         <form action="{{ route('convention.destroy', $convention) }}"
                                                             method="POST">
                                                             @csrf
