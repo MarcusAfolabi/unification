@@ -49,9 +49,9 @@ class Create extends Component
             $postImage->post_id = $post->id;
             $postImage->save();
         }
-        $optimizer = OptimizerChainFactory::create();
-        $optimizer
-        ->optimize($postImage->path);
+        // $optimizer = OptimizerChainFactory::create();
+        // $optimizer
+        // ->optimize($postImage->path);
 
         session()->flash('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
         return redirect()->route('posts.index');
