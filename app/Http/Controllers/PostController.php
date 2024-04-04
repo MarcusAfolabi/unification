@@ -35,11 +35,9 @@ class PostController extends Controller
         $sideproducts = Product::select('name', 'currency', 'price', 'slug', 'id')->where('user_id', '!=', auth()->user()->id)->inRandomOrder()->limit(5)->get();
         return view('posts.index', compact('myposts', 'all_posts', 'sideproducts'));
     }
- 
+
     public function store(Request $request)
     {
-        // $users = User::latest()->get();
-
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
             "intro" => 'required|string|max:251',
@@ -59,7 +57,7 @@ class PostController extends Controller
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
         $post->save();
-        
+
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
                 $path = $image->store('postImages', 'public');
@@ -69,14 +67,6 @@ class PostController extends Controller
                 $postImage->save();
             }
         }
-
-        // Notification::route('mail', [
-        //     'isokanmagazine@gmail.com' => 'Alert! New post has been published on the website',
-        // ])->notify(new PostNotification($post));
-
-        // $users = User::all();
-        // Notification::send($users, new NotificationPost($post));
-
         return redirect(route('posts.index'))->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
@@ -102,7 +92,7 @@ class PostController extends Controller
 
         // Update the post's like count
         // $post->likes()->increment('count');
-        
+
         Mail::to($like->post->user->email)->send(new LikeMail($like));
 
         return redirect()->back()->with(['status' => 'Post liked successfully.']);
@@ -138,16 +128,16 @@ class PostController extends Controller
             'post_id' => ['required', 'integer', 'max:255'],
         ]);
 
-        $user = Auth::user();  
+        $user = Auth::user();
         $content = htmlentities($validatedData['content'], ENT_QUOTES, 'UTF-8');
         $comment = new Comment();
         $comment->content = $content;
         $comment->post_id = $validatedData['post_id'];
         $comment->user_id = $user->id;
         $post->comments()->save($comment);
-        
+
         return redirect()->back()->with(['status' => 'comment shared.']);
-        
+
 
     }
 
@@ -156,10 +146,10 @@ class PostController extends Controller
 
         // Retrieve the post by its ID
         $post = Post::findOrFail($post);
-    
+
         // Retrieve the comment by its ID, ensuring that it belongs to the authenticated user
         $comment = Comment::where('id', $comment)->where('user_id', $user->id)->firstOrFail();
-    
+
         // Delete the comment from the post
         $comment->delete();
     }
