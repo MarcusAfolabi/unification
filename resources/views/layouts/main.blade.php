@@ -7,10 +7,10 @@
     <title>@yield('title') - Cherubim and Seraphim Church Unification Campus Fellowship </title>
     <meta name="description" content="@yield('description') ">
     <meta name="keywords" content="@yield('keywords')">
-    <link rel="canonical"  href="@yield('canonical')" />
-    <link rel="shortcut icon"  href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <link rel="canonical"  href="https://cnsunification.org" />
-    <link rel="shortcut icon"  href="{{ asset('assets/images/isokan_logo.png') }}" />
+    <link rel="canonical" href="@yield('canonical')" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="canonical" href="https://cnsunification.org" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/isokan_logo.png') }}" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="@yield('canonical')">
     <meta property="og:title" content="@yield('title')">
@@ -28,21 +28,17 @@
     <meta name="og:site_name" content="@yield('title')">
     <meta name="og:application-name" content="@yield('title')">
     <meta name="og:author" content="Afolabi Marcus - +2349035155129">
-    <link rel="apple-touch-icon" sizes="180x180" 
-        href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" 
-        href="{{ asset('assets/images/favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" 
-        href="{{ asset('assets/images/favicon/favicon-16x16.png') }}">
-    <link rel="manifest"  href="{{ asset('assets/images/favicon/site.webmanifest') }}">
-    <link rel="mask-icon"  href="{{ asset('assets/images/favicon/safari-pinned-tab.svg') }}"
-        color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('assets/images/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('assets/images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet"  href="{{ asset('assets/css/icons.css') }}">
-    <link rel="stylesheet"  href="{{ asset('assets/css/uikit.css') }}">
-    <link rel="stylesheet"  href="{{ asset('assets/css/style.css') }}">
-    <link  href="{{ asset('assets/tailwindcss%402.2.19/dist/tailwind.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/uikit.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link href="{{ asset('assets/tailwindcss%402.2.19/dist/tailwind.min.css') }}" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RBZ3GDR92P"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -55,7 +51,7 @@
     </script>
     <script src="https://www.googleoptimize.com/optimize.js?id=GTM-5L3ZJLW"></script>
 
-    <link rel="stylesheet"  href="https://cdn.plyr.io/3.5.6/plyr.css" />
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const controls = [
@@ -87,9 +83,9 @@
 <body>
     <div id="wrapper" class="is-collapse">
         @persist('header')
-            @livewire('header')
+            <x-header />
             <div class="sidebar">
-                @livewire('sidebar')
+            <x-sidebar />
             </div>
         @endpersist
         @yield('main')
