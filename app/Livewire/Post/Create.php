@@ -23,7 +23,7 @@ class Create extends Component
     public $user_id;
 
     protected $rules = [
-        'title' => 'required|string|unique:posts|max:255',
+        'title' => 'required|string|max:255',
         'images.*' => 'required|image|mimes:jpeg,png,jpg',
         'category' => 'required',
         'content' => ['required', 'string', 'max:1000', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate|kiss|fuck).*$/i'],
@@ -51,7 +51,7 @@ class Create extends Component
         }
         // $optimizer = OptimizerChainFactory::create();
         // $optimizer
-        // ->optimize($postImage->path);
+        //     ->optimize($postImage->path);
 
         session()->flash('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
         return redirect()->route('posts.index');
