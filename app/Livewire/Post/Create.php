@@ -54,6 +54,8 @@ class Create extends Component
             $postImage->path = $path;
             $postImage->post_id = $post->id;
             $postImage->save();
+            $optimizer = OptimizerChainFactory::create();
+            $optimizer->optimize(storage_path('app/public/' . $path));
         }
         // $optimizer = OptimizerChainFactory::create();
         // $optimizer
