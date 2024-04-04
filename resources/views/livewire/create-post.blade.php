@@ -19,7 +19,7 @@
         <form wire:submit.prevent='CreatePost'>
             <div class="p-10 space-y-7">
                 <div class="line">
-                    <input wire:model.live="title" class="line__input" maxlength="100" type="text">
+                    <input wire:model.lazy="title" class="line__input" maxlength="100" type="text">
                     <span for="title" class="line__placeholder">Caption</span>
                 </div>
                 @error('title')
@@ -50,7 +50,7 @@
                     <em class="mb-4 text-red-500">{{ $message }}</em>
                 @enderror
                 <div class="form-group">
-                    <textarea wire:model.live="content" id="content" class="px-3 py-3 with-border" placeholder="Enter content here">{{ old('content') }}</textarea>
+                    <textarea wire:model.lazy="content" id="content" class="px-3 py-3 with-border" placeholder="Enter content here">{{ old('content') }}</textarea>
                 </div>
                 @error('content')
                     <em class="mb-4 text-red-500">{{ $message }}</em>
@@ -62,10 +62,15 @@
                     To
                     Be Accurate And Concise.</p>
 
-                <button wire:loading.attr="disabled" class="button blue" type="submit">
+                {{-- <button wire:loading.attr="disabled" class="button blue" type="submit">
                     <span wire:loading.remove>PUBLISH</span>
                     <span wire:loading.target='CreatePost'>Loading...</span>
-                </button>
+                </button> --}}
+                <button type="submit" class="button blue">Publish</button>
+                {{-- <button type="submit" class="button blue" wire:loading.attr="disabled">
+                    <span wire:loading wire:target="CreatePost">Please wait ...</span>
+                    <span wire:loading.remove>Post</span>
+                </button> --}}
             </div>
 
         </form>

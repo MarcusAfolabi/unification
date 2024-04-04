@@ -36,6 +36,9 @@ class PostController extends Controller
         return view('posts.index', compact('myposts', 'all_posts', 'sideproducts'));
     }
 
+    public function create(){
+        return view('posts.create');
+    }
     public function store(Request $request)
     {
         $request->validate([

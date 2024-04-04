@@ -27,7 +27,7 @@
                     </h5>
                 </div>
             </div> --}}
-        @livewire('create-post')
+        @livewire('post.index')
         {{-- @if ($showForm)
                 <form wire:submit.prevent='CreatePost'>
                     <div class="p-10 space-y-7">

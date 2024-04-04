@@ -1,44 +1,36 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Post;
 
 use App\Models\Post;
 use App\Models\Image;
-use App\Models\Product;
 use Livewire\Component;
 use Illuminate\Support\Str;
-use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 
-class CreatePost extends Component
+class Create extends Component
 {
     use WithFileUploads;
-    use WithPagination;
 
-
-    public $showForm = false;
     public $title;
+    public $content;
     public $images = [];
     public $category;
-    public $content;
     public $fellowship_id;
     public $slug;
     public $user_id;
-    public $query;
-
 
     protected $rules = [
         'title' => 'required|string|unique:posts|max:255',
-        'images.*' => 'required|image|mimes:jpeg,png,jpg|max:500',
+        'images.*' => 'required|image|mimes:jpeg,png,jpg',
         'category' => 'required',
         'content' => ['required', 'string', 'max:1000', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate|kiss|fuck).*$/i'],
     ];
- 
 
-    public function CreatePost()
+
+    public function create()
     {
-        dd('Hi');
         $this->validate();
         $post = new Post();
         $post->title = $this->title;
@@ -59,8 +51,6 @@ class CreatePost extends Component
         session()->flash('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
         return redirect()->route('posts.index');
     }
-
-
     public function render()
     {
         return view('livewire.post.create');
