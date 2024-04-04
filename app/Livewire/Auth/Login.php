@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Auth;
+namespace App\Livewire\Auth;
 
-use App\Models\User;
 use Livewire\Component;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,16 +17,12 @@ class Login extends Component
         'email' => 'required|email|valid_email_domain|exists:users,email',
         'password' => 'required',
     ];
-
-    // public function updated($propertyName)
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
+ 
 
     public function login()
     {
         $this->validate();
-        
+
         $user = User::where('email', $this->email)->first();
         if ($user) {
             if (Hash::check($this->password, $user->password)) {
