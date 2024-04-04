@@ -12,7 +12,7 @@
             <div class="relative flex items-center justify-between mb-3 md:mb-4">
                 <div class="flex-1">
                     <h2 class="text-2xl font-semibold">
-                        All Registered Convention Members
+                        <b>{{ $conventions->count() }}</b> Registered
                     </h2>
                 </div>
                 <a uk-tooltip="Add" href="{{ route('convention.index') }}"
@@ -45,10 +45,10 @@
                             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                                 <div class="overflow-x-auto">
                                     <table class="min-w-full border border-collapse border-slate-400">
-                                        <thead class="border-b">
+                                        <thead class="border-b dark:bg-white">
                                             <tr>
                                                 <th scope="col"
-                                                    class="px-1 py-1 text-sm font-medium border text-dark border-slate-300">
+                                                    class="px-1 py-1 dark:text-white text-sm font-medium border text-dark border-slate-300">
                                                     S/N
                                                 </th>
                                                 <th scope="col"
@@ -117,13 +117,10 @@
                                                         class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
                                                         {{ $convention->email }}
                                                     </td>
+
                                                     <td
                                                         class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
-                                                        <a href="{{ asset($convention->payment_proof) }}">Download Receipt</a>
-                                                    </td>
-                                                    <td
-                                                        class="px-1 py-1 text-sm font-light dark:text-white text-gray-900 border whitespace-nowrap border-slate-300">
-                                                       {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS F Y') }}
+                                                        {{ \Carbon\Carbon::parse($convention->created_at)->format('l, jS F Y') }}
                                                     </td>
 
                                                     <td
