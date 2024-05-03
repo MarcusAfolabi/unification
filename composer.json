@@ -1,4 +1,4 @@
-{
+{    
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1.10",
+        "cloudinary-labs/cloudinary-laravel": "^2.1",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0.0",
