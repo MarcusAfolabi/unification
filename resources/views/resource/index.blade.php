@@ -60,7 +60,7 @@ ecommerce, facebook, facebook shop, shop, buyers, sellers, small business, enter
                                             </a>
                                         </th>
                                         <th class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                             
+
                                             <a href="{{ asset($resource->file) }}" title="download" > <i class="icon-feather-image"></i> download</a>
                                         </th>
 

@@ -5,6 +5,8 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
+    darkMode: 'class', // Enable dark mode with class-based toggling
+
     theme: {
         extend: {},
     },

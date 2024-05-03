@@ -24,7 +24,7 @@ class FellowshipController extends Controller
         } else {
             $fellowships = Fellowship::latest()->paginate(30);
         }
-         
+
             return view('fellowship.index', compact('fellowships'));
     }
 
@@ -38,20 +38,24 @@ class FellowshipController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData =  $request->validate([
             "name" => 'required',
             "acronyms" => 'required',
             "phone" => 'required',
             "address" => 'required',
             "logo" => 'required',
         ]);
+        if ($validatedData['logo']) {
+            $uploadResult = cloudinary()->upload($validatedData['logo']->getRealPath());
+            $iconUrl = $uploadResult->getSecurePath();
+        }
         $fellowship = new Fellowship();
         $fellowship->name = $request->input('name');
         $fellowship->slug = Str::slug($request->input('name'), '-');
         $fellowship->acronyms = $request->input('acronyms');
         $fellowship->phone = $request->input('phone');
         $fellowship->address = $request->input('address');
-        $fellowship->logo = '/' . $request->file('logo')->store('fellowshipLogo', 'public');
+        $fellowship->logo = $iconUrl;
         $fellowship->save();
         return redirect()->back()->with('status', 'Added Successfully');
     }
@@ -87,22 +91,23 @@ class FellowshipController extends Controller
 
     public function update(Request $request, Fellowship $fellowship)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             "name" => 'required',
             "acronyms" => 'required',
             "phone" => 'required',
             "address" => 'required',
             "logo" => 'sometimes',
         ]);
+        if ($validatedData['logo']) {
+            $uploadResult = cloudinary()->upload($validatedData['logo']->getRealPath());
+            $iconUrl = $uploadResult->getSecurePath();
+        }
         $fellowship->name = $request->input('name');
         $fellowship->slug = Str::slug($request->input('name'), '-');
         $fellowship->acronyms = $request->input('acronyms');
         $fellowship->phone = $request->input('phone');
         $fellowship->address = $request->input('address');
-        if ($request->hasFile("logo")) {
-            $image = "storage/" . $request->file("image")->store("fellowshipLogo", "public");
-            $fellowship->image = $image;
-        }
+        $fellowship->image = $iconUrl;
 
         $fellowship->save();
         return redirect(route('fellowship.index'))->with('status', 'Updated Successfully');
@@ -120,6 +125,10 @@ class FellowshipController extends Controller
             return redirect()->back()->with('status', 'Deleted Successfully');
         } else {
             $fellowship->delete();
+            if ($fellowship->logo) {
+                $publicId = basename($fellowship->logo, '.' . pathinfo($fellowship->logo, PATHINFO_EXTENSION));
+                cloudinary()->destroy($publicId);
+            }
             return redirect()->back()->with('status', 'Deleted Successfully');
         }
     }
