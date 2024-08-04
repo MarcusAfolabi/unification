@@ -59,9 +59,11 @@
                 <input type="file" wire:model="profile_image" class="with-border">
                 @error('profile_image') <span class="text-red-500">{{ $message }}</span> @enderror
                 <div class="flex items-center text-center justify-between mt-6">
-                    <button class="btn btn-secondary w-full justify-center text-center ml-5 justify-end">
-                        {{ __('Register') }}
+                    <button type="submit" wire:loading.attr="disabled" class="btn btn-secondary w-full justify-center text-center ml-5">
+                        <span wire:loading wire:target="submit" class="spinner-border spinner-border-sm">Please wait, Saving...</span>
+                        <span wire:loading.remove> Register</span>
                     </button>
+                    
                 </div>
             </div>
         </div>

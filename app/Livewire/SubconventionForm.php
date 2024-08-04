@@ -54,6 +54,7 @@ class SubconventionForm extends Component
 
     public function submit()
     {
+        
         $validatedData = $this->validate([
             'payment_proof' => 'required|image|max:2054',
             'firstname' => 'required|string|max:100',
@@ -67,16 +68,15 @@ class SubconventionForm extends Component
             'unit_id' => 'required|string',
             'profile_image' => 'required|image|max:2054',
         ]);
-        // dd($validatedData);
-
+        
         $validatedData['payment_proof'] = 'storage/' . $this->payment_proof->store('subconventionImages', 'public');
         $validatedData['profile_image'] = 'storage/' . $this->profile_image->store('subconventionImages', 'public');
-
+        
         Subconvention::create($validatedData);
-
-        session()->flash('message', 'Registration successful.');
-
-        return redirect('/subconvention');
+        
+        session()->flash('success', 'Registration successful.');
+        $this->js("alert('Registration successful!')"); 
+        $this->reset();
     }
 
     public function render()

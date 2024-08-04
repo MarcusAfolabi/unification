@@ -82,6 +82,7 @@
 
 <body>
     <div id="wrapper" class="is-collapse">
+        
         @persist('header')
             <x-header />
             <div class="sidebar">
