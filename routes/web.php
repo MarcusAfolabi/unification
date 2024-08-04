@@ -15,10 +15,11 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\WelcomeController;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ExecutiveController;
 use App\Http\Controllers\ConventionController;
-use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FellowshipController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SubconventionController;
@@ -43,6 +44,12 @@ Route::get('/create-storage-link', function () {
     return 'Storage link created!';
 });
  
+Route::get('/idcard', function () {
+    $string="subconvention";
+    $qrcode = QrCode::generate($string);
+    return view('card')->with('qrcode', $qrcode);
+})->name('id.card');
+
 Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
@@ -196,3 +203,4 @@ Route::resource('house', HouseController::class);
 
 Route::resource('unit', UnitController::class);
 Route::get('/unit/{unit:slug}',[UnitController::class, 'show'])->name('unit.show');
+

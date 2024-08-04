@@ -1,3 +1,6 @@
+<!-- Front Side -->
+
+
 <form wire:submit.prevent="submit">
     <div class="">
         <div class="bg-white w-full p-10 relative rounded-md shadow">
@@ -63,7 +66,7 @@
                         <span wire:loading wire:target="submit" class="spinner-border spinner-border-sm">Please wait, Saving...</span>
                         <span wire:loading.remove> Register</span>
                     </button>
-                    
+
                 </div>
             </div>
         </div>
