@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Executive;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 class ExecutiveController extends Controller
 {
@@ -24,7 +24,7 @@ class ExecutiveController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'position' => 'required',
             'hobby' => 'required',
@@ -33,13 +33,18 @@ class ExecutiveController extends Controller
             "image" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        if ($validatedData['image']) {
+            $uploadResult = cloudinary()->upload($validatedData['image']->getRealPath());
+            $iconUrl = $uploadResult->getSecurePath();
+        }
+
         $executive = Executive::create([
             'name' => $request->input('name'),
             'position' => $request->input('position'),
             'hobby' => $request->input('hobby'),
             'email' => $request->input('email'),
             'profile' => $request->input('profile'),
-            'image' => 'storage/' . $request->file('image')->store('aboutImages', 'public'),
+            'image' => $iconUrl,
         ]);
 
         return redirect()->back()->with('status', 'Executive added successfully.');
@@ -58,7 +63,7 @@ class ExecutiveController extends Controller
 
     public function update(Request $request, Executive $executive)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'position' => 'required',
             'hobby' => 'required',
@@ -73,16 +78,21 @@ class ExecutiveController extends Controller
         $email = $request->input('email');
         $profile = $request->input('profile');
 
-        if ($request->hasFile('image')) {
-            $image = 'storage/' . $request->file('image')->store('aboutImages', 'public');
-            $executive->image = $image;
-        }
+        // if ($request->hasFile('image')) {
+        //     $image = 'storage/' . $request->file('image')->store('aboutImages', 'public');
+        //     $executive->image = $image;
+        // }
 
+        if ($validatedData['image']) {
+            $uploadResult = cloudinary()->upload($validatedData['image']->getRealPath());
+            $iconUrl = $uploadResult->getSecurePath();
+        }
         $executive->name = $name;
         $executive->position = $position;
         $executive->hobby = $hobby;
         $executive->email = $email;
         $executive->profile = $profile;
+        $executive->image = $iconUrl;
 
         $executive->save();
 
@@ -91,16 +101,11 @@ class ExecutiveController extends Controller
     public function destroy($id)
     {
         $executive = Executive::findOrFail($id);
-        $image = '/'.$executive->image;
-        $path = str_replace('\\','/',public_path());
-
-        if (file_exists($path.$image)) {
-            unlink($path.$image);
-            $executive->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
-        } else {
-            $executive->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
+        if ($executive->image) {
+            $publicId = basename($executive->image, '.' . pathinfo($executive->image, PATHINFO_EXTENSION));
+            cloudinary()->destroy($publicId);
         }
+        $executive->delete();
+        return redirect()->back()->with('status', 'Deleted Successfully');
     }
 }

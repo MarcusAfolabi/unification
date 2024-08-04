@@ -25,14 +25,14 @@ class FellowshipController extends Controller
             $fellowships = Fellowship::latest()->paginate(30);
         }
 
-            return view('fellowship.index', compact('fellowships'));
+        return view('fellowship.index', compact('fellowships'));
     }
 
 
     public function list()
     {
         $chapters = Fellowship::latest()->paginate(30);
-            return view('fellowship.list', compact('chapters'));
+        return view('fellowship.list', compact('chapters'));
     }
 
 
@@ -116,20 +116,11 @@ class FellowshipController extends Controller
     public function destroy($id)
     {
         $fellowship = Fellowship::findOrFail($id);
-        $image = '/'.$fellowship->logo;
-        $path = str_replace('\\','/',public_path());
-
-        if (file_exists($path.$image)) {
-            unlink($path.$image);
-            $fellowship->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
-        } else {
-            $fellowship->delete();
-            if ($fellowship->logo) {
-                $publicId = basename($fellowship->logo, '.' . pathinfo($fellowship->logo, PATHINFO_EXTENSION));
-                cloudinary()->destroy($publicId);
-            }
-            return redirect()->back()->with('status', 'Deleted Successfully');
+        if ($fellowship->image) {
+            $publicId = basename($fellowship->image, '.' . pathinfo($fellowship->image, PATHINFO_EXTENSION));
+            cloudinary()->destroy($publicId);
         }
+        $fellowship->delete();
+        return redirect()->back()->with('status', 'Deleted Successfully');
     }
 }

@@ -12,7 +12,7 @@ class Image extends Model
     protected $table = 'images';
 
     protected $fillable = [
-        'post_id', 'path'
+        'post_id', 'path', 'public_id'
     ];
 
     public function post()

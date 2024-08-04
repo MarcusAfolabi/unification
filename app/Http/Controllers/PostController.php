@@ -21,6 +21,7 @@ use App\Notifications\NotificationPost;
 use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class PostController extends Controller
 {
@@ -39,16 +40,18 @@ class PostController extends Controller
     public function create(){
         return view('posts.create');
     }
+
+
     public function store(Request $request)
     {
         $request->validate([
             "title" => 'required|string|unique:posts|max:255',
             "image" => 'required|array|max:5',
-            "image*" => 'required|image|mimes:jpeg,png,jpg|max:500',
+            "image.*" => 'required|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
-            'content' => 'required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate|kiss|fuck).*$/i',
-            'fellowship_id' => 'required',
+            'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate|kiss|fuck).*$/i'],
         ]);
+        dd($request->validate());
 
         $post = new Post();
         $postData = $request->only(['title', 'category', 'content', 'fellowship_id']);
@@ -58,19 +61,29 @@ class PostController extends Controller
         $post->content = $content;
         $post->slug = Str::slug($request->input('title'), '-');
         $post->user_id = Auth::user()->id;
+        $post->fellowship_id = Auth::user()->fellowship->id;
         $post->save();
 
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
-                $path = $image->store('postImages', 'public');
+                // Upload image to Cloudinary with transformation to resize to 400x400
+                $imageUploadResult = Cloudinary::upload($image->getRealPath(), [
+                    'transformation' => [
+                        ['width' => 400, 'height' => 400, 'crop' => 'fill']
+                    ]
+                ]);
+
+                // Create new Image instance with Cloudinary URL
                 $postImage = new Image();
-                $postImage->path = $path;
+                $postImage->path = $imageUploadResult->getSecurePath();
                 $postImage->post_id = $post->id;
                 $postImage->save();
             }
         }
+
         return redirect(route('posts.index'))->with('status', 'Post Created Successfully. We ensure it edify the body of Christ before we publish');
     }
+
 
     public function like(Post $post)
     {
@@ -170,50 +183,69 @@ class PostController extends Controller
     {
         return view('posts.edit', compact('post'));
     }
+
     public function update(Request $request, Post $post)
     {
         $request->validate([
             "title" => 'required|string|max:255',
-            "image*" => 'required|image|array|max:5',
-            "image*" => 'sometimes|image|mimes:jpeg,png,jpg|max:250|dimensions:min_width=300,min_height=300,max_width=900,max_height=450',
+            "image" => 'nullable|array|max:5',
+            "image.*" => 'nullable|image|mimes:jpeg,png,jpg|max:500',
             "category" => 'required',
-            'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate).*$/i'],
+            'content' => ['required', 'string', 'max:255', 'not_regex:/^.*(kill|death|blood|fool|stupid|sex|hate|kiss|fuck).*$/i'],
+            'fellowship_id' => 'required',
         ]);
-        $post->fill($request->only(['title',  'category', 'content']));
-        $post->slug = Str::slug($request->input('title'), '-');
-        $post->user_id = Auth::user()->id;
-        $post->save();
+
+        $postData = $request->only(['title', 'category', 'content', 'fellowship_id']);
+        $postData = array_map('strip_tags', $postData);
+        $content = htmlentities($request->input('content'), ENT_QUOTES, 'UTF-8');
+        $postData['content'] = $content;
+        $postData['slug'] = Str::slug($request->input('title'), '-');
+        $postData['user_id'] = Auth::user()->id;
+
+        // If new images are provided, delete existing images
+        if ($request->hasFile('image')) {
+            // Delete existing images from Cloudinary
+            foreach ($post->images as $image) {
+                Cloudinary::destroy($image->public_id); // Assuming you have a method to get the public ID of the image
+                $image->delete();
+            }
+        }
+
+        // Update post data
+        $post->update($postData);
+
+        // Upload and associate new images if provided
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
-                $path = $image->store('postImages', 'public');
+                // Upload image to Cloudinary with transformation to resize to 400x400
+                $imageUploadResult = Cloudinary::upload($image->getRealPath(), [
+                    'transformation' => [
+                        ['width' => 400, 'height' => 400, 'crop' => 'fill']
+                    ]
+                ]);
 
+                // Create new Image instance with Cloudinary URL
                 $postImage = new Image();
-                $postImage->path = $path;
+                $postImage->path = $imageUploadResult->getSecurePath();
                 $postImage->post_id = $post->id;
+                $postImage->public_id = $imageUploadResult->getPublicId(); // Assuming you have a method to retrieve the public ID
                 $postImage->save();
             }
         }
-        return redirect(route('posts.index'))->with('status', 'Post Updated Successfully. We ensure it edify the body of Christ before we publish');
+
+        return redirect(route('posts.index'))->with('status', 'Post Updated Successfully');
     }
-    public function deleteimage(Image $id)
-    {
-        $image = Image::findOrFail($id);
-        if (File::exists("posts/" . $image->path)) {
-            File::delete("posts/" . $image->path);
-        }
-        Image::find($id)->delete();
-        return redirect()->back()->with('status', 'Post Image Deleted');
-    }
+
+
 
     public function destroy(Post $post)
     {
-        $images = $post->images;
-
-        foreach ($images as $image) {
-            Storage::delete($image->path);
+        foreach ($post->images as $image) {
+            Cloudinary::destroy($image->public_id); // Assuming you have a method to get the public ID of the image
             $image->delete();
         }
 
+        // Delete the post
         $post->delete();
 
         return redirect()->route('posts.index')->with('status', 'Post and associated images deleted successfully.');

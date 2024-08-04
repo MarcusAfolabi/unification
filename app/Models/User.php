@@ -85,10 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Audio::class);
     }
-    public function jobs()
-    {
-        return $this->hasMany(Job::class);
-    }
+
 
     public function products()
     {

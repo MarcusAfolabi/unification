@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BookController extends Controller
 {
@@ -42,17 +43,24 @@ class BookController extends Controller
             'author' => 'required|max:255'
         ]);
 
+        // Upload image to Cloudinary
+        $imageUploadResult = Cloudinary::upload($request->file('image')->getRealPath());
+
+        // Upload file to Cloudinary
+        $fileUploadResult = Cloudinary::upload($request->file('file')->getRealPath());
+
+        // Create new Book instance with Cloudinary URLs
         $book = new Book([
             'title' => $request->input('title'),
             'author' => $request->input('author'),
             'slug' => Str::slug($request->input('title'), '-'),
             'user_id' => Auth::user()->id,
-            'image' => 'storage/' . $request->file('image')->store('bookImages', 'public'),
-            'file' => 'storage/' . $request->file('file')->store('bookImages', 'public')
+            'image' => $imageUploadResult->getSecurePath(),
+            'file' => $fileUploadResult->getSecurePath()
         ]);
 
         $book->save();
-        event(new ItemStored()); 
+        event(new ItemStored());
         return redirect()->back()->with('status', 'Book Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
@@ -70,56 +78,75 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $request->validate([
-            "title" => "required|string|max:255",
-            "image" => "nullable|image|mimes:png,jpg,jpeg,gif,svg|max:2254",
-            "file" => "nullable|mimes:pdf,mp3,docx|max:10052",
-            "author" => "required|string|max:255"
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,svg|max:1015',
+            'file' => 'nullable|mimes:pdf,mp3,docx|max:15052',
         ]);
 
-        $title = $request->input("title");
-        $author = $request->input("author");
-        $slug = Str::slug($title, "-");
+        // Initialize an empty array to store updated book data
+        $data = [];
 
-        $book->title = $title;
-        $book->author = $author;
-        $book->slug = $slug;
+        // Update book title and author
+        $data['title'] = $request->input('title');
+        $data['author'] = $request->input('author');
 
-        if ($request->hasFile("image")) {
-            $image = "storage/" . $request->file("image")->store("bookImages", "public");
-            $book->image = $image;
+        // Generate slug from the updated title
+        $data['slug'] = Str::slug($request->input('title'), '-');
+
+        // Update user ID
+        $data['user_id'] = Auth::user()->id;
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Upload new image to Cloudinary
+            $imageUploadResult = Cloudinary::upload($request->file('image')->getRealPath());
+
+            // Delete existing image if it exists
+            if ($book->image) {
+                Cloudinary::destroy($book->imagePublicId());
+            }
+
+            // Update image URL in the data array
+            $data['image'] = $imageUploadResult->getSecurePath();
         }
 
-        if ($request->hasFile("file")) {
-            $file = "storage/" . $request->file("file")->store("bookFiles", "public");
-            $book->file = $file;
+        // Handle file upload
+        if ($request->hasFile('file')) {
+            // Upload new file to Cloudinary
+            $fileUploadResult = Cloudinary::upload($request->file('file')->getRealPath());
+
+            // Delete existing file if it exists
+            if ($book->file) {
+                Cloudinary::destroy($book->filePublicId());
+            }
+
+            // Update file URL in the data array
+            $data['file'] = $fileUploadResult->getSecurePath();
         }
 
-        $book->save();
-        return redirect()->back()->with('status', 'Book Updated Successfully. We ensure it edify the body of Christ before we publish');
+        // Update the book record with the new data
+        $book->update($data);
+
+        return redirect()->back()->with('status', 'Book updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $book = Book::findOrFail($id);
-        $image = '/'.$book->image;
-        $file = '/'.$book->file;
-        $path = str_replace('\\','/',public_path());
+        // Delete associated image from Cloudinary if it exists
+        if ($book->image) {
+            Cloudinary::destroy($book->imagePublicId());
+        }
 
-        if (file_exists($path.$image)) {
-            unlink($path.$image);
-            $book->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
-        } else {
-            $book->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
+        // Delete associated file from Cloudinary if it exists
+        if ($book->file) {
+            Cloudinary::destroy($book->filePublicId());
         }
-        if (file_exists($path.$file)) {
-            unlink($path.$file);
-            $book->delete();
+
+        // Delete the book record from the database
+        $book->delete();
+
             return redirect()->back()->with('status', 'Deleted Successfully');
-        } else {
-            $book->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
-        }
+
     }
 }

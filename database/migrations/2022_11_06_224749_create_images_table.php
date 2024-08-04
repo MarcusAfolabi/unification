@@ -5,20 +5,18 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
-{ 
+{
     public function up()
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('post_id');
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->string('path');
+            $table->string('public_id');
             $table->timestamps();
-            
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-
         });
     }
- 
+
     public function down()
     {
         Schema::dropIfExists('images');

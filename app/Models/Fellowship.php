@@ -10,7 +10,7 @@ class Fellowship extends Model
     use HasFactory;
      protected $table = 'fellowships';
 
-    protected $fillable = ['name', 'slug', 'acronyms', 'logo', 'phone', 'address'];
+    protected $fillable = ['name', 'slug', 'acronyms', 'logo', 'phone'];
 
     public function users()
     {

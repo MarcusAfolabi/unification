@@ -10,16 +10,17 @@ return new class extends Migration
     {
         Schema::create('subconventions', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('lastname');
+            $table->string('payment_proof');
             $table->string('firstname'); 
-            $table->string('gender');
+            $table->string('lastname');
+            $table->string('email');
             $table->string('phone'); 
+            $table->string('gender');
+            $table->string('fellowship_id');
             $table->string('academic_status');
             $table->string('fellowship_status'); 
             $table->string('unit_id') ;
-            $table->string('fellowship_id')->nullable();
-            $table->string('fellowship_name');
+            $table->string('profile_image');
             $table->timestamps();
         });
     }

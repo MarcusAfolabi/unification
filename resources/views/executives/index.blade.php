@@ -18,7 +18,7 @@
         @if (session('status'))
         <p class="bg-blue-500 text-white text-center border p-4 relative rounded-md uk-alert">
             {{ session('status') }}
-        </p> 
+        </p>
         @endif
         <div class="card">
             <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"> </div>
@@ -26,7 +26,7 @@
                 <form action="">
                     <input type="text" class="form-control" name="executive" placeholder="Search for Names, Position and more.." autocomplete="off">
                 </form>
-            </div> 
+            </div>
             <br>
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -87,7 +87,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                        </div> 
+                        </div>
                     </div>
                     {{ $executives->links() }}
                 </div>

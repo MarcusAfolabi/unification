@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AudioController extends Controller
 {
@@ -27,38 +28,62 @@ class AudioController extends Controller
 
     public function create()
     {
-       //
+        //
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             "title" => 'required|unique:audios|max:255',
             "author" => 'required|max:255',
             "image" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048',
-            "file" => "sometimes|file|mimetypes:audio/mpeg,video/webm,video/ogg,video/x-msvideo,video/3gpp,video/mp4|max:15512",
+            "file" => "nullable|mimetypes:audio/mpeg,audio/mp3|max:20120",
             "url" => 'nullable|unique:audios|regex:/^.+\.mp3$/i',
-            "url.regex" => 'The URL must end with the .mp3 file extension.',
             "content" => 'nullable',
         ]);
-        $data = $request->only(['title', 'author', 'content', 'url']);
-        $data['slug'] = Str::slug($data['title'], '-');
-        $data['user_id'] = Auth::id();
+
+        $imageUrl = null;
         if ($request->hasFile('image')) {
-            $data['image'] = 'storage/' . $request->file('image')->store('audioImages', 'public');
+            $imageFile = $request->file('image');
+            // Check if the uploaded file is indeed an image
+            if ($imageFile->isValid()) {
+                $uploadResult = cloudinary()->upload($imageFile->getRealPath());
+                $imageUrl = $uploadResult->getSecurePath();
+            } else {
+                return redirect()->back()->withErrors(['image' => 'Invalid image file.']);
+            }
         }
 
+        $iconUrl = null;
         if ($request->hasFile('file')) {
-            $data['file'] = 'storage/' . $request->file('file')->store('audioFiles', 'public');
-        } 
-        $audio = Audio::create($data);
-        event(new ItemStored()); 
+            $audioFile = $request->file('file');
+            // Check if the uploaded file is indeed an audio file
+            if ($audioFile->isValid()) {
+                $uploadResult = cloudinary()->upload($audioFile->getRealPath());
+                $iconUrl = $uploadResult->getSecurePath();
+            } else {
+                return redirect()->back()->withErrors(['file' => 'Invalid audio file.']);
+            }
+        }
+
+        $audio = Audio::create([
+            'title' => $validatedData['title'],
+            'user_id' => Auth::user()->id,
+            'author' => $validatedData['author'],
+            'url' => $validatedData['url'] ?? null,
+            'content' => $validatedData['content'],
+            'slug' => Str::slug($validatedData['title'], '-'),
+            'image' => $imageUrl,
+            'file' => $iconUrl,
+        ]);
+
         return redirect(route('audios.index'))->with('status', 'Audio Created Successfully. We ensure it edify the body of Christ before we publish');
     }
 
+
     public function list(Audio $audio)
     {
-        
+
         DB::table('audios')->increment('views');
         $side_audios = Audio::latest()->paginate(10);
         $audios = Audio::latest()->paginate(10);
@@ -70,48 +95,72 @@ class AudioController extends Controller
         return view('audios.edit', compact('audio'));
     }
 
+
+
     public function update(Request $request, Audio $audio)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             "title" => 'required|max:255',
             "author" => 'required|max:255',
             "image" => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1048',
-            "file" => "sometimes|file|mimetypes:audio/mpeg,video/webm,video/ogg,video/x-msvideo,video/3gpp,video/mp4|max:15512",
+            "file" => "nullable|file|mimetypes:audio/mpeg,audio/mp3|max:5120",
             "url" => 'nullable|regex:/^.+\.mp3$/i',
             "url.regex" => 'The URL must end with the .mp3 file extension.',
             "content" => 'required',
         ]);
-        $data = $request->only(['title', 'author', 'content', 'url']);
-        $data['slug'] = Str::slug($data['title'], '-');
-        $data['user_id'] = Auth::id();
 
-        if ($request->hasFile('image')) {
-            Storage::delete($audio->image);
-            $data['image'] = 'storage/' . $request->file('image')->store('audioImages', 'public');
+        $data = [
+            'title' => $request->input('title'),
+            'author' => $request->input('author'),
+            'content' => $request->input('content'),
+            'url' => $request->input('url'),
+            'slug' => Str::slug($request->input('title'), '-'),
+            'user_id' => Auth::id(),
+        ];
+
+        // Handle file update or removal
+        if ($request->hasFile('file')) {
+            $uploadResult = cloudinary()->upload($request->file('file')->getRealPath());
+            $data['file'] = $uploadResult->getSecurePath();
+        } elseif ($request->exists('remove_file')) {
+            cloudinary()->destroy($audio->filePublicId()); // Assuming you have a method to get the public ID of the file
+            $data['file'] = null;
         }
 
-        if ($request->hasFile('file')) {
-            Storage::delete($audio->file);
-            $data['file'] = 'storage/' . $request->file('file')->store('audioFiles', 'public');
+        // Handle image update or removal
+        if ($request->hasFile('image')) {
+            $uploadResult = cloudinary()->upload($request->file('image')->getRealPath());
+            $data['image'] = $uploadResult->getSecurePath();
+        } elseif ($request->exists('remove_image')) {
+            cloudinary()->destroy($audio->imagePublicId()); // Assuming you have a method to get the public ID of the image
+            $data['image'] = null;
         }
 
         $audio->update($data);
+
         return redirect(route('audios.index'))->with('status', 'Audio Updated Successfully. We ensure it edify the body of Christ before we publish');
     }
+
 
     public function destroy($id)
     {
         $audio = Audio::findOrFail($id);
-        $image = '/'.$audio->image;
-        $path = str_replace('\\','/',public_path());
 
-        if (file_exists($path.$image)) {
-            unlink($path.$image);
-            $audio->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
-        } else {
-            $audio->delete();
-            return redirect()->back()->with('status', 'Deleted Successfully');
+        // Delete associated file from cloud storage if exists
+
+
+        if ($audio->image) {
+            Cloudinary::destroy($audio->imagePublicId());
         }
+
+        // Delete associated file from Cloudinary if it exists
+        if ($audio->file) {
+            Cloudinary::destroy($audio->filePublicId());
+        }
+
+        // Delete audio record from the database
+        $audio->delete();
+
+        return redirect()->back()->with('status', 'Deleted Successfully');
     }
 }

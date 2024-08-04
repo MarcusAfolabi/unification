@@ -12,14 +12,15 @@ class Subconvention extends Model
     protected $table = 'subconventions';
 
     protected $fillable =[
-        'email',
-        'lastname',
+        'payment_proof',
         'firstname',
-        'gender',
+        'lastname',
+        'email',
         'phone',
+        'gender',
+        'fellowship_id', 
         'academic_status',
         'fellowship_status',
-        'fellowship_id', 
         'unit_id',
         'profile_image',
     ];
