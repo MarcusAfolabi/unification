@@ -14,18 +14,18 @@ class SubconventionForm extends Component
     public $schools = [];
 
     public $levels = [];
-    
+
     public $payment_proof;
     public $profile_image;
     public $firstname;
     public $lastname;
     public $email;
-    public $phone; 
-    public $gender; 
-    public $fellowship_id; 
-    public $academic_status; 
-    public $fellowship_status; 
-    public $unit_id; 
+    public $phone;
+    public $gender;
+    public $fellowship_id;
+    public $academic_status;
+    public $fellowship_status;
+    public $unit_id;
     public $fellowshipPosts = [];
     public $units = [];
 
@@ -33,28 +33,58 @@ class SubconventionForm extends Component
     {
         $this->schools = Fellowship::orderby('name', 'asc')->get();
         $this->levels = [
-            'Pre-ND', 'Pre-Degree', 'HND1', 'HND2', 'ND1', 'ND2',
-            '100 Level', '200 Level', '300 Level', '400 Level',
-            '500 Level', '600 Level', 'Graduate', 'Post Graduate'
+            'Pre-ND',
+            'Pre-Degree',
+            'HND1',
+            'HND2',
+            'ND1',
+            'ND2',
+            '100 Level',
+            '200 Level',
+            '300 Level',
+            '400 Level',
+            '500 Level',
+            '600 Level',
+            'Graduate',
+            'Post Graduate'
         ];
         $this->fellowshipPosts = [
-            'CEC', 'CENTRAL ADMIN', 'ASSISTANT SECRETARY', 'CHOIR MASTER/MISTRESS',
-            'EVANGELISM SECRETARY', 'FEMALE CO-ORDINATOR', 'FINANCIAL SECRETARY',
-            'LEVITE CO-ORDINATOR', 'PRAYER MINISTRY LEADER', 'PRESIDENT',
-            'PUBLICITY SECRETARY', 'SECRETARY', 'TREASURY SECRETARY',
-            'VICE PRESIDENT', 'WELFARE SECRETARY', 'MEMBER', 'OTHERS'
+            'CEC',
+            'CENTRAL ADMIN',
+            'ASSISTANT SECRETARY',
+            'CHOIR MASTER/MISTRESS',
+            'EVANGELISM SECRETARY',
+            'FEMALE CO-ORDINATOR',
+            'FINANCIAL SECRETARY',
+            'LEVITE CO-ORDINATOR',
+            'PRAYER MINISTRY LEADER',
+            'PRESIDENT',
+            'PUBLICITY SECRETARY',
+            'SECRETARY',
+            'TREASURY SECRETARY',
+            'VICE PRESIDENT',
+            'WELFARE SECRETARY',
+            'MEMBER',
+            'OTHERS'
         ];
         $this->units = [
-            'Drama Unit', 'Choir Unit', 'Decorating Unit', 'Usering Unit',
-            'Levites Unit', 'Prayer Unit', 'Bible Unit', 'Evangelism Unit',
-            'Academic Unit', 'Media/Publicity Unit', 'OTHERS'
+            'Drama Unit',
+            'Choir Unit',
+            'Decorating Unit',
+            'Usering Unit',
+            'Levites Unit',
+            'Prayer Unit',
+            'Bible Unit',
+            'Evangelism Unit',
+            'Academic Unit',
+            'Media/Publicity Unit',
+            'OTHERS'
         ];
-        
     }
 
     public function submit()
     {
-        
+
         $validatedData = $this->validate([
             'payment_proof' => 'required|image|max:2054',
             'firstname' => 'required|string|max:100',
@@ -68,14 +98,12 @@ class SubconventionForm extends Component
             'unit_id' => 'required|string',
             'profile_image' => 'required|image|max:2054',
         ]);
-        
+
         $validatedData['payment_proof'] = 'storage/' . $this->payment_proof->store('subconventionImages', 'public');
         $validatedData['profile_image'] = 'storage/' . $this->profile_image->store('subconventionImages', 'public');
-        
+
         Subconvention::create($validatedData);
-        
-        session()->flash('success', 'Registration successful.');
-        $this->js("alert('Registration successful!')"); 
+        $this->js("alert('Your registration was received successful and payment will be verified!')");
         $this->reset();
     }
 
