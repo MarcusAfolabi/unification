@@ -59,7 +59,7 @@ class SubconventionForm extends Component
             'payment_proof' => 'required|image|max:2054',
             'firstname' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
-            'email' => 'required|unique:subconventions,email|valid_email_domain|max:255',
+            'email' => 'required|unique:subconventions,email|max:255',
             'phone' => 'required|unique:subconventions,phone|digits:11',
             'gender' => 'required|string',
             'fellowship_id' => 'required|string',
