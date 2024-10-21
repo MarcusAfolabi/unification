@@ -15,13 +15,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
+    } 
+    
     public function boot()
     {
         Validator::extend('valid_email_domain', function ($attribute, $value, $parameters, $validator) {
