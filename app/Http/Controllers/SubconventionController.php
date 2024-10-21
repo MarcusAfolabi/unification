@@ -18,6 +18,7 @@ class SubconventionController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except(['index', 'store', 'subpayment']);
     }
+    
     public function index(Request $request)
     {
         return view('subconvention.index');
