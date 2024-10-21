@@ -25,24 +25,24 @@
                 <h4 class="text-xl font-semibold mb-1"> Step 1</h4>
                 <hr>
                 <p class="font-medium mt-3">Payment Details</p>
-                <p class="font-small">Graduate Fee: N5,000</p>
-                <p class="font-small mb-3">Undergraduate Fee: N4,000</p>
+                <p class="font-small">Graduate Fee: N4,000</p>
+                <p class="font-small mb-3">Undergraduate Fee: N2,000</p>
                 <hr>
 
                 <p class="font-medium mt-3">Online Bank Transfer Payment</p>
                 <div class="mt-4 text-base font-medium space-y-2">
                     <div class="flex items-center">
-                        <ion-icon name="medkit" class="text-lg mr-3"></ion-icon> 01100110011
+                        <ion-icon name="medkit" class="text-lg mr-3"></ion-icon> 2016294268
                     </div>
                     <div class="flex items-center">
-                        <ion-icon name="school" class="text-lg mr-3"></ion-icon> Eco Bank
+                        <ion-icon name="school" class="text-lg mr-3"></ion-icon> First Bank of Nigeria
                     </div>
                     <div class="flex items-center">
                         <ion-icon name="heart-circle" class="text-lg mr-3"></ion-icon> Cherubim and Seraphim Church Unification Campus Fellowship
                     </div>
                 </div>
                 <br>
-                <hr> 
+                <hr>
             </div>
             @livewire('subconvention-form')
         </div>
