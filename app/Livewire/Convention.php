@@ -46,7 +46,7 @@ class Convention extends Component
     protected $rules = [
         'firstname' => 'required|string',
         'lastname' => 'required|string',
-        'email' => 'required|email|valid_email_domain|unique:fourth_conventions',
+        'email' => 'required|email|unique:fourth_conventions',
         'gender' => 'required|string',
         'phone' => 'required|string|max:11|min:11|unique:fourth_conventions',
         'academic_status' => 'required|string',
