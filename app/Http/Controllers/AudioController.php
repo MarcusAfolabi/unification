@@ -17,6 +17,7 @@ class AudioController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except(['list']);
     }
+    
     public function index(Request $request)
     {
         DB::table('audios')->increment('views');

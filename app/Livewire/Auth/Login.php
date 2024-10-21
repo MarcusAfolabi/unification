@@ -14,7 +14,7 @@ class Login extends Component
 
 
     protected $rules = [
-        'email' => 'required|email|valid_email_domain|exists:users,email',
+        'email' => 'required|email|exists:users,email',
         'password' => 'required',
     ];
  
