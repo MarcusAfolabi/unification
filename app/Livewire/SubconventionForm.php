@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Fellowship;
 use App\Models\Subconvention;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Session;
 
 class SubconventionForm extends Component
 {
@@ -84,7 +85,6 @@ class SubconventionForm extends Component
 
     public function submit()
     {
-
         $validatedData = $this->validate([
             'payment_proof' => 'required|image|max:2054',
             'firstname' => 'required|string|max:100',
@@ -103,7 +103,9 @@ class SubconventionForm extends Component
         $validatedData['profile_image'] = 'storage/' . $this->profile_image->store('subconventionImages', 'public');
 
         Subconvention::create($validatedData);
-        $this->js("alert('Your registration was received successful and payment will be verified!')");
+        Session::put('email', $this->email);
+        $this->js("alert('Your registration was received successful and payment will be verified!. Download your ID in the next page')");
+        return redirect('subconvention.idcard');
         $this->reset();
     }
 

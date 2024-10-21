@@ -10,10 +10,11 @@
 </head>
 
 <body>
+	
 	<div class="id-card-tag"></div>
 	<div class="id-card-tag-strip"></div>
 	<div class="id-card-hook"></div>
-	@foreach ($myidcards as $myidcard)
+	@if ($myidcard)
 	<div class="id-card-holder">
 		<div class="id-card">
 			<p>
@@ -25,13 +26,12 @@
 				<img src="{{ asset($myidcard->profile_image) }}">
 			</div>
 			<h2>{{ $myidcard->firstname }} {{ $myidcard->lastname }}
-				<br>{{ $myidcard->unificationStatus }}
+				<br>{{ $myidcard->fellowship_status }}
 			</h2>
-			<br>{{ $myidcard->unificationCurrentPost}}</h2>
+			<br>{{ $myidcard->unit_id}}</h2>
 			<hr>
-			<h3>{{ $myidcard->yourFellowship }} | {{ $myidcard->levelInSchool }}<br />
-				<strong>
-					Coker House </strong>
+			<h3>{{ $myidcard->fellowship_id }} | {{ $myidcard->academic_status }}<br />
+				<!-- <strong>Coker House  </strong> -->
 			</h3>
 			<hr>
 			<h6> <small> Central Office: www.cnsunification.org
@@ -39,10 +39,11 @@
 					<br>helpdesk@cnsunification.org <br> 08028554541, 08036506376
 					<br>
 					<br> If lost, pls call
-					<br>Phone: {{ $myidcard->phoneNumber }} <br> Email: {{ $myidcard->email }}</small></h6>
+					<br>Phone: {{ $myidcard->phone }} <br> Email: {{ $myidcard->email }}</small></h6>
 		</div>
 	</div>
-	@endforeach
+	@endif
+
 </body>
 
 </html>

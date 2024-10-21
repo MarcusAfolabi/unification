@@ -9,7 +9,7 @@ class Subconvention extends Model
 {
     use HasFactory;
 
-    protected $table = 'subconventions';
+    protected $table = 'fourth_subconventions';
 
     protected $fillable =[
         'payment_proof',

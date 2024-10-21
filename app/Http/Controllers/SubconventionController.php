@@ -9,15 +9,16 @@ use Illuminate\Http\Request;
 use App\Models\Subconvention;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ConventionNotification;
 
 class SubconventionController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth', 'verified'])->except(['index', 'store', 'subpayment']);
-    // }
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified'])->except(['subcard','index', 'store', 'subpayment']);
+    }
 
     public function index(Request $request)
     {
@@ -43,13 +44,11 @@ class SubconventionController extends Controller
 
     public function subcard()
     {
-        dd('id');
-        if ($myidcards = Subconvention::where('email', auth()->user()->email)->first()) {
-            info($myidcards);
-            return view('subconvention.idcard', compact('myidcards'));
+        $email = Session::get('email');
+        if ($myidcard = Subconvention::where('email', auth()->user()->email)->first()) {
+            return view('subconvention.idcard', compact('myidcard'));
         } else {
-            // return redirect('subconvention.index');
-            return redirect(route('subconvention.index'))->with('status', 'Register to get your ID CARD');
+            return redirect(route('subconvention.index'))->with('error', 'Register to get your ID CARD');
         }
     }
 
