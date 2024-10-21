@@ -14,11 +14,11 @@ use App\Notifications\ConventionNotification;
 
 class SubconventionController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified'])->except(['index', 'store', 'subpayment']);
-    }
-    
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth', 'verified'])->except(['index', 'store', 'subpayment']);
+    // }
+
     public function index(Request $request)
     {
         return view('subconvention.index');
