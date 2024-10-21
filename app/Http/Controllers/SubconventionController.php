@@ -43,7 +43,7 @@ class SubconventionController extends Controller
     public function subcard()
     {
         dd('id');
-        if ($myidcards = Subconvention::where('email', auth()->user()->email)->latest()->take(1)->get()) {
+        if ($myidcards = Subconvention::where('email', auth()->user()->email)->first()) {
             info($myidcards);
             return view('subconvention.idcard', compact('myidcards'));
         } else {
