@@ -29,7 +29,7 @@
                         @endif @endauth
                         @endif
                         @if (Route::has('login'))
-                        @auth @php $user = auth()->user(); @endphp <a wire:navigate href="{{ route('user.index') }}"><img
+                        @auth @php $user = auth()->user(); @endphp <a ><img
                                 src="{{ asset($user->profile_photo_url) }}" class="is_avatar"
                                 alt=""></a>
                         @else
@@ -38,7 +38,7 @@
                         @endif
                         <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
                             @if (Route::has('login')) @auth
-                            <a wire:navigate href="{{ route('user.index') }}" class="user">
+                            <a  class="user">
                                 <div class="user_avatar"><img src="{{ asset($user->profile_photo_url) }}"
                                         class="is_avatar" title="Unification Campus Fellowship"
                                         alt="Unification Campus Fellowship"></div>
