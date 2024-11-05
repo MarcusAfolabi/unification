@@ -54,11 +54,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function fellowship()
     {
-        return $this->belongsTo(Fellowship::class);
+        return $this->belongsTo(Fellowship::class, 'fellowship_id');
     }
     public function unit()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(Unit::class, 'unit_id');
     }
 
     public function posts()

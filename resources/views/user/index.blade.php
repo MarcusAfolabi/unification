@@ -71,20 +71,20 @@
                                             ++$key}}</td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
                                             <a href="{{ url('member', $user) }}">
-                                                {{ $user->name }} </a>
+                                                {{ $user->name ?? '' }} </a>
                                         </td>
                                         <th class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"><a href="{{ asset($user->profile_photo_url) }}"> <img src="{{ asset($user->profile_photo_url) }}" alt="{{ $user->name }}" class="rounded-lg" style="max-height: 50px; max-width:50px" srcset=""></a></th>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                                            <a href="mailto:{{ $user->email }}">{{ $user->email ?? '' }}</a>
                                         </td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap"> <a href="tel:{{ $user->phone }}">
-                                                {{ $user->phone }}</a></td>
+                                                {{ $user->phone ?? '' }}</a></td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $user->fellowship->name }}</td>
+                                            $user->fellowship->name ?? '' }}</td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $user->fellowship_status }}</td>
+                                            $user->fellowship_status ?? '' }}</td>
                                         <td class="text-sm text-blue-900 font-light px-6 py-4 whitespace-nowrap">{{
-                                            $user->unit->name }}</td>
+                                            $user->unit->name ?? '' }}</td>
                                         <td>
                                             <form action="{{ route('user.destroy', $user) }}" method="POST">
                                                 @csrf
