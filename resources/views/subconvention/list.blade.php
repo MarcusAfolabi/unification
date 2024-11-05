@@ -65,7 +65,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{
                                             ++$key}}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <a class="is_link" href="{{ route('subconvention.idcard', $convention->email) }}">Download ID Card</a>
+                                            <a class="is_link" href="{{ route('subconvention.idcard', ['email' => $convention->email]) }}">Download ID Card</a>
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {{ $convention->lastname }} {{ $convention->firstname }}
