@@ -8,12 +8,11 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Fellowship;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
-use Laravel\Fortify\Contracts\UpdatesUserPasswords;
- use PasswordValidationRules;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage; 
 
 class UserController extends Controller
 {
