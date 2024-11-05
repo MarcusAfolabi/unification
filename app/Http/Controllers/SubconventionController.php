@@ -10,6 +10,8 @@ use App\Models\Subconvention;
 use App\Models\FourthSubConvention;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SubconventionsExport;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ConventionNotification;
@@ -52,6 +54,13 @@ class SubconventionController extends Controller
         } else {
             return redirect(route('subconvention'))->with('error', 'Register to get your ID CARD');
         }
+    }
+
+    public function exportSubconventions(Request $request, $format)
+    {
+        $fileName = 'subconventions.' . $format;
+
+        return Excel::download(new SubconventionsExport, $fileName, $format === 'csv' ? \Maatwebsite\Excel\Excel::CSV : \Maatwebsite\Excel\Excel::XLSX);
     }
 
     public function store(Request $request)
