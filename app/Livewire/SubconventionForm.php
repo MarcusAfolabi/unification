@@ -107,7 +107,7 @@ class SubconventionForm extends Component
         FourthSubConvention::create($validatedData);
         Session::put('email', $this->email);
         $this->js("alert('Your registration was received successful and payment will be verified!. Download your ID in the next page')");
-        return redirect('subconvention.idcard');
+        return redirect()->to('/subconvention/id-card');
         $this->reset();
     }
 

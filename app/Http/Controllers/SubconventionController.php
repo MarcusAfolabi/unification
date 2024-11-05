@@ -7,6 +7,7 @@ use App\Mail\WelcomeMail;
 use App\Models\Convention;
 use Illuminate\Http\Request;
 use App\Models\Subconvention;
+use App\Models\FourthSubConvention;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -46,7 +47,7 @@ class SubconventionController extends Controller
     public function subcard()
     {
         $email = Session::get('email');
-        if ($myidcard = Subconvention::where('email', auth()->user()->email)->first()) {
+        if ($myidcard = FourthSubConvention::where('email', $email)->first()) {
             return view('subconvention.idcard', compact('myidcard'));
         } else {
             return redirect(route('subconvention'))->with('error', 'Register to get your ID CARD');
