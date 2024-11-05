@@ -47,7 +47,6 @@ class SubconventionController extends Controller
     public function subcard(Request $request)
     {
         $email = Session::get('email') ?? $request->input('email');
-        dd($email, $request->all());
         if ($myidcard = FourthSubConvention::where('email', $email)->first()) {
             // dd($myidcard);
             return view('subconvention.idcard', compact('myidcard'));
