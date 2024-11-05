@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Fellowship;
 use App\Models\Subconvention;
 use Livewire\WithFileUploads;
+use App\Models\FourthConvention;
+use App\Models\FourthSubConvention;
 use Illuminate\Support\Facades\Session;
 
 class SubconventionForm extends Component
@@ -102,7 +104,7 @@ class SubconventionForm extends Component
         $validatedData['payment_proof'] = 'storage/' . $this->payment_proof->store('subconventionImages', 'public');
         $validatedData['profile_image'] = 'storage/' . $this->profile_image->store('subconventionImages', 'public');
 
-        Subconvention::create($validatedData);
+        FourthSubConvention::create($validatedData);
         Session::put('email', $this->email);
         $this->js("alert('Your registration was received successful and payment will be verified!. Download your ID in the next page')");
         return redirect('subconvention.idcard');

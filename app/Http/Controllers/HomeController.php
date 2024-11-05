@@ -13,6 +13,7 @@ use App\Models\Vacancy;
 use App\Models\Convention;
 use App\Models\Fellowship;
 use App\Models\Subconvention;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -37,7 +38,7 @@ class HomeController extends Controller
         $products = Product::select('id')->count();
         $books = Book::select('id')->count();
         $convention = Convention::select('id')->count();
-        $subconvention = Subconvention::select('id')->count();
+        $subconvention = DB::table('fourth_subsconvention')->select('id')->count();
 
         $auth = Auth::user();
         $users = User::latest()->paginate(50);
