@@ -37,6 +37,8 @@
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             S/No</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                           Download ID</th>
+                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Full Name</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Fellowship Name</th>
@@ -63,7 +65,10 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{
                                             ++$key}}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {{ $convention->lastname }} {{ $convention->firstname }} </a>
+                                            <a href="#">Download ID Card</a>
+                                        </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {{ $convention->lastname }} {{ $convention->firstname }}
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $convention->fellowship_id }}</td>
