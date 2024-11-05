@@ -32,7 +32,8 @@ class SubconventionController extends Controller
         } else {
             $subconventions = Subconvention::latest()->paginate(30);
         }
-        $role = Auth::user()->role;
+        
+        $role = Auth::user()->role ?? 'user';
 
         if ($role == 'admin') {
             $subconventions = Subconvention::latest()->paginate(30);
@@ -64,7 +65,6 @@ class SubconventionController extends Controller
             "fellowship_status" => 'required|string',
             "unit_id" => 'required|string',
             "fellowship_id" => 'required|string',
-
         ]);
         $firstname = $request->input('firstname');
         $lastname = $request->input('lastname');
