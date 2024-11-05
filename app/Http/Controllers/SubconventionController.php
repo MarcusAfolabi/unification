@@ -55,13 +55,7 @@ class SubconventionController extends Controller
             return redirect(route('subconvention'))->with('error', 'Register to get your ID CARD');
         }
     }
-
-    public function exportSubconventions(Request $request, $format)
-    {
-        $fileName = 'subconventions.' . $format;
-
-        return Excel::download(new SubconventionsExport, $fileName, $format === 'csv' ? \Maatwebsite\Excel\Excel::CSV : \Maatwebsite\Excel\Excel::XLSX);
-    }
+ 
 
     public function store(Request $request)
     {

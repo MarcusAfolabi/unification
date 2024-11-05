@@ -3,29 +3,26 @@
 namespace App\Exports;
 
 use App\Models\FourthSubConvention;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Rap2hpoutre\FastExcel\FastExcel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
-class SubconventionsExport implements FromCollection, WithHeadings
+class SubconventionsExport
 {
-    public function collection()
+    public function export()
     {
-        return FourthSubConvention::all(); // Adjust as necessary
-    }
-
-    public function headings(): array
-    {
-        return [
-            'S/No',
-            'Email',
-            'Full Name',
-            'Fellowship Name',
-            'Gender',
-            'Phone Number',
-            'Academic Status',
-            'Fellowship Status',
-            'Unit member',
-            'When'
-        ];
+        return (new FastExcel(FourthSubConvention::all()))->download('subconventions.xlsx', function ($convention) {
+            return [
+                'S/No' => $convention->id,
+                'Full Name' => $convention->lastname . ' ' . $convention->firstname,
+                'Fellowship Name' => $convention->fellowship_id,
+                'Gender' => $convention->gender,
+                'Phone Number' => $convention->phone,
+                'Academic Status' => $convention->academic_status,
+                'Fellowship Status' => $convention->fellowship_status,
+                'Unit Member' => $convention->unit_id,
+                'When' => $convention->created_at->format('l, jS M. Y g:ia'),
+            ];
+        });
     }
 }

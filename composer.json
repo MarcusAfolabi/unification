@@ -19,6 +19,7 @@
         "livewire/livewire": "*",
         "maatwebsite/excel": "^1.1",
         "queueworker/sansdaemon": "^1.2",
+        "rap2hpoutre/fast-excel": "^5.5",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/image-optimizer": "^1.7",
         "spatie/laravel-ignition": "^2.0"

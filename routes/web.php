@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\SubconventionsExport;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\BookController;
@@ -172,8 +173,9 @@ Route::get('/subconvention', [SubconventionController::class, 'index'])->name('s
 Route::get('/subconvention/payment', [SubconventionController::class, 'subpayment'])->name('subconvention.payment');
 Route::get('/subconvention-id-card', [SubconventionController::class, 'subcard'])->name('subconvention.idcard');
 Route::get('/subconvention-list', [SubconventionController::class, 'list'])->name('subconvention.list');
-Route::get('/subconventions/export/{format}', [SubconventionController::class, 'exportSubconventions'])->name('subconventions.export');
-
+Route::get('/subconventions/export', function () {
+    return (new SubconventionsExport)->export();
+})->name('subconventions.export');
 
 
 

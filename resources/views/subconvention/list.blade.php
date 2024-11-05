@@ -25,8 +25,7 @@
                 </form>
             </div>
             <hr>
-            <a href="{{ route('subconventions.export', 'csv') }}" class="btn btn-primary">Download CSV</a>
-            <a href="{{ route('subconventions.export', 'xlsx') }}" class="btn btn-primary">Download Excel</a>
+            <a href="{{ route('subconventions.export') }}" class="btn btn-primary">Export to Excel</a>
 
             <br>
             @if ($subconventions->count() > 0)
