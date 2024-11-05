@@ -28,16 +28,16 @@ class SubconventionController extends Controller
     public function list(Request $request)
     {
         if ($request->subconvention) {
-            $subconventions = Subconvention::where('firstname', 'like', '%' . $request->subconventions . '%')
+            $subconventions = FourthSubConvention::where('firstname', 'like', '%' . $request->subconventions . '%')
                 ->orWhere('email', 'like', '%' . $request->subconventions . '%')->latest()->paginate(30);
         } else {
-            $subconventions = Subconvention::latest()->paginate(30);
+            $subconventions = FourthSubConvention::latest()->paginate(30);
         }
-
+        
         $role = Auth::user()->role ?? 'user';
 
         if ($role == 'admin') {
-            $subconventions = Subconvention::latest()->paginate(30);
+            $subconventions = FourthSubConvention::latest()->paginate(30);
             return view('subconvention.list', compact('subconventions'));
         } else {
             abort(419);
