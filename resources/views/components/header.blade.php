@@ -76,8 +76,7 @@
                                         </g>
                                     </g>
                                 </svg>Logout </a>
-                           
-                            <a wire:navigate href="{{ route('logout') }}" id="night-mode"
+                                <a wire:navigate href="{{ route('logout') }}" id="night-mode"
                                 class="btn-night-mode"><svg xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20" fill="currentColor">
                                     <path
