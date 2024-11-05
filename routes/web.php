@@ -67,7 +67,7 @@ Route::get('/profile/{user}/edit', [UserController::class, 'editMember'])->name(
 Route::put('/profile/{user}', [UserController::class, 'updateMember'])->name('user.updateMember');
 Route::put('/profile-pass/{user}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 // Route::delete('/user-delete/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 // All Post
 Route::get('/post', [PostController::class, 'index'])->name('posts.index');

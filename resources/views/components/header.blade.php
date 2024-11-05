@@ -75,7 +75,9 @@
                                                 d="M385.4,337.65c2.4,2.4,5.5,3.6,8.7,3.6s6.3-1.2,8.7-3.6l83.9-83.9c4.8-4.8,4.8-12.5,0-17.3l-83.9-83.9 c-4.8-4.8-12.5-4.8-17.3,0s-4.8,12.5,0,17.3l63,63H218.6c-6.8,0-12.3,5.5-12.3,12.3c0,6.8,5.5,12.3,12.3,12.3h229.8l-63,63 C380.6,325.15,380.6,332.95,385.4,337.65z" />
                                         </g>
                                     </g>
-                                </svg>Logout </a><a wire:navigate href="{{ route('logout') }}" id="night-mode"
+                                </svg>Logout </a>
+                           
+                            <a wire:navigate href="{{ route('logout') }}" id="night-mode"
                                 class="btn-night-mode"><svg xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20" fill="currentColor">
                                     <path
