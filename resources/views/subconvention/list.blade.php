@@ -8,7 +8,7 @@
         <div class="flex justify-between items-center relative md:mb-4 mb-3">
             <div class="flex-1">
                 <h5 class="text-1xl font-semibold">
-                    <a href="{{ route('subconvention.index') }}"><i class="icon-material-outline-add"></i> New </a>
+                    <a href="{{ route('subconvention') }}"><i class="icon-material-outline-add"></i> New </a>
                 </h5>
             </div>
         </div>

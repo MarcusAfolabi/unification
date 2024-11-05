@@ -32,7 +32,7 @@ class SubconventionController extends Controller
         } else {
             $subconventions = Subconvention::latest()->paginate(30);
         }
-        
+
         $role = Auth::user()->role ?? 'user';
 
         if ($role == 'admin') {
@@ -49,7 +49,7 @@ class SubconventionController extends Controller
         if ($myidcard = Subconvention::where('email', auth()->user()->email)->first()) {
             return view('subconvention.idcard', compact('myidcard'));
         } else {
-            return redirect(route('subconvention.index'))->with('error', 'Register to get your ID CARD');
+            return redirect(route('subconvention'))->with('error', 'Register to get your ID CARD');
         }
     }
 
