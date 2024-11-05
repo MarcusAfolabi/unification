@@ -60,6 +60,7 @@ Route::post('send', [NotificationController::class, "sendnotification"])->middle
 
 // All User
 Route::resource('/user', UserController::class);
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/user-presidents', [UserController::class, 'president'])->name('user.president');
 Route::get('/user-pro', [UserController::class, 'pro'])->name('user.pro');
 Route::get('/profile/{user}/edit', [UserController::class, 'editMember'])->name('user.editMember');
