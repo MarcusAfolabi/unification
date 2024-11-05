@@ -167,7 +167,7 @@ Route::delete('/convention/{convention}', [ConventionController::class, 'destroy
 
 //SubConvention
 Route::resource('subconvention', SubconventionController::class);
-Route::get('/subconvention', [SubconventionController::class,'index'])->name('subconvention');
+Route::get('/subconvention', [SubconventionController::class,'index'])->name('subconvention.index');
 Route::get('/subconvention/payment', [SubconventionController::class,'subpayment'])->name('subconvention.payment');
 Route::get('/subconvention/id-card', [SubconventionController::class, 'subcard'])->name('subconvention.idcard');
 Route::get('/subconvention-list', [SubconventionController::class,'list'])->name('subconvention.list') ;
