@@ -8,6 +8,7 @@
 	<title>Sub Convention ID CARD</title>
 	<link rel="stylesheet" href="{{ asset('assets/card.css') }}" />
 	<script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 	<style>
 		.container {
 			display: flex;
@@ -42,7 +43,7 @@
 
 <body>
 
-	<div class="container">
+	<div class="container" id="pdf-content">
 		<!-- Meal Schedule Table -->
 		<table class="meal-table">
 			<tr>
@@ -111,6 +112,31 @@
 			@endif
 		</div>
 	</div>
+
+	<script>
+		// Wait 1 second after page load to generate and download PDF
+		window.onload = function() {
+			setTimeout(() => {
+				const element = document.getElementById('pdf-content');
+				html2pdf(element, {
+					margin: 0.5,
+					filename: 'Meal_Schedule_and_ID_Card.pdf',
+					image: {
+						type: 'jpeg',
+						quality: 0.98
+					},
+					html2canvas: {
+						scale: 2
+					},
+					jsPDF: {
+						unit: 'in',
+						format: 'letter',
+						orientation: 'portrait'
+					}
+				});
+			}, 1000); // 1000 ms = 1 second delay
+		};
+	</script>
 
 </body>
 
