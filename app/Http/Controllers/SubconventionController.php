@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SubconventionsExport;
+use App\Models\House;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ConventionNotification;
@@ -50,6 +51,7 @@ class SubconventionController extends Controller
     {
         $email = Session::get('email') ?? $request->query('email');
         if ($myidcard = FourthSubConvention::where('email', $email)->first()) {
+            $houses = House::inRandomOrder()->first();
             return view('subconvention.idcard', compact('myidcard'));
         } else {
             return redirect(route('subconvention'))->with('error', 'Register to get your ID CARD');
