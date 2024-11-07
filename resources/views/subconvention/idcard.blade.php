@@ -31,7 +31,7 @@
 			<br>{{ $myidcard->unit_id}}</h2>
 			<hr>
 			<h3>{{ $myidcard->fellowship_id }} <br> {{ $myidcard->academic_status }}<br />
-				<strong>{{ $houses }}  </strong>
+				<strong>{{ $houses->name }}  </strong>
 			</h3>
 			<hr>
 			<h6> <small> Central Office: www.cnsunification.org
