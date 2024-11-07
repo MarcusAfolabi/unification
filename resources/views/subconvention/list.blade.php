@@ -45,6 +45,8 @@
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Fellowship Name</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                            House</th>
+                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Gender</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                             Phone Number</th>
@@ -74,6 +76,8 @@
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $convention->fellowship_id }}</td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
+                                            $convention->house }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{
                                             $convention->gender }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"> {{

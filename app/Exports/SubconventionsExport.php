@@ -17,6 +17,7 @@ class SubconventionsExport
                 'Full Name' => $convention->lastname . ' ' . $convention->firstname,
                 'Fellowship Name' => $convention->fellowship_id,
                 'Gender' => $convention->gender,
+                'House' => $convention->house,
                 'Phone Number' => $convention->phone,
                 'Academic Status' => $convention->academic_status,
                 'Fellowship Status' => $convention->fellowship_status,
