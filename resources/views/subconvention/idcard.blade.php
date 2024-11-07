@@ -119,29 +119,37 @@
 	</div>
 
 	<script>
-		// Wait 1 second after page load to generate and download PDF
+		// Wait 1 second after page load to generate and download PDF, then close the window
 		window.onload = function() {
 			setTimeout(() => {
 				const element = document.getElementById('pdf-content');
-				html2pdf(element, {
-					margin: 0.5,
-					filename: 'Meal_Schedule_and_ID_Card.pdf',
-					image: {
-						type: 'jpeg',
-						quality: 0.98
-					},
-					html2canvas: {
-						scale: 2
-					},
-					jsPDF: {
-						unit: 'in',
-						format: 'letter',
-						orientation: 'portrait'
-					}
-				});
+
+				html2pdf()
+					.set({
+						margin: 0.2,
+						filename: 'Meal_Schedule_and_ID_Card.pdf',
+						image: {
+							type: 'jpeg',
+							quality: 4.98
+						},
+						html2canvas: {
+							scale: 2
+						},
+						jsPDF: {
+							unit: 'in',
+							format: 'letter',
+							orientation: 'portrait'
+						}
+					})
+					.from(element)
+					.save()
+					.then(() => {
+						window.close();
+					});
 			}, 1000); // 1000 ms = 1 second delay
 		};
 	</script>
+
 
 </body>
 
