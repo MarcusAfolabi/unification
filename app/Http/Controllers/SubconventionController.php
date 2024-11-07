@@ -52,7 +52,7 @@ class SubconventionController extends Controller
         $email = Session::get('email') ?? $request->query('email');
         if ($myidcard = FourthSubConvention::where('email', $email)->first()) {
             $houses = House::inRandomOrder()->first();
-            return view('subconvention.idcard', compact('myidcard'));
+            return view('subconvention.idcard', compact('myidcard', 'houses'));
         } else {
             return redirect(route('subconvention'))->with('error', 'Register to get your ID CARD');
         }
