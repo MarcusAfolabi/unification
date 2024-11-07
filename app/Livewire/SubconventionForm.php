@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\House;
 use Livewire\Component;
 use App\Models\Fellowship;
 use App\Models\Subconvention;
@@ -103,6 +104,8 @@ class SubconventionForm extends Component
 
         $validatedData['payment_proof'] = 'storage/' . $this->payment_proof->store('subconventionImages', 'public');
         $validatedData['profile_image'] = 'storage/' . $this->profile_image->store('subconventionImages', 'public');
+        $houses = House::inRandomOrder()->first();
+        $validatedData['house'] = $houses->name;
 
         FourthSubConvention::create($validatedData);
         Session::put('email', $this->email);

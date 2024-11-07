@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('academic_status');
             $table->string('fellowship_status');
             $table->string('unit_id');
+            $table->string('house');
             $table->string('profile_image');
             $table->timestamps();
         });

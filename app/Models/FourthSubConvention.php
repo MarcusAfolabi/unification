@@ -20,6 +20,7 @@ class FourthSubConvention extends Model
         'fellowship_status',
         'unit_id',
         'profile_image',
+        'house',
     ];
     protected $table = 'fourth_sub_conventions';
 }

@@ -99,11 +99,11 @@
 					<h2>{{ $myidcard->unit_id }}</h2>
 					<hr>
 					<h3>{{ $myidcard->fellowship_id }} <br> {{ $myidcard->academic_status }}<br />
-						<strong>{{ $houses->name }}</strong>
+						<strong>{{ $myidcard->house }}</strong>
 					</h3>
 					<hr>
 					<h6>
-						<small style="font-size: 10px;">
+						<small style="font-size: 9px;">
 							Central Office: www.cnsunification.org
 							<br>No 13, Iyaniwura Street, Everbest Busstop, Meran, Lagos.
 							<br>helpdesk@cnsunification.org <br> 08028554541, 08036506376
