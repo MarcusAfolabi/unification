@@ -102,11 +102,16 @@
 						<strong>{{ $houses->name }}</strong>
 					</h3>
 					<hr>
-					<h6><small>Central Office: www.cnsunification.org
+					<h6>
+						<small style="font-size: 10px;">
+							Central Office: www.cnsunification.org
 							<br>No 13, Iyaniwura Street, Everbest Busstop, Meran, Lagos.
 							<br>helpdesk@cnsunification.org <br> 08028554541, 08036506376
 							<br>If lost, pls call
-							<br>Phone: {{ $myidcard->phone }} <br>Email: {{ $myidcard->email }}</small></h6>
+							<br>Phone: {{ $myidcard->phone }} <br>Email: {{ $myidcard->email }}
+						</small>
+					</h6>
+
 				</div>
 			</div>
 			@endif
